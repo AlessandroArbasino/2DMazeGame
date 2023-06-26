@@ -2,15 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class MazeGenerator : MonoBehaviour
 {
     public Vector2 worldSize = new Vector2(20, 20);
-    public GameObject roomPrefab;
-
-   public  Room[,] rooms;
-
+    public  Room[,] rooms;
+    public TileBase TileBasetile;
     public List<Vector2> takenPositions = new List<Vector2>();
+
+    public Tilemap tm;
 
     int gridSizeX, gridSizeY, numberOfRooms = 20;
 
@@ -27,6 +28,8 @@ public class MazeGenerator : MonoBehaviour
         CreateRooms();
         SetRoomDoors();
         DrawMap();
+
+        
     }
 
     private void DrawMap()
@@ -38,19 +41,11 @@ public class MazeGenerator : MonoBehaviour
                 continue;
             }
 
-            Vector2 drawPos = room.gridPos;
+            Vector3Int drawPos = new Vector3Int((int)room.gridPos.x, (int)room.gridPos.y,0);
             //drawPos.x *= 16;// size map sprite
             //drawPos.y *= 8;
-
-            GameObject mapper = Instantiate(roomPrefab, drawPos, Quaternion.identity);
-
-            //MapSpriteSelector mapper = Instantiate(roomPrefab, drawPos, Quaternion.identity).GetComponent<MapSpriteSelector>();
-
-            //mapper.type = room.type;
-            //mapper.up = room.doorTop;
-            //mapper.down = room.doorBot;
-            //mapper.left = room.doorleft;
-            //mapper.right = room.doorRight;
+            TileChangeData tiledata= new TileChangeData(drawPos, TileBasetile, Color.white,new Matrix4x4());
+            tm.SetTile(tiledata, false);
         }
     }
 
