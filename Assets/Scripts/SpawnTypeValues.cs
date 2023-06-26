@@ -10,6 +10,7 @@ public class SpawnTypeValues
     public RoomType type;
     public Tilemap myTypeMap;
     public TileBase mybaseTyle;
+    public Color UiColor;
     public int min;
     public int max;
 }

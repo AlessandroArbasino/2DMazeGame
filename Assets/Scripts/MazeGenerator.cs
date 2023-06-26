@@ -27,8 +27,6 @@ public class MazeGenerator : MonoBehaviour
         CreateRooms();
         SetRoomDoors();
         DrawMap();
-
-
     }
 
     private void DrawMap()
@@ -46,16 +44,15 @@ public class MazeGenerator : MonoBehaviour
 
     private void DrawTileByType(Room room)
     {
-        foreach(SpawnTypeValues value in spawnTypeValues)
+        foreach (SpawnTypeValues value in spawnTypeValues)
         {
-            if(value.type == room.roomType)
+            if (value.type == room.roomType)
             {
                 Vector3Int drawPos = new Vector3Int((int)room.gridPos.x, (int)room.gridPos.y, 0);
-                TileChangeData tiledata = new TileChangeData(drawPos, value.mybaseTyle, Color.white, new Matrix4x4());
+                TileChangeData tiledata = new TileChangeData(drawPos, value.mybaseTyle, value.UiColor, new Matrix4x4());
                 value.myTypeMap.SetTile(tiledata, false);
             }
         }
-       
     }
     private void SetRoomDoors()
     {
@@ -138,8 +135,7 @@ public class MazeGenerator : MonoBehaviour
 
             //}
 
-            // other  r0om type logic 
-
+            //dictionary?
             takenPositions.Insert(0, checkPos);
 
             ChooseRoomType(checkPos);

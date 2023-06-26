@@ -9,5 +9,8 @@ public enum RoomType
     Normal,
     Enemy,
     Hole,
-    Teleport
+    Teleport,
+    Wind,
+    Mud,
+    Blood
 }
