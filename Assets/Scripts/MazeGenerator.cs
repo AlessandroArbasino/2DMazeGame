@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class MazeGenerator : MonoBehaviour
 {
-    Vector2 worldSize = new Vector2(20, 20);
+    public Vector2 worldSize = new Vector2(20, 20);
     public GameObject roomPrefab;
 
-    Room[,] rooms;
+   public  Room[,] rooms;
 
-    List<Vector2> takenPositions = new List<Vector2>();
+    public List<Vector2> takenPositions = new List<Vector2>();
 
     int gridSizeX, gridSizeY, numberOfRooms = 20;
 
@@ -39,16 +39,18 @@ public class MazeGenerator : MonoBehaviour
             }
 
             Vector2 drawPos = room.gridPos;
-            drawPos.x *= 16;// size map sprite
-            drawPos.y *= 8;
+            //drawPos.x *= 16;// size map sprite
+            //drawPos.y *= 8;
 
-            MapSpriteSelector mapper = Instantiate(roomPrefab, drawPos, Quaternion.identity).GetComponent<MapSpriteSelector>();
+            GameObject mapper = Instantiate(roomPrefab, drawPos, Quaternion.identity);
 
-            mapper.type = room.type;
-            mapper.up = room.doorTop;
-            mapper.down = room.doorBot;
-            mapper.left = room.doorleft;
-            mapper.right = room.doorRight;
+            //MapSpriteSelector mapper = Instantiate(roomPrefab, drawPos, Quaternion.identity).GetComponent<MapSpriteSelector>();
+
+            //mapper.type = room.type;
+            //mapper.up = room.doorTop;
+            //mapper.down = room.doorBot;
+            //mapper.left = room.doorleft;
+            //mapper.right = room.doorRight;
         }
     }
 
@@ -107,7 +109,7 @@ public class MazeGenerator : MonoBehaviour
     {
         rooms = new Room[gridSizeX * 2, gridSizeY * 2];
         //1 for starting room
-        rooms[gridSizeX, gridSizeY] = new Room(Vector2.zero, 1);
+        rooms[gridSizeX, gridSizeY] = new Room(Vector2.zero, RoomType.Start);
 
         takenPositions.Insert(0, Vector2.zero);
         Vector2 checkPos = Vector2.zero;
@@ -121,19 +123,20 @@ public class MazeGenerator : MonoBehaviour
 
             checkPos = NewPosition();
 
-            if (NumberOfNeightbors(checkPos, takenPositions) > 1 && UnityEngine.Random.value > randomCompare)
-            {
-                int iteration = 0;
-                do
-                {
-                    checkPos = SelectiveNewPosition();
-                    iteration++;
-                } while (NumberOfNeightbors(checkPos, takenPositions) > 1 && iteration < 100);
+            //if (NumberOfNeightbors(checkPos, takenPositions) > 1 && UnityEngine.Random.value > randomCompare)
+            //{
+            //    int iteration = 0;
+            //    do
+            //    {
+            //        checkPos = SelectiveNewPosition();
+            //        iteration++;
+            //    } while (NumberOfNeightbors(checkPos, takenPositions) > 1 && iteration < 100);
 
 
-            }
+            //}
 
-            rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, 0);
+            // other  r0om type logic 
+            rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, RoomType.Start);
             takenPositions.Insert(0, checkPos);
         }
     }
@@ -194,11 +197,11 @@ public class MazeGenerator : MonoBehaviour
             {
                 if (positive)
                 {
-                    y += 1;
+                    x += 1;
                 }
                 else
                 {
-                    y -= 1;
+                    x -= 1;
                 }
             }
             checkingPos = new Vector2(x, y);
