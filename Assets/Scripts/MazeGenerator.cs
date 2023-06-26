@@ -17,6 +17,9 @@ public class MazeGenerator : MonoBehaviour
     public Tilemap DungeonMap;
     public TileBase baseDungeonTile;
 
+    public PlayerManager playerManager;
+    //public Dictionary<Vector2, Room> roomsPositionType=new Dictionary<Vector2, Room>();
+
     private void Start()
     {
         if (numberOfRooms >= (worldSize.x * 2) * (worldSize.y * 2))
@@ -47,6 +50,8 @@ public class MazeGenerator : MonoBehaviour
 
     private void DrawTileByType(Room room)
     {
+        if(room.roomType== RoomType.Start)
+            playerManager.InitPlayer(rooms, takenPositions,room);
 
         foreach (SpawnTypeValues value in spawnTypeValues)
         {
