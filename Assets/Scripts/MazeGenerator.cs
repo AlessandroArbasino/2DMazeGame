@@ -10,9 +10,12 @@ public class MazeGenerator : MonoBehaviour
     public Room[,] rooms;
     public List<Vector2> takenPositions = new List<Vector2>();
 
-    int gridSizeX, gridSizeY, numberOfRooms = 20;
-
+    int gridSizeX, gridSizeY = 20;
+    int numberOfRooms = 40;
     public List<SpawnTypeValues> spawnTypeValues = new List<SpawnTypeValues>();
+
+    public Tilemap DungeonMap;
+    public TileBase baseDungeonTile;
 
     private void Start()
     {
@@ -44,15 +47,20 @@ public class MazeGenerator : MonoBehaviour
 
     private void DrawTileByType(Room room)
     {
+
         foreach (SpawnTypeValues value in spawnTypeValues)
         {
             if (value.type == room.roomType)
             {
+                Debug.Log(room.roomType);
                 Vector3Int drawPos = new Vector3Int((int)room.gridPos.x, (int)room.gridPos.y, 0);
-                TileChangeData tiledata = new TileChangeData(drawPos, value.mybaseTyle, value.UiColor, new Matrix4x4());
-                value.myTypeMap.SetTile(tiledata, false);
+                TileChangeData tiledata = new TileChangeData(drawPos, value.mybaseTyle, Color.white, new Matrix4x4());
+                value.myTypeMap.SetTile(tiledata, value.mybaseTyle);
             }
         }
+        Vector3Int drawRoomPos = new Vector3Int((int)room.gridPos.x, (int)room.gridPos.y, 0);
+        TileChangeData roomTiledata = new TileChangeData(drawRoomPos, baseDungeonTile, Color.white, new Matrix4x4());
+        DungeonMap.SetTile(roomTiledata, baseDungeonTile);
     }
     private void SetRoomDoors()
     {
@@ -215,7 +223,7 @@ public class MazeGenerator : MonoBehaviour
 
     private void ChooseRoomType(Vector2 checkPos)
     {
-        rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, RoomType.Start);
+        rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, RoomType.Normal);
 
         int choosedRandom = UnityEngine.Random.Range(1, 100);
 
