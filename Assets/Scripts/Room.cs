@@ -6,7 +6,6 @@ public class Room
 {
     public Vector2 gridPos;
     public RoomType roomType;
-    public int type;
     public bool doorTop, doorBot, doorleft, doorRight;
    
     public Room(Vector2 _gridPos, RoomType roomType)

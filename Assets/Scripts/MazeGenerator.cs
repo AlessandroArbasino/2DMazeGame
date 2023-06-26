@@ -7,13 +7,12 @@ using UnityEngine.Tilemaps;
 public class MazeGenerator : MonoBehaviour
 {
     public Vector2 worldSize = new Vector2(20, 20);
-    public  Room[,] rooms;
-    public TileBase TileBasetile;
+    public Room[,] rooms;
     public List<Vector2> takenPositions = new List<Vector2>();
 
-    public Tilemap tm;
-
     int gridSizeX, gridSizeY, numberOfRooms = 20;
+
+    public List<SpawnTypeValues> spawnTypeValues = new List<SpawnTypeValues>();
 
     private void Start()
     {
@@ -29,26 +28,35 @@ public class MazeGenerator : MonoBehaviour
         SetRoomDoors();
         DrawMap();
 
-        
+
     }
 
     private void DrawMap()
     {
-        foreach(Room room in rooms)
+        foreach (Room room in rooms)
         {
-            if(room == null)
+            if (room == null)
             {
                 continue;
             }
 
-            Vector3Int drawPos = new Vector3Int((int)room.gridPos.x, (int)room.gridPos.y,0);
-            //drawPos.x *= 16;// size map sprite
-            //drawPos.y *= 8;
-            TileChangeData tiledata= new TileChangeData(drawPos, TileBasetile, Color.white,new Matrix4x4());
-            tm.SetTile(tiledata, false);
+            DrawTileByType(room);
         }
     }
 
+    private void DrawTileByType(Room room)
+    {
+        foreach(SpawnTypeValues value in spawnTypeValues)
+        {
+            if(value.type == room.roomType)
+            {
+                Vector3Int drawPos = new Vector3Int((int)room.gridPos.x, (int)room.gridPos.y, 0);
+                TileChangeData tiledata = new TileChangeData(drawPos, value.mybaseTyle, Color.white, new Matrix4x4());
+                value.myTypeMap.SetTile(tiledata, false);
+            }
+        }
+       
+    }
     private void SetRoomDoors()
     {
         for (int x = 0; x < (gridSizeX * 2); x++)
@@ -131,8 +139,10 @@ public class MazeGenerator : MonoBehaviour
             //}
 
             // other  r0om type logic 
-            rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, RoomType.Start);
+
             takenPositions.Insert(0, checkPos);
+
+            ChooseRoomType(checkPos);
         }
     }
 
@@ -162,6 +172,7 @@ public class MazeGenerator : MonoBehaviour
         }
         return ret;
     }
+
 
     private Vector2 NewPosition()
     {
@@ -205,4 +216,19 @@ public class MazeGenerator : MonoBehaviour
         return checkingPos;
     }
 
+
+    private void ChooseRoomType(Vector2 checkPos)
+    {
+        rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, RoomType.Start);
+
+        int choosedRandom = UnityEngine.Random.Range(1, 100);
+
+        foreach (SpawnTypeValues value in spawnTypeValues)
+        {
+            if (choosedRandom > value.min && choosedRandom < value.max)
+            {
+                rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, value.type);
+            }
+        }
+    }
 }
