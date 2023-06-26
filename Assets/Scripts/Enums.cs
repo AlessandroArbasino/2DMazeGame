@@ -11,3 +11,9 @@ public enum RoomType
     Hole,
     Teleport
 }
+
+public enum CellType
+{
+    Tunnel,
+    Room
+}

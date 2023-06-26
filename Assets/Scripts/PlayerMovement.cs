@@ -14,8 +14,38 @@ public class PlayerMovement
         this.currentRoom = CurrentRoom;
 
     }
-    public bool checkMovement()
+    public Room CheckMovement(Vector2 moveDirection)
     {
-        return true;
+        //never equals returns null TODO
+        if(moveDirection == Vector2.up)
+        {
+            if (currentRoom.doorTop)
+            {
+                return rooms[(int)currentRoom.gridPos.x, (int)currentRoom.gridPos.y - 1];
+            }
+        }
+        else if (moveDirection == Vector2.down)
+        {
+            if (currentRoom.doorBot)
+            {
+                return rooms[(int)currentRoom.gridPos.x, (int)currentRoom.gridPos.y + 1];
+            }
+        }
+        else if (moveDirection == Vector2.left)
+        {
+            if (currentRoom.doorleft)
+            {
+                return rooms[(int)currentRoom.gridPos.x-1, (int)currentRoom.gridPos.y];
+            }
+        }
+
+        else if (moveDirection == Vector2.right)
+        {
+            if (currentRoom.doorRight)
+            {
+                return rooms[(int)currentRoom.gridPos.x+1, (int)currentRoom.gridPos.y];
+            }
+        }
+        return null;
     }
 }

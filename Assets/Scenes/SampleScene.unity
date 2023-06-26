@@ -152,6 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 267ad0544effc3a48b0bb6ee4379a7f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerMap: {fileID: 1772402849}
+  playerBase: {fileID: 11400000, guid: 5e0aa9eaf0e08ed4a83dd51974ebecf7, type: 2}
 --- !u!4 &189093507
 Transform:
   m_ObjectHideFlags: 0
@@ -238,9 +240,9 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: -999
+  m_SortingLayerID: -587460303
+  m_SortingLayer: 4
+  m_SortingOrder: -100
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -633,9 +635,9 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: -999
+  m_SortingLayerID: 1507251203
+  m_SortingLayer: 3
+  m_SortingOrder: -100
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -801,7 +803,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -999
+  m_SortingOrder: 9999
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -960,28 +962,28 @@ MonoBehaviour:
   takenPositions: []
   spawnTypeValues:
   - type: 0
-    myTypeMap: {fileID: 0}
+    myTypeMap: {fileID: 1772402849}
     mybaseTyle: {fileID: 11400000, guid: 5e0aa9eaf0e08ed4a83dd51974ebecf7, type: 2}
     min: 0
     max: 0
   - type: 2
-    myTypeMap: {fileID: 0}
+    myTypeMap: {fileID: 1367037301}
     mybaseTyle: {fileID: 11400000, guid: 2830811029bb1f74cb9e5fcdaca137f4, type: 2}
     min: 30
     max: 40
   - type: 3
-    myTypeMap: {fileID: 0}
+    myTypeMap: {fileID: 491498340}
     mybaseTyle: {fileID: 11400000, guid: 7f1f7e6cf07e75144a852452d26de2a1, type: 2}
     min: 50
     max: 60
   - type: 4
-    myTypeMap: {fileID: 0}
+    myTypeMap: {fileID: 906688805}
     mybaseTyle: {fileID: 11400000, guid: 8f8c3569c9846384187d0b69e947621d, type: 2}
     min: 80
     max: 89
   DungeonMap: {fileID: 1185835854}
   baseDungeonTile: {fileID: 11400000, guid: 3ac35bc99c83a4642860074f8b6f892f, type: 2}
-  playerManager: {fileID: 0}
+  playerManager: {fileID: 189093506}
 --- !u!1 &1367037298
 GameObject:
   m_ObjectHideFlags: 0
@@ -994,7 +996,7 @@ GameObject:
   - component: {fileID: 1367037301}
   - component: {fileID: 1367037300}
   m_Layer: 0
-  m_Name: Teleports (1)
+  m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1053,9 +1055,9 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: -999
+  m_SortingLayerID: 1143438531
+  m_SortingLayer: 2
+  m_SortingOrder: 100
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -1219,9 +1221,9 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: -999
+  m_SortingLayerID: -2081267895
+  m_SortingLayer: 1
+  m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16

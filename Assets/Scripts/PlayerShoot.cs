@@ -14,8 +14,8 @@ public class PlayerShoot
         this.CurrentRoom = CurrentRoom;
     }
 
-    public void Shoot()
+    public Room Shoot(Vector2 shootDirection)
     {
-
+        return null;
     }
 }

@@ -18,7 +18,7 @@ public class MazeGenerator : MonoBehaviour
     public TileBase baseDungeonTile;
 
     public PlayerManager playerManager;
-    public Dictionary<Vector2, Room> roomsPositionType=new Dictionary<Vector2, Room>();
+    public Dictionary<Vector2, Room> roomsPositionType = new Dictionary<Vector2, Room>();
 
     private void Start()
     {
@@ -50,8 +50,8 @@ public class MazeGenerator : MonoBehaviour
 
     private void DrawTileByType(Room room)
     {
-        if(room.roomType== RoomType.Start)
-            playerManager.InitPlayer(rooms, takenPositions,room);
+        if (room.roomType == RoomType.Start)
+            playerManager.InitPlayer(rooms, takenPositions, room);
 
         foreach (SpawnTypeValues value in spawnTypeValues)
         {
@@ -115,6 +115,7 @@ public class MazeGenerator : MonoBehaviour
                     rooms[x, y].doorRight = (rooms[x + 1, y] != null);
                 }
             }
+            //controlls if has just 2 doors put it as a tunnel
         }
     }
 
@@ -122,7 +123,7 @@ public class MazeGenerator : MonoBehaviour
     {
         rooms = new Room[gridSizeX * 2, gridSizeY * 2];
         //1 for starting room
-        rooms[gridSizeX, gridSizeY] = new Room(Vector2.zero, RoomType.Start);
+        rooms[gridSizeX, gridSizeY] = new Room(Vector2.zero, RoomType.Start, CellType.Room);
         //roomsPositionType.Add(Vector2.zero, new Room(Vector2.zero, RoomType.Start));
 
         takenPositions.Insert(0, Vector2.zero);
@@ -153,7 +154,7 @@ public class MazeGenerator : MonoBehaviour
             takenPositions.Insert(0, checkPos);
 
             ChooseRoomType(checkPos);
-            
+
         }
     }
 
@@ -230,18 +231,18 @@ public class MazeGenerator : MonoBehaviour
 
     private void ChooseRoomType(Vector2 checkPos)
     {
-        rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, RoomType.Normal);
-
         int choosedRandom = UnityEngine.Random.Range(1, 100);
-
+        RoomType chosenType = RoomType.Normal;
         foreach (SpawnTypeValues value in spawnTypeValues)
         {
             if (choosedRandom > value.min && choosedRandom < value.max)
             {
-                rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, value.type);
-                //roomsPositionType.Add(checkPos, new Room(checkPos, value.type));
-                
+                chosenType = value.type;
+                //limit too the first usefull case
+                break;
             }
         }
+        //roomsPositionType.Add(checkPos, new Room(checkPos, value.type));
+        rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, chosenType, CellType.Room);
     }
 }
