@@ -899,13 +899,13 @@ MonoBehaviour:
   spawnTypeValues:
   - type: 0
     myTypeMap: {fileID: 1185835854}
-    mybaseTyle: {fileID: 0}
+    mybaseTyle: {fileID: 11400000, guid: 3ac35bc99c83a4642860074f8b6f892f, type: 2}
     UiColor: {r: 0, g: 1, b: 0.023826122, a: 0}
     min: 0
     max: 0
   - type: 1
     myTypeMap: {fileID: 1185835854}
-    mybaseTyle: {fileID: 0}
+    mybaseTyle: {fileID: 11400000, guid: 3ac35bc99c83a4642860074f8b6f892f, type: 2}
     UiColor: {r: 1, g: 1, b: 1, a: 1}
     min: 1
     max: 79
