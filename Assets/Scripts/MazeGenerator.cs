@@ -18,7 +18,7 @@ public class MazeGenerator : MonoBehaviour
     public TileBase baseDungeonTile;
 
     public PlayerManager playerManager;
-    //public Dictionary<Vector2, Room> roomsPositionType=new Dictionary<Vector2, Room>();
+    public Dictionary<Vector2, Room> roomsPositionType=new Dictionary<Vector2, Room>();
 
     private void Start()
     {
@@ -123,6 +123,7 @@ public class MazeGenerator : MonoBehaviour
         rooms = new Room[gridSizeX * 2, gridSizeY * 2];
         //1 for starting room
         rooms[gridSizeX, gridSizeY] = new Room(Vector2.zero, RoomType.Start);
+        //roomsPositionType.Add(Vector2.zero, new Room(Vector2.zero, RoomType.Start));
 
         takenPositions.Insert(0, Vector2.zero);
         Vector2 checkPos = Vector2.zero;
@@ -152,6 +153,7 @@ public class MazeGenerator : MonoBehaviour
             takenPositions.Insert(0, checkPos);
 
             ChooseRoomType(checkPos);
+            
         }
     }
 
@@ -237,6 +239,8 @@ public class MazeGenerator : MonoBehaviour
             if (choosedRandom > value.min && choosedRandom < value.max)
             {
                 rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, value.type);
+                //roomsPositionType.Add(checkPos, new Room(checkPos, value.type));
+                
             }
         }
     }
