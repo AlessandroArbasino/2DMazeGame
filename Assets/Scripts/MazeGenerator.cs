@@ -65,7 +65,6 @@ public class MazeGenerator : MonoBehaviour
         {
             if (value.type == room.roomType)
             {
-                Debug.Log(new Vector3Int((int)room.gridPos.x, (int)room.gridPos.y, 0).ToString());
                 Vector3Int drawPos = new Vector3Int((int)room.gridPos.x, (int)room.gridPos.y, 0);
                 TileChangeData tiledata = new TileChangeData(drawPos, value.mybaseTyle, Color.white, new Matrix4x4());
                 value.myTypeMap.SetTile(tiledata, value.mybaseTyle);

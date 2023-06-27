@@ -12,8 +12,7 @@ public class FogOfWadUpdater : MonoBehaviour
     {
         foreach(Room room in playerVisistedRooms)
         {
-            fogOfWarTileMap.DeleteCells(new Vector3Int((int)room.gridPos.x, (int)room.gridPos.y, 0), 
-                new Vector3Int((int)room.gridPos.x, (int)room.gridPos.y, 0));
+            fogOfWarTileMap.SetTile(new Vector3Int((int)room.gridPos.x, (int)room.gridPos.y, 0),null);
         }
     }
 }
