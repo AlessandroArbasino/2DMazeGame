@@ -50,6 +50,14 @@ public class MazeGenerator : MonoBehaviour
 
     private void DrawTileByType(Room room)
     {
+        Vector3Int drawRoomPos = new Vector3Int((int)room.gridPos.x, (int)room.gridPos.y, 0);
+        TileChangeData roomTiledata = new TileChangeData(drawRoomPos, baseDungeonTile, Color.white, new Matrix4x4());
+        DungeonMap.SetTile(roomTiledata, baseDungeonTile);
+
+        //a tunnel cannot have anything inside maybe ui ?
+        if (room.myCellType == CellType.Tunnel)
+            return;
+
         if (room.roomType == RoomType.Start)
             playerManager.InitPlayer(rooms, takenPositions, room);
 
@@ -57,15 +65,12 @@ public class MazeGenerator : MonoBehaviour
         {
             if (value.type == room.roomType)
             {
-                Debug.Log(room.roomType);
+                Debug.Log(new Vector3Int((int)room.gridPos.x, (int)room.gridPos.y, 0).ToString());
                 Vector3Int drawPos = new Vector3Int((int)room.gridPos.x, (int)room.gridPos.y, 0);
                 TileChangeData tiledata = new TileChangeData(drawPos, value.mybaseTyle, Color.white, new Matrix4x4());
                 value.myTypeMap.SetTile(tiledata, value.mybaseTyle);
             }
         }
-        Vector3Int drawRoomPos = new Vector3Int((int)room.gridPos.x, (int)room.gridPos.y, 0);
-        TileChangeData roomTiledata = new TileChangeData(drawRoomPos, baseDungeonTile, Color.white, new Matrix4x4());
-        DungeonMap.SetTile(roomTiledata, baseDungeonTile);
     }
     private void SetRoomDoors()
     {
@@ -77,9 +82,8 @@ public class MazeGenerator : MonoBehaviour
                 {
                     continue;
                 }
-                Vector2 gridPosition = new Vector2(x, y);
-
-                if (y - 1 < 0)//check above
+                
+                if (y - 1 < 0)
                 {
                     rooms[x, y].doorBot = false;
                 }
@@ -88,7 +92,7 @@ public class MazeGenerator : MonoBehaviour
                     rooms[x, y].doorBot = (rooms[x, y - 1] != null);
                 }
 
-                if (y + 1 >= gridSizeY * 2)//check bellow
+                if (y + 1 >= gridSizeY * 2)
                 {
                     rooms[x, y].doorTop = false;
                 }
@@ -97,7 +101,7 @@ public class MazeGenerator : MonoBehaviour
                     rooms[x, y].doorTop = (rooms[x, y + 1] != null);
                 }
 
-                if (y + 1 < 0)//check left
+                if (y + 1 < 0)
                 {
                     rooms[x, y].doorleft = false;
                 }
@@ -106,7 +110,7 @@ public class MazeGenerator : MonoBehaviour
                     rooms[x, y].doorleft = (rooms[x - 1, y] != null);
                 }
 
-                if (x + 1 >= gridSizeX * 2)//check right
+                if (x + 1 >= gridSizeX * 2)
                 {
                     rooms[x, y].doorRight = false;
                 }
@@ -114,8 +118,12 @@ public class MazeGenerator : MonoBehaviour
                 {
                     rooms[x, y].doorRight = (rooms[x + 1, y] != null);
                 }
+
+                rooms[x, y].FillDoorsList();
+                //controlls if has just 2 doors put it as a tunnel
+                if (rooms[x, y].doors.Count == 2)
+                    rooms[x, y].myCellType = CellType.Tunnel;
             }
-            //controlls if has just 2 doors put it as a tunnel
         }
     }
 

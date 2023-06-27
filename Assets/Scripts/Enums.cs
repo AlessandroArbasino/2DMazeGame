@@ -17,3 +17,11 @@ public enum CellType
     Tunnel,
     Room
 }
+
+public enum DoorTypes
+{
+    TopDoor,
+    BottomDoor,
+    LeftDoor,
+    RightDoor
+}

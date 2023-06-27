@@ -14,38 +14,46 @@ public class PlayerMovement
         this.currentRoom = CurrentRoom;
 
     }
-    public Room CheckMovement(Vector2 moveDirection)
+    public List<Room> CheckMovement(Vector2 moveDirection)
     {
-        //never equals returns null TODO
-        if(moveDirection == Vector2.up)
+         List<Room> returnedList = new List<Room>();
+        if (moveDirection.y > 0)
         {
             if (currentRoom.doorTop)
             {
-                return rooms[(int)currentRoom.gridPos.x, (int)currentRoom.gridPos.y - 1];
+                if ((int)currentRoom.gridPos.y + 2 < rooms.Length)
+                    if (rooms[(int)currentRoom.gridPos.x, (int)currentRoom.gridPos.y + 1]!=null)
+                    returnedList.Add(rooms[(int)currentRoom.gridPos.x, (int)currentRoom.gridPos.y + 1]);
             }
         }
-        else if (moveDirection == Vector2.down)
+        else if (moveDirection.y < 0)
         {
             if (currentRoom.doorBot)
             {
-                return rooms[(int)currentRoom.gridPos.x, (int)currentRoom.gridPos.y + 1];
+                if((int)currentRoom.gridPos.y - 2 > 0)
+                if (rooms[(int)currentRoom.gridPos.x, (int)currentRoom.gridPos.y - 1] != null)
+                    returnedList.Add(rooms[(int)currentRoom.gridPos.x, (int)currentRoom.gridPos.y - 1]);
             }
         }
-        else if (moveDirection == Vector2.left)
+        else if (moveDirection.x < 0)
         {
             if (currentRoom.doorleft)
             {
-                return rooms[(int)currentRoom.gridPos.x-1, (int)currentRoom.gridPos.y];
+                if ((int)currentRoom.gridPos.x - 2 > 0)
+                    if (rooms[(int)currentRoom.gridPos.x-1, (int)currentRoom.gridPos.y] != null)
+                        returnedList.Add(rooms[(int)currentRoom.gridPos.x-1, (int)currentRoom.gridPos.y]);
             }
         }
 
-        else if (moveDirection == Vector2.right)
+        else if (moveDirection.x > 0)
         {
             if (currentRoom.doorRight)
             {
-                return rooms[(int)currentRoom.gridPos.x+1, (int)currentRoom.gridPos.y];
+                if((int)currentRoom.gridPos.x + 2< rooms.Length)
+                if (rooms[(int)currentRoom.gridPos.x+1, (int)currentRoom.gridPos.y] != null)
+                    returnedList.Add(rooms[(int)currentRoom.gridPos.x+1, (int)currentRoom.gridPos.y]);
             }
         }
-        return null;
+        return returnedList;
     }
 }

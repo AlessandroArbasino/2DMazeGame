@@ -12,6 +12,8 @@ public class PlayerManager : MonoBehaviour
 
     [SerializeField] private Tilemap playerMap;
     [SerializeField] private TileBase playerBase;
+
+    [SerializeField] private FogOfWadUpdater fogUpdater;
     private void Awake()
     {
         //enabling input Actions
@@ -21,14 +23,15 @@ public class PlayerManager : MonoBehaviour
     }
     void Start()
     {
-        myInput.Player.Shoot.performed += OnShot;
-        myInput.Player.Move.performed += OnMove;
+        myInput.Player.Shoot.started += OnShot;
+        myInput.Player.Move.started += OnMove;
     }
 
     public void InitPlayer(Room[,] rooms, List<Vector2> takenPositions, Room CurrentRoom)
     {
         playerMovement = new PlayerMovement(rooms, takenPositions, CurrentRoom);
         playerShoot= new PlayerShoot( rooms, takenPositions,CurrentRoom);
+        fogUpdater.UpdateFog(new List<Room> { CurrentRoom });
     }
 
     public void OnShot(InputAction.CallbackContext context)
@@ -38,13 +41,20 @@ public class PlayerManager : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        Room newPlayerPos=playerMovement.CheckMovement(context.ReadValue<Vector2>());
+        List<Room> newPlayerVisitedRooms=playerMovement.CheckMovement(context.ReadValue<Vector2>());
         //moving sprite
-        if(newPlayerPos.myCellType == CellType.Tunnel)
+        if(newPlayerVisitedRooms == null)
         {
-            //to the other door and move to the next tile
-            newPlayerPos = playerMovement.CheckMovement(context.ReadValue<Vector2>());
+            Debug.Log("cantMove");
+            return;
         }
+        if (newPlayerVisitedRooms.Count == 0)
+        {
+            Debug.Log("no door");
+            return;
+        }
+
+        fogUpdater.UpdateFog(newPlayerVisitedRooms);
     }
 
 }
