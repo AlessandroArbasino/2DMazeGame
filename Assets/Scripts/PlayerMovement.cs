@@ -79,4 +79,19 @@ public class PlayerMovement
         }
         return newRoom;
     }
+
+    public Room Teleport()
+    {
+        int randomCell = UnityEngine.Random.Range(0, takenPositions.Count);
+
+        Room teleportRoom = GetNextRoom(takenPositions[randomCell]);
+
+        if (teleportRoom.roomType != RoomType.Enemy)
+        {
+            currentRoom = teleportRoom;
+            return teleportRoom;
+        }
+        teleportRoom=Teleport();
+        return teleportRoom;
+    }
 }

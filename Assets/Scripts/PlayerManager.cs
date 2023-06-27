@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 using UnityEngine.Tilemaps;
 
 public class PlayerManager : MonoBehaviour
@@ -17,6 +19,8 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private FogOfWadUpdater fogUpdater;
 
     private Room currentRoom;
+
+    public static event Action OnDeath;
     private void Awake()
     {
         //enabling input Actions
@@ -33,7 +37,7 @@ public class PlayerManager : MonoBehaviour
     public void InitPlayer(Room[,] rooms, List<Vector2> takenPositions, Room currentRoom)
     {
         playerMovement = new PlayerMovement(rooms, takenPositions, currentRoom);
-        playerShoot= new PlayerShoot( rooms, takenPositions,currentRoom);
+        playerShoot = new PlayerShoot(rooms, takenPositions, currentRoom);
         fogUpdater.UpdateFog(new List<Room> { currentRoom });
         this.currentRoom = currentRoom;
     }
@@ -45,28 +49,47 @@ public class PlayerManager : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        List<Room> newPlayerVisitedRooms=playerMovement.CheckMovement(context.ReadValue<Vector2>());
+        List<Room> newPlayerVisitedRooms = playerMovement.CheckMovement(context.ReadValue<Vector2>());
         //moving sprite
-        if(newPlayerVisitedRooms == null)
-        {
-            Debug.Log("cantMove");
+        if (newPlayerVisitedRooms == null)
             return;
-        }
         if (newPlayerVisitedRooms.Count == 0)
-        {
-            Debug.Log("no door");
             return;
+
+        TranslateSprite(newPlayerVisitedRooms.Last());
+
+        foreach (Room room in newPlayerVisitedRooms)
+        {
+            if (room.roomType == RoomType.Enemy || room.roomType == RoomType.Hole)
+                PlayerDeath();
+
+            if (room.roomType == RoomType.Teleport)
+                Teleport();
         }
 
+        fogUpdater.UpdateFog(newPlayerVisitedRooms);
+    }
+    private void TranslateSprite(Room newCurrentRoom)
+    {
         //clean the position before the movement 
         playerMap.SetTile(new Vector3Int((int)currentRoom.gridPos.x, (int)currentRoom.gridPos.y, 0), null);
         //set new player position
-        currentRoom = newPlayerVisitedRooms.Last();
+        currentRoom = newCurrentRoom;
         //set the new player base tile
         playerMap.SetTile(new Vector3Int((int)currentRoom.gridPos.x, (int)currentRoom.gridPos.y, 0), playerBase);
+    }
+    private void PlayerDeath()
+    {
+        OnDeath?.Invoke();
+        //myInput.Player.Disable();
+    }
 
+    private void Teleport()
+    {
+        Room teleportRoom = playerMovement.Teleport();
 
-        fogUpdater.UpdateFog(newPlayerVisitedRooms);
+        TranslateSprite(teleportRoom);
+        fogUpdater.UpdateFog(new List<Room> { teleportRoom});
     }
 
 }
