@@ -20,7 +20,7 @@ public class PlayerShoot
 
     public Room Shoot(Vector2 shootDirection,Room currentPlayerRoom)
     {
-        currentRoom= currentPlayerRoom;
+        this.currentRoom= currentPlayerRoom;
         Room returnedRoom = null;
         if (shootDirection.y > 0)
         {

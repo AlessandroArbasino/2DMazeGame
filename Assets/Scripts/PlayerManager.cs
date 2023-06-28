@@ -22,6 +22,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private FogOfWadUpdater fogUpdater;
 
     private Room currentRoom;
+    private Room currentArrowRoom;
 
     public static event Action OnDeath;
     private void Awake()
@@ -43,35 +44,39 @@ public class PlayerManager : MonoBehaviour
         playerShoot = new PlayerShoot(rooms, takenPositions, currentRoom);
         fogUpdater.UpdateFog(new List<Room> { currentRoom });
         this.currentRoom = currentRoom;
+        this.currentArrowRoom = currentRoom;
     }
 
     public void OnShot(InputAction.CallbackContext context)
     {
-        ShootMethod(context.ReadValue<Vector2>(),this.currentRoom);
+        currentArrowRoom = currentRoom;
+        ShootMethod(context.ReadValue<Vector2>());
     }
 
-    private void ShootMethod(Vector2 shootDirection,Room currentRoom)
+    private void ShootMethod(Vector2 shootDirection)
     {
-        StartCoroutine(ShootCouroutine(shootDirection,currentRoom));
+        StartCoroutine(ShootCouroutine(shootDirection));
     }
 
-    private IEnumerator ShootCouroutine(Vector2 shootDirection, Room currentRoom)
+    private IEnumerator ShootCouroutine(Vector2 shootDirection)
     {
-        Room newArrowRoom = playerShoot.Shoot(shootDirection, currentRoom);
+        Room newArrowRoom = playerShoot.Shoot(shootDirection, currentArrowRoom);
         yield return new WaitForSeconds(.2f);
 
         if (newArrowRoom != null)
         {
             TranslateArrowSprite(newArrowRoom);
-            ShootMethod(shootDirection,newArrowRoom);
+            ShootMethod(shootDirection);
         }
         else
         {
+            arrowMap.SetTile(new Vector3Int((int)currentArrowRoom.gridPos.x, (int)currentArrowRoom.gridPos.y, 0), null);
+            currentArrowRoom = currentRoom;
             yield break;
         }
 
 
-        if(newArrowRoom.roomType==RoomType.Enemy)
+        if (newArrowRoom.roomType == RoomType.Enemy)
         {
             WinGame();
         }
@@ -118,11 +123,11 @@ public class PlayerManager : MonoBehaviour
     private void TranslateArrowSprite(Room newCurrentRoom)
     {
         //clean the position before the movement 
-        arrowMap.SetTile(new Vector3Int((int)currentRoom.gridPos.x, (int)currentRoom.gridPos.y, 0), null);
+        arrowMap.SetTile(new Vector3Int((int)currentArrowRoom.gridPos.x, (int)currentArrowRoom.gridPos.y, 0), null);
         //set new player position
-        currentRoom = newCurrentRoom;
+        currentArrowRoom = newCurrentRoom;
         //set the new player base tile
-        arrowMap.SetTile(new Vector3Int((int)currentRoom.gridPos.x, (int)currentRoom.gridPos.y, 0), arrowBase);
+        arrowMap.SetTile(new Vector3Int((int)currentArrowRoom.gridPos.x, (int)currentArrowRoom.gridPos.y, 0), arrowBase);
     }
     private void PlayerDeath()
     {
