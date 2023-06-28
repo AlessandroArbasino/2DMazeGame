@@ -56,3 +56,6 @@ TagManager:
   - name: FogOfWar
     uniqueID: 3203716931
     locked: 0
+  - name: Arrow
+    uniqueID: 3803531395
+    locked: 0

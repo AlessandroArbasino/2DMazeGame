@@ -16,6 +16,9 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private Tilemap playerMap;
     [SerializeField] private TileBase playerBase;
 
+    [SerializeField] private Tilemap arrowMap;
+    [SerializeField] private TileBase arrowBase;
+
     [SerializeField] private FogOfWadUpdater fogUpdater;
 
     private Room currentRoom;
@@ -44,7 +47,40 @@ public class PlayerManager : MonoBehaviour
 
     public void OnShot(InputAction.CallbackContext context)
     {
-        playerShoot.Shoot(context.ReadValue<Vector2>());
+        ShootMethod(context.ReadValue<Vector2>(),this.currentRoom);
+    }
+
+    private void ShootMethod(Vector2 shootDirection,Room currentRoom)
+    {
+        StartCoroutine(ShootCouroutine(shootDirection,currentRoom));
+    }
+
+    private IEnumerator ShootCouroutine(Vector2 shootDirection, Room currentRoom)
+    {
+        Room newArrowRoom = playerShoot.Shoot(shootDirection, currentRoom);
+        yield return new WaitForSeconds(.2f);
+
+        if (newArrowRoom != null)
+        {
+            TranslateArrowSprite(newArrowRoom);
+            ShootMethod(shootDirection,newArrowRoom);
+        }
+        else
+        {
+            yield break;
+        }
+
+
+        if(newArrowRoom.roomType==RoomType.Enemy)
+        {
+            WinGame();
+        }
+
+    }
+
+    private void WinGame()
+    {
+        Debug.Log("YouWin");
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -78,6 +114,16 @@ public class PlayerManager : MonoBehaviour
         //set the new player base tile
         playerMap.SetTile(new Vector3Int((int)currentRoom.gridPos.x, (int)currentRoom.gridPos.y, 0), playerBase);
     }
+
+    private void TranslateArrowSprite(Room newCurrentRoom)
+    {
+        //clean the position before the movement 
+        arrowMap.SetTile(new Vector3Int((int)currentRoom.gridPos.x, (int)currentRoom.gridPos.y, 0), null);
+        //set new player position
+        currentRoom = newCurrentRoom;
+        //set the new player base tile
+        arrowMap.SetTile(new Vector3Int((int)currentRoom.gridPos.x, (int)currentRoom.gridPos.y, 0), arrowBase);
+    }
     private void PlayerDeath()
     {
         OnDeath?.Invoke();
@@ -89,7 +135,7 @@ public class PlayerManager : MonoBehaviour
         Room teleportRoom = playerMovement.Teleport();
 
         TranslateSprite(teleportRoom);
-        fogUpdater.UpdateFog(new List<Room> { teleportRoom});
+        fogUpdater.UpdateFog(new List<Room> { teleportRoom });
     }
 
 }
