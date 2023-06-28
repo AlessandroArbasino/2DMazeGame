@@ -16,6 +16,9 @@ public class PlayerShoot
 
     public Room Shoot(Vector2 shootDirection)
     {
+        //saving the shoot direction 
+        // couroutine 
+        // same as the movement 
         return null;
     }
 }
