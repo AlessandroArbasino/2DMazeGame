@@ -53,3 +53,6 @@ TagManager:
   - name: Holes
     uniqueID: 3707506993
     locked: 0
+  - name: FogOfWar
+    uniqueID: 3203716931
+    locked: 0
