@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ArrowBase
+  m_Name: Arrow
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: -722125201, guid: 160097e133658b647b30b850223b3bce, type: 3}
+  m_Sprite: {fileID: 520168234, guid: 08107cec9f4b3614aa9298027ab4ac21, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1

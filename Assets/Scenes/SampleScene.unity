@@ -551,7 +551,31 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   m_TileSpriteArray:
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
   - m_RefCount: 0
@@ -577,30 +601,32 @@ Tilemap:
       e33: 6.4e-43
   - m_RefCount: 0
     m_Data:
-      e00: -1.1821699e+30
-      e01: 7e-45
-      e02: -2.5921607e-19
-      e03: 0
-      e10: 8.1e-44
+      e00: 1e-45
+      e01: 0
+      e02: 8.081546e-39
+      e03: 8.081546e-39
+      e10: 0
       e11: 0
-      e12: 4.5905e-41
-      e13: 0
-      e20: 7.4925e-41
-      e21: 0
-      e22: -1.1821687e+30
-      e23: 0
-      e30: 0
-      e31: 7.34684e-40
-      e32: 8.1e-44
-      e33: 1
+      e12: 6.87e-43
+      e13: 6.87e-43
+      e20: -7.116325e+17
+      e21: 1e-45
+      e22: -6.281695e-29
+      e23: 4.75096e-40
+      e30: 4.5905e-41
+      e31: 0
+      e32: 6.87e-43
+      e33: 6.91e-43
   m_TileColorArray:
+  - m_RefCount: 0
+    m_Data: {r: 3.9875e-41, g: 3.9875e-41, b: 3.9875e-41, a: 3.9875e-41}
   - m_RefCount: 0
     m_Data: {r: NaN, g: NaN, b: NaN, a: NaN}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Origin: {x: 0, y: 0, z: 0}
-  m_Size: {x: 6, y: 2, z: 1}
+  m_Origin: {x: 0, y: -4, z: 0}
+  m_Size: {x: 21, y: 13, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -1735,7 +1761,7 @@ MonoBehaviour:
     max: 0
   - type: 2
     myTypeMap: {fileID: 1367037301}
-    mybaseTyle: {fileID: 11400000, guid: 2830811029bb1f74cb9e5fcdaca137f4, type: 2}
+    mybaseTyle: {fileID: 11400000, guid: 21d2843f7ab46284c9a222667d5f01ad, type: 2}
     min: 30
     max: 40
   - type: 3
@@ -1749,7 +1775,7 @@ MonoBehaviour:
     min: 80
     max: 89
   DungeonMap: {fileID: 1185835854}
-  baseDungeonTile: {fileID: 11400000, guid: 3ac35bc99c83a4642860074f8b6f892f, type: 2}
+  baseDungeonTile: {fileID: 11400000, guid: 51e3157cf04452a4f9e56e693244bf24, type: 2}
   playerManager: {fileID: 189093506}
 --- !u!1 &1367037298
 GameObject:
