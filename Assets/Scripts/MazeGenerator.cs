@@ -18,6 +18,7 @@ public class MazeGenerator : MonoBehaviour
     public TileBase baseDungeonTile;
 
     public PlayerManager playerManager;
+    public UIUpdater updater;
     public Dictionary<Vector2, Room> roomsPositionType = new Dictionary<Vector2, Room>();
 
     private void Start()
@@ -33,6 +34,8 @@ public class MazeGenerator : MonoBehaviour
         CreateRooms();
         SetRoomDoors();
         DrawMap();
+
+        updater.InitUiUpdater(rooms, takenPositions);
     }
 
     private void DrawMap()
