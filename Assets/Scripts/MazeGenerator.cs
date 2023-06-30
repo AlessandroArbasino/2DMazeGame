@@ -56,7 +56,10 @@ public class MazeGenerator : MonoBehaviour
 
         //a tunnel cannot have anything inside maybe ui ?
         if (room.myCellType == CellType.Tunnel)
+        {
+            Debug.Log("tunnel");
             return;
+        }
 
         if (room.roomType == RoomType.Start)
             playerManager.InitPlayer(rooms, takenPositions, room);
@@ -80,7 +83,7 @@ public class MazeGenerator : MonoBehaviour
                 {
                     continue;
                 }
-                
+
                 if (y - 1 < 0)
                 {
                     rooms[x, y].doorBot = false;
@@ -117,10 +120,7 @@ public class MazeGenerator : MonoBehaviour
                     rooms[x, y].doorRight = (rooms[x + 1, y] != null);
                 }
 
-                rooms[x, y].FillDoorsList();
-                //controlls if has just 2 doors put it as a tunnel
-                if (rooms[x, y].doors.Count == 2)
-                    rooms[x, y].myCellType = CellType.Tunnel;
+                ChooseRoomType(rooms[x, y]);
             }
         }
     }
@@ -129,11 +129,11 @@ public class MazeGenerator : MonoBehaviour
     {
         rooms = new Room[gridSizeX * 2, gridSizeY * 2];
         //1 for starting room
-        rooms[gridSizeX, gridSizeY] = new Room(Vector2.zero, RoomType.Start, CellType.Room);
+        rooms[gridSizeX, gridSizeY] = new Room(Vector2.zero,true);
+        rooms[gridSizeX, gridSizeY].SetRoomType(RoomType.Start, CellType.Room);
         //roomsPositionType.Add(Vector2.zero, new Room(Vector2.zero, RoomType.Start));
 
         takenPositions.Insert(0, Vector2.zero);
-        Vector2 checkPos = Vector2.zero;
 
         float randomCompare = 0.2f, randomCompareStart = 0.2f, randomCompareEnd = 0.01f;
 
@@ -142,56 +142,12 @@ public class MazeGenerator : MonoBehaviour
             float randomPerc = ((float)i) / (((float)numberOfRooms - 1));
             randomCompare = Mathf.Lerp(randomCompareStart, randomCompareEnd, randomPerc);
 
-            checkPos = NewPosition();
+            Vector2 checkPos = NewPosition();
 
-            //if (NumberOfNeightbors(checkPos, takenPositions) > 1 && UnityEngine.Random.value > randomCompare)
-            //{
-            //    int iteration = 0;
-            //    do
-            //    {
-            //        checkPos = SelectiveNewPosition();
-            //        iteration++;
-            //    } while (NumberOfNeightbors(checkPos, takenPositions) > 1 && iteration < 100);
-
-
-            //}
-
-            //dictionary?
             takenPositions.Insert(0, checkPos);
-
-            ChooseRoomType(checkPos);
-
+            rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos,false);
         }
     }
-
-    private Vector2 SelectiveNewPosition()
-    {
-        throw new NotImplementedException();
-    }
-
-    private int NumberOfNeightbors(Vector2 checkPos, List<Vector2> usedPosition)
-    {
-        int ret = 0;
-        if (usedPosition.Contains(checkPos + Vector2.right))
-        {
-            ret++;
-        }
-        if (usedPosition.Contains(checkPos + Vector2.left))
-        {
-            ret++;
-        }
-        if (usedPosition.Contains(checkPos + Vector2.up))
-        {
-            ret++;
-        }
-        if (usedPosition.Contains(checkPos + Vector2.down))
-        {
-            ret++;
-        }
-        return ret;
-    }
-
-
     private Vector2 NewPosition()
     {
         int x = 0; int y = 0;
@@ -235,9 +191,20 @@ public class MazeGenerator : MonoBehaviour
     }
 
 
-    private void ChooseRoomType(Vector2 checkPos)
+    private void ChooseRoomType(Room currentRoom)
     {
+        if (currentRoom.IsDefinitive)
+            return;
+
         int choosedRandom = UnityEngine.Random.Range(1, 100);
+        currentRoom.FillDoorsList();
+
+        if (currentRoom.doors.Count == 2)
+        {
+            currentRoom.SetRoomType(RoomType.Normal, CellType.Tunnel);
+            return;
+        }
+
         RoomType chosenType = RoomType.Normal;
         foreach (SpawnTypeValues value in spawnTypeValues)
         {
@@ -249,6 +216,6 @@ public class MazeGenerator : MonoBehaviour
             }
         }
         //roomsPositionType.Add(checkPos, new Room(checkPos, value.type));
-        rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, chosenType, CellType.Room);
+        currentRoom.SetRoomType(chosenType, CellType.Room);
     }
 }

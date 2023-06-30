@@ -9,13 +9,13 @@ public class Room
     public RoomType roomType;
     public bool doorTop, doorBot, doorleft, doorRight;
     public List<DoorTypes> doors;
-   
-    public Room(Vector2 _gridPos, RoomType roomType, CellType myCellType)
+
+    public bool IsDefinitive;
+    public Room(Vector2 _gridPos, bool isDefinitive)
     {
         gridPos = _gridPos;
-        this.roomType = roomType;
-        this.myCellType = myCellType;
-        doors= new List<DoorTypes>();
+        doors = new List<DoorTypes>();
+        IsDefinitive = isDefinitive;
     }
 
     public void FillDoorsList()
@@ -31,5 +31,11 @@ public class Room
 
         if (doorRight)
             doors.Add(DoorTypes.RightDoor);
+    }
+
+    public void SetRoomType(RoomType roomType, CellType myCellType)
+    {
+        this.roomType = roomType;
+        this.myCellType = myCellType;
     }
 }
