@@ -33,7 +33,7 @@ public class PlayerMovement
         {
             CheckNormalMovement(moveDirection);
         }
- 
+
 
     }
 
@@ -119,7 +119,7 @@ public class PlayerMovement
                 if (takenPositions.Contains(new Vector2((int)currentRoom.gridPos.x - 1, (int)currentRoom.gridPos.y)))
                 {
                     newRoom = GetNextRoom(new Vector2((int)currentRoom.gridPos.x - 1, (int)currentRoom.gridPos.y), DoorTypes.RightDoor);
-                    newusedDoor = DoorTypes.LeftDoor;
+                    newusedDoor = DoorTypes.RightDoor;
                 }
 
         if (usedDoor != DoorTypes.RightDoor)
@@ -127,19 +127,22 @@ public class PlayerMovement
                 if (takenPositions.Contains(new Vector2((int)currentRoom.gridPos.x + 1, (int)currentRoom.gridPos.y)))
                 {
                     newRoom = GetNextRoom(new Vector2((int)currentRoom.gridPos.x + 1, (int)currentRoom.gridPos.y), DoorTypes.LeftDoor);
-                    newusedDoor = DoorTypes.RightDoor;
+                    newusedDoor = DoorTypes.LeftDoor;
                 }
 
         if (newRoom != null)
         {
-            currentRoom=newRoom;
+            currentRoom = newRoom;
             returnedList.Add(newRoom);
 
             if (newRoom.myCellType == CellType.Tunnel)
             {
                 CheckTunnelMovement(newusedDoor);
             }
+            return;
         }
+
+        return;
     }
 
     private Room GetNextRoom(Vector2 newGripPositoin, DoorTypes usedDoor)

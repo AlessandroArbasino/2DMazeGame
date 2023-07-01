@@ -54,8 +54,7 @@ public class MazeGenerator : MonoBehaviour
     private void DrawTileByType(Room room)
     {
         Vector3Int drawRoomPos = new Vector3Int((int)room.gridPos.x, (int)room.gridPos.y, 0);
-        TileChangeData roomTiledata = new TileChangeData(drawRoomPos, baseDungeonTile, Color.white, new Matrix4x4());
-        DungeonMap.SetTile(roomTiledata, baseDungeonTile);
+        DungeonMap.SetTile(drawRoomPos, baseDungeonTile);
 
         //a tunnel cannot have anything inside maybe ui ?
         if (room.myCellType == CellType.Tunnel)
