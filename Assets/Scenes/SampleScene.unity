@@ -347,7 +347,7 @@ MonoBehaviour:
   playerMap: {fileID: 1772402849}
   playerBase: {fileID: 11400000, guid: 5e0aa9eaf0e08ed4a83dd51974ebecf7, type: 2}
   arrowMap: {fileID: 484232914}
-  arrowBase: {fileID: 11400000, guid: bf060b8c65094a74da3d1d35150b9a1e, type: 2}
+  arrowBase: {fileID: 11400000, guid: 6b047680755fe7d4191ba38f65551bb1, type: 2}
   fogUpdater: {fileID: 477354687}
 --- !u!4 &189093507
 Transform:

@@ -90,7 +90,7 @@ public class PlayerManager : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        List<Room> newPlayerVisitedRooms = playerMovement.CheckMovement(context.ReadValue<Vector2>());
+        List<Room> newPlayerVisitedRooms = playerMovement.Move(context.ReadValue<Vector2>());
         //moving sprite
         if (newPlayerVisitedRooms == null)
             return;
