@@ -6363,8 +6363,8 @@ MonoBehaviour:
   - type: 2
     myTypeMap: {fileID: 1367037301}
     mybaseTyle: {fileID: 11400000, guid: 21d2843f7ab46284c9a222667d5f01ad, type: 2}
-    min: 30
-    max: 40
+    min: 0
+    max: 0
   - type: 3
     myTypeMap: {fileID: 491498340}
     mybaseTyle: {fileID: 11400000, guid: 7f1f7e6cf07e75144a852452d26de2a1, type: 2}

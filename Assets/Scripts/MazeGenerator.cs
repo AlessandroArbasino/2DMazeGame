@@ -40,6 +40,7 @@ public class MazeGenerator : MonoBehaviour
 
     private void DrawMap()
     {
+        SetMonsterRoom();
         foreach (Room room in rooms)
         {
             if (room == null)
@@ -63,6 +64,7 @@ public class MazeGenerator : MonoBehaviour
         if (room.roomType == RoomType.Start)
             playerManager.InitPlayer(rooms, takenPositions, room);
 
+        Debug.Log(room.roomType);
         foreach (SpawnTypeValues value in spawnTypeValues)
         {
             if (value.type == room.roomType)
@@ -128,7 +130,7 @@ public class MazeGenerator : MonoBehaviour
     {
         rooms = new Room[gridSizeX * 2, gridSizeY * 2];
         //1 for starting room
-        rooms[gridSizeX, gridSizeY] = new Room(Vector2.zero,true);
+        rooms[gridSizeX, gridSizeY] = new Room(Vector2.zero, true);
         rooms[gridSizeX, gridSizeY].SetRoomType(RoomType.Start, CellType.Room);
         //roomsPositionType.Add(Vector2.zero, new Room(Vector2.zero, RoomType.Start));
 
@@ -144,7 +146,7 @@ public class MazeGenerator : MonoBehaviour
             Vector2 checkPos = NewPosition();
 
             takenPositions.Insert(0, checkPos);
-            rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos,false);
+            rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, false);
         }
     }
     private Vector2 NewPosition()
@@ -216,5 +218,41 @@ public class MazeGenerator : MonoBehaviour
         }
         //roomsPositionType.Add(checkPos, new Room(checkPos, value.type));
         currentRoom.SetRoomType(chosenType, CellType.Room);
+    }
+
+    private void SetMonsterRoom()
+    {
+        Room monsterRoom = null;
+        do
+        {
+            int randomCell = UnityEngine.Random.Range(0, takenPositions.Count);
+            monsterRoom = GetMonsterRoom(takenPositions[randomCell]);
+
+        } while (monsterRoom.roomType != RoomType.Normal || monsterRoom.myCellType != CellType.Room);
+
+
+        if (monsterRoom != null)
+            monsterRoom.roomType = RoomType.Enemy;
+    }
+    private Room GetMonsterRoom(Vector2 newGripPositionIn)
+    {
+        Room newRoom = null;
+        for (int x = 0; x < (gridSizeX * 2); x++)
+        {
+            for (int y = 0; y < (gridSizeY * 2); y++)
+            {
+                if (rooms[x, y] == null)
+                {
+                    continue;
+                }
+                if (rooms[x, y].gridPos == newGripPositionIn)
+                {
+                    newRoom = rooms[x, y];
+                    break;
+                }
+            }
+        }
+
+        return newRoom;
     }
 }
