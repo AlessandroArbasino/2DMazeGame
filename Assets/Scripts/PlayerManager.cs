@@ -112,20 +112,13 @@ public class PlayerManager : MonoBehaviour
     {
         NextRoomEntryDoor entry;
         if (currentRoom.myCellType == CellType.Tunnel)
-        {
             entry = playerMovement.CheckTunnelMovement(usedDoor, currentRoom);
-
-        }
         else
-        {
             entry = playerMovement.CheckNormalMovement(moveDirection, currentRoom);
-        }
-        Room newCurrentRoom = entry.nextRoom;
 
+        Room newCurrentRoom = entry.nextRoom;
         if (newCurrentRoom == null)
-        {
             yield break;
-        }
 
         TranslateSprite(newCurrentRoom);
         currentRoom = newCurrentRoom;
@@ -140,9 +133,12 @@ public class PlayerManager : MonoBehaviour
 
         if (newCurrentRoom.myCellType == CellType.Tunnel)
         {
+            myInput.Player.Disable();
             yield return new WaitForSeconds(.2f);
             MoveMethod(moveDirection, entry.entryDoor);
         }
+        else
+            myInput.Player.Enable();
     }
     private void TranslateSprite(Room newCurrentRoom)
     {
