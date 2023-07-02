@@ -131,13 +131,21 @@ public class PlayerManager : MonoBehaviour
         TranslateSprite(newCurrentRoom);
         currentRoom = newCurrentRoom;
 
-        if (entry.nextRoom.roomType == RoomType.Enemy || entry.nextRoom.roomType == RoomType.Hole)
-            PlayerDeath();
-
-        if (entry.nextRoom.roomType == RoomType.Teleport)
-            Teleport();
 
         fogUpdater.UpdateFog(entry.nextRoom);
+
+        if (entry.nextRoom.roomType == RoomType.Enemy || entry.nextRoom.roomType == RoomType.Hole)
+        {
+            PlayerDeath();
+            yield break;
+        }
+
+        if (entry.nextRoom.roomType == RoomType.Teleport)
+        {
+            Teleport();
+            myInput.Player.Enable();
+            yield break;
+        }
 
         if (newCurrentRoom.myCellType == CellType.Tunnel)
         {
