@@ -58,11 +58,7 @@ public class MazeGenerator : MonoBehaviour
 
         //a tunnel cannot have anything inside maybe ui ?
         if (room.myCellType == CellType.Tunnel)
-        {
-        DungeonMap.SetColor(drawRoomPos, Color.blue);
-            Debug.Log("tunnel");
             return;
-        }
 
         if (room.roomType == RoomType.Start)
             playerManager.InitPlayer(rooms, takenPositions, room);

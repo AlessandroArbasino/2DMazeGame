@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 78df09041e0a4a54bb7ae8bf3d0d98b2
+guid: e3aaf704b2d26ad4a8ad853efe8cbb59
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 150
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -67,7 +67,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 4096
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -129,127 +129,190 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Dungeon2DoorsI
+      name: DungeonAssets_2_0
       rect:
         serializedVersion: 2
-        x: 47
-        y: 216
-        width: 160
-        height: 161
+        x: 0
+        y: 473
+        width: 202
+        height: 203
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 377fe2d30646b1a40953266fb304a6b8
-      internalID: -810699100
+      spriteID: ee1c5c62aec244946916dd68ee153d83
+      internalID: 1909537148
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dungeon1Door
+      name: DungeonAssets_2_1
       rect:
         serializedVersion: 2
-        x: 226
-        y: 216
-        width: 162
-        height: 161
+        x: 231
+        y: 473
+        width: 203
+        height: 203
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 501ec4cd567185e41acba743d2117b4e
-      internalID: -282562084
+      spriteID: e1a704e21bd018d4d97766a1465b3898
+      internalID: -2085333574
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dungeon4Doors
+      name: DungeonAssets_2_2
       rect:
         serializedVersion: 2
-        x: 406
-        y: 216
-        width: 161
-        height: 161
+        x: 462
+        y: 473
+        width: 204
+        height: 203
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9c22a20d44d035b4fb3ea04b9a5234aa
-      internalID: -1904600909
+      spriteID: 65982434c57bb4e49a1d925639b34e6e
+      internalID: 63378692
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dungeon2DoorsL
+      name: DungeonAssets_2_3
       rect:
         serializedVersion: 2
-        x: 47
-        y: 40
-        width: 161
-        height: 162
+        x: 0
+        y: 239
+        width: 202
+        height: 204
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8dafe50199ee20242b3582acb44f32a6
-      internalID: -991872872
+      spriteID: f53e389d2d744df4aa69735b2d5149cc
+      internalID: -1122125783
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dungeon3Doors
+      name: DungeonAssets_2_4
       rect:
         serializedVersion: 2
-        x: 227
-        y: 41
-        width: 160
-        height: 161
+        x: 231
+        y: 239
+        width: 203
+        height: 204
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 54efb5585592c7f4a9bb4e3ac6feed5f
-      internalID: 1326017066
+      spriteID: af3f00532ac957946a4eca781a610c74
+      internalID: 620725855
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dungeon0Doors
+      name: DungeonAssets_2_5
       rect:
         serializedVersion: 2
-        x: 406
-        y: 39
-        width: 161
-        height: 163
+        x: 462
+        y: 239
+        width: 204
+        height: 204
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f1ba1cd66fcd3554fa4401ff81ca2a3b
-      internalID: -1139016146
+      spriteID: 023d599413ea84945b96952b1ae5a28e
+      internalID: 1615438569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DungeonAssets_2_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 202
+        height: 203
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b9f69caa4f90564ab0726dbc125ae54
+      internalID: -977343327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DungeonAssets_2_7
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 0
+        width: 203
+        height: 204
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1576f0321b5e90a4d93bc53ef718275d
+      internalID: 1207922386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DungeonAssets_2_8
+      rect:
+        serializedVersion: 2
+        x: 464
+        y: 0
+        width: 202
+        height: 203
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fab9a8934a2429d4bab656e8a59e780a
+      internalID: 1058193450
       vertices: []
       indices: 
       edges: []
@@ -265,12 +328,15 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Dungeon2DoorsI: -810699100
-      Dungeon0Doors: -1139016146
-      Dungeon1Door: -282562084
-      Dungeon3Doors: 1326017066
-      Dungeon2DoorsL: -991872872
-      Dungeon4Doors: -1904600909
+      DungeonAssets_2_3: -1122125783
+      DungeonAssets_2_7: 1207922386
+      DungeonAssets_2_4: 620725855
+      DungeonAssets_2_1: -2085333574
+      DungeonAssets_2_2: 63378692
+      DungeonAssets_2_5: 1615438569
+      DungeonAssets_2_6: -977343327
+      DungeonAssets_2_0: 1909537148
+      DungeonAssets_2_8: 1058193450
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
