@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
 public class PlayerManager : MonoBehaviour
@@ -24,7 +25,6 @@ public class PlayerManager : MonoBehaviour
     private Room currentRoom;
     private Room currentArrowRoom;
 
-    public static event Action OnDeath;
     private void Awake()
     {
         //enabling input Actions
@@ -36,6 +36,12 @@ public class PlayerManager : MonoBehaviour
     {
         myInput.Player.Shoot.started += OnShot;
         myInput.Player.Move.started += OnMove;
+    }
+
+    private void OnDestroy()
+    {
+        myInput.Player.Shoot.started -= OnShot;
+        myInput.Player.Move.started -= OnMove;
     }
 
     public void InitPlayer(Room[,] rooms, List<Vector2> takenPositions, Room currentRoom)
@@ -76,7 +82,7 @@ public class PlayerManager : MonoBehaviour
 
         if (newArrowRoom != null)
         {
-            TranslateArrowSprite(newArrowRoom);
+            TranslateArrowSprite(newArrowRoom,newShootDirection);
 
             if (newArrowRoom.roomType == RoomType.Enemy)
             {
@@ -95,7 +101,9 @@ public class PlayerManager : MonoBehaviour
 
     private void WinGame()
     {
-        Debug.Log("YouWin");
+        myInput.Player.Disable();
+
+        PopUpManager.Instance.SpawnPopUp("Hero you defeat the terrible monster", "WIN", "PlayAgain", delegate { PlayAgain(); });
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -150,7 +158,7 @@ public class PlayerManager : MonoBehaviour
         playerMap.SetTile(new Vector3Int((int)currentRoom.gridPos.x, (int)currentRoom.gridPos.y, 0), playerBase);
     }
 
-    private void TranslateArrowSprite(Room newCurrentRoom)
+    private void TranslateArrowSprite(Room newCurrentRoom,Vector2 arrowDirection)
     {
         //clean the position before the movement 
         arrowMap.SetTile(new Vector3Int((int)currentArrowRoom.gridPos.x, (int)currentArrowRoom.gridPos.y, 0), null);
@@ -158,13 +166,21 @@ public class PlayerManager : MonoBehaviour
         currentArrowRoom = newCurrentRoom;
         //set the new player base tile
         arrowMap.SetTile(new Vector3Int((int)currentArrowRoom.gridPos.x, (int)currentArrowRoom.gridPos.y, 0), arrowBase);
+        //TileChangeData arrowData = new TileChangeData(new Vector3Int((int)currentArrowRoom.gridPos.x, (int)currentArrowRoom.gridPos.y, 0), arrowBase,Color.black, Matrix4x4.Rotate(Quaternion.LookRotation(arrowDirection,Vector2.up)));
+        //arrowMap.SetTile(arrowData, true);
     }
     private void PlayerDeath()
     {
-        OnDeath?.Invoke();
-        //myInput.Player.Disable();
+        myInput.Player.Disable();
+
+        PopUpManager.Instance.SpawnPopUp("The monster kills you", "DEFEAT", "PlayAgain", delegate { PlayAgain(); });
     }
 
+    private void PlayAgain()
+    {
+        StopAllCoroutines();
+        SceneManager.LoadScene("GameScene");
+    }
     private void Teleport()
     {
         Room teleportRoom = playerMovement.Teleport();
