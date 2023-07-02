@@ -679,7 +679,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5faafd31ae3f33741999eb0949f970e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fogOfWarTileMap: {fileID: 0}
+  fogOfWarTileMap: {fileID: 731670240}
   fogBase: {fileID: 11400000, guid: d5e3ea883ec0a16489641265efe35c07, type: 2}
 --- !u!4 &477354688
 Transform:
