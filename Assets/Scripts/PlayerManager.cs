@@ -40,9 +40,9 @@ public class PlayerManager : MonoBehaviour
 
     public void InitPlayer(Room[,] rooms, List<Vector2> takenPositions, Room currentRoom)
     {
-        playerMovement = new PlayerMovement(rooms, takenPositions, currentRoom);
+        playerMovement = new PlayerMovement(rooms, takenPositions);
         playerShoot = new PlayerShoot(rooms, takenPositions);
-        fogUpdater.UpdateFog(new List<Room> { currentRoom });
+        fogUpdater.UpdateFog(currentRoom);
         this.currentRoom = currentRoom;
         this.currentArrowRoom = currentRoom;
     }
@@ -100,25 +100,49 @@ public class PlayerManager : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        List<Room> newPlayerVisitedRooms = playerMovement.Move(context.ReadValue<Vector2>());
-        //moving sprite
-        if (newPlayerVisitedRooms == null)
-            return;
-        if (newPlayerVisitedRooms.Count == 0)
-            return;
+        MoveMethod(context.ReadValue<Vector2>(), DoorTypes.TopDoor);
+    }
 
-        TranslateSprite(newPlayerVisitedRooms.Last());
+    private void MoveMethod(Vector2 moveDirection, DoorTypes usedDoor)
+    {
+        StartCoroutine(MoveCouroutine(moveDirection, usedDoor));
+    }
 
-        foreach (Room room in newPlayerVisitedRooms)
+    private IEnumerator MoveCouroutine(Vector2 moveDirection, DoorTypes usedDoor)
+    {
+        NextRoomEntryDoor entry;
+        if (currentRoom.myCellType == CellType.Tunnel)
         {
-            if (room.roomType == RoomType.Enemy || room.roomType == RoomType.Hole)
-                PlayerDeath();
+            entry = playerMovement.CheckTunnelMovement(usedDoor, currentRoom);
 
-            if (room.roomType == RoomType.Teleport)
-                Teleport();
+        }
+        else
+        {
+            entry = playerMovement.CheckNormalMovement(moveDirection, currentRoom);
+        }
+        Room newCurrentRoom = entry.nextRoom;
+
+        if (newCurrentRoom == null)
+        {
+            yield break;
         }
 
-        fogUpdater.UpdateFog(newPlayerVisitedRooms);
+        TranslateSprite(newCurrentRoom);
+        currentRoom = newCurrentRoom;
+
+        if (entry.nextRoom.roomType == RoomType.Enemy || entry.nextRoom.roomType == RoomType.Hole)
+            PlayerDeath();
+
+        if (entry.nextRoom.roomType == RoomType.Teleport)
+            Teleport();
+
+        fogUpdater.UpdateFog(entry.nextRoom);
+
+        if (newCurrentRoom.myCellType == CellType.Tunnel)
+        {
+            yield return new WaitForSeconds(.2f);
+            MoveMethod(moveDirection, entry.entryDoor);
+        }
     }
     private void TranslateSprite(Room newCurrentRoom)
     {
@@ -150,7 +174,7 @@ public class PlayerManager : MonoBehaviour
         Room teleportRoom = playerMovement.Teleport();
 
         TranslateSprite(teleportRoom);
-        fogUpdater.UpdateFog(new List<Room> { teleportRoom });
+        fogUpdater.UpdateFog(teleportRoom);
     }
 
 }

@@ -8,12 +8,9 @@ public class FogOfWadUpdater : MonoBehaviour
     [SerializeField] private Tilemap fogOfWarTileMap;
     [SerializeField] private TileBase fogBase;
 
-    public void UpdateFog(List<Room>playerVisistedRooms)
+    public void UpdateFog(Room discoveredRoom)
     {
-        foreach(Room room in playerVisistedRooms)
-        {
-            //clean all the visited tiles from the fog
-            fogOfWarTileMap.SetTile(new Vector3Int((int)room.gridPos.x, (int)room.gridPos.y, 0),null);
-        }
+        //clean all the visited tiles from the fog
+        fogOfWarTileMap.SetTile(new Vector3Int((int)discoveredRoom.gridPos.x, (int)discoveredRoom.gridPos.y, 0), null);
     }
 }

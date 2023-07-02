@@ -13,31 +13,13 @@ public class PlayerMovement
     private int gridSizeY = 20;
     List<Room> returnedList = new List<Room>();
 
-    public PlayerMovement(Room[,] rooms, List<Vector2> takenPositions, Room CurrentRoom)
+    public PlayerMovement(Room[,] rooms, List<Vector2> takenPositions)
     {
         this.rooms = rooms;
         this.takenPositions = takenPositions;
-        this.currentRoom = CurrentRoom;
     }
 
-    public List<Room> Move(Vector2 moveDirection)
-    {
-        returnedList = new List<Room>();
-        CheckMovement(moveDirection);
-
-        return returnedList;
-    }
-    public void CheckMovement(Vector2 moveDirection)
-    {
-        if (moveDirection != Vector2.zero)
-        {
-            CheckNormalMovement(moveDirection);
-        }
-
-
-    }
-
-    private void CheckNormalMovement(Vector2 moveDirection)
+    public NextRoomEntryDoor CheckNormalMovement(Vector2 moveDirection,Room currentRoom)
     {
         // the next room ingress room is the opposite 
         Room newRoom = null;
@@ -78,22 +60,10 @@ public class PlayerMovement
                     usedDoor = DoorTypes.LeftDoor;
                 }
 
-        if (newRoom != null)
-        {
-            currentRoom = newRoom;
-            returnedList.Add(newRoom);
-
-            if (newRoom.myCellType == CellType.Tunnel)
-            {
-                CheckTunnelMovement(usedDoor);
-            }
-            return;
-        }
-
-        return;
+        return new NextRoomEntryDoor(newRoom,usedDoor);
     }
 
-    private void CheckTunnelMovement(DoorTypes usedDoor)
+    public NextRoomEntryDoor CheckTunnelMovement(DoorTypes usedDoor, Room currentRoom)
     {
         Room newRoom = null;
         DoorTypes newusedDoor = DoorTypes.TopDoor;
@@ -130,19 +100,7 @@ public class PlayerMovement
                     newusedDoor = DoorTypes.LeftDoor;
                 }
 
-        if (newRoom != null)
-        {
-            currentRoom = newRoom;
-            returnedList.Add(newRoom);
-
-            if (newRoom.myCellType == CellType.Tunnel)
-            {
-                CheckTunnelMovement(newusedDoor);
-            }
-            return;
-        }
-
-        return;
+        return new NextRoomEntryDoor(newRoom, newusedDoor);
     }
 
     private Room GetNextRoom(Vector2 newGripPositoin)
