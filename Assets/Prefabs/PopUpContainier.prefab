@@ -1044,7 +1044,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3119218676269295537}
         m_TargetAssemblyTypeName: PopUp, Assembly-CSharp
-        m_MethodName: ClosePopPup
+        m_MethodName: BackToMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
