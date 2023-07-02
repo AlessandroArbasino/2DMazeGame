@@ -41,7 +41,7 @@ public class PlayerManager : MonoBehaviour
     public void InitPlayer(Room[,] rooms, List<Vector2> takenPositions, Room currentRoom)
     {
         playerMovement = new PlayerMovement(rooms, takenPositions, currentRoom);
-        playerShoot = new PlayerShoot(rooms, takenPositions, currentRoom);
+        playerShoot = new PlayerShoot(rooms, takenPositions);
         fogUpdater.UpdateFog(new List<Room> { currentRoom });
         this.currentRoom = currentRoom;
         this.currentArrowRoom = currentRoom;
@@ -49,38 +49,48 @@ public class PlayerManager : MonoBehaviour
 
     public void OnShot(InputAction.CallbackContext context)
     {
-        currentArrowRoom = currentRoom;
-        ShootMethod(context.ReadValue<Vector2>());
+        ShootMethod(context.ReadValue<Vector2>(), DoorTypes.TopDoor, currentRoom);
     }
 
-    private void ShootMethod(Vector2 shootDirection)
+    private void ShootMethod(Vector2 shootDirection, DoorTypes usedDoor, Room currentArrowRoom)
     {
-        StartCoroutine(ShootCouroutine(shootDirection));
+        StartCoroutine(ShootCouroutine(shootDirection, usedDoor, currentArrowRoom));
     }
 
-    private IEnumerator ShootCouroutine(Vector2 shootDirection)
+    private IEnumerator ShootCouroutine(Vector2 shootDirection, DoorTypes usedDoor, Room currentArrowRoom)
     {
-        Room newArrowRoom = playerShoot.Shoot(shootDirection, currentArrowRoom);
+        NextRoomEntryDoor entry;
+        Vector2 newShootDirection;
+        if (currentArrowRoom.myCellType == CellType.Tunnel)
+        {
+            entry = playerShoot.CheckTunnelShoot(usedDoor, currentArrowRoom);
+            newShootDirection = playerShoot.CalcolateNewShootdirection(entry.entryDoor);
+        }
+        else
+        {
+            entry = playerShoot.Shoot(shootDirection, currentArrowRoom);
+            newShootDirection = shootDirection;
+        }
+        Room newArrowRoom = entry.nextRoom;
         yield return new WaitForSeconds(.2f);
 
         if (newArrowRoom != null)
         {
             TranslateArrowSprite(newArrowRoom);
-            ShootMethod(shootDirection);
+
+            if (newArrowRoom.roomType == RoomType.Enemy)
+            {
+                WinGame();
+            }
+
+            ShootMethod(newShootDirection, entry.entryDoor, newArrowRoom);
+            yield break;
         }
         else
         {
             arrowMap.SetTile(new Vector3Int((int)currentArrowRoom.gridPos.x, (int)currentArrowRoom.gridPos.y, 0), null);
-            currentArrowRoom = currentRoom;
             yield break;
         }
-
-
-        if (newArrowRoom.roomType == RoomType.Enemy)
-        {
-            WinGame();
-        }
-
     }
 
     private void WinGame()
