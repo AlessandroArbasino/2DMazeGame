@@ -1,14 +1,20 @@
+using ExitGames.Client.Photon;
+using Photon.Pun;
+using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class MultiplayerMazeGen : MonoBehaviour
+public class MultiplayerMazeGen : MonoBehaviourPun
 {
     public Vector2 worldSize = new Vector2(20, 20);
     public Room[,] rooms;
     public List<Vector2> takenPositions = new List<Vector2>();
+
+    protected const byte MazeGeneration = 1;
 
     int gridSizeX, gridSizeY = 20;
     int numberOfRooms = 40;
@@ -23,6 +29,8 @@ public class MultiplayerMazeGen : MonoBehaviour
 
     private void Start()
     {
+        PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
+
         if (numberOfRooms >= (worldSize.x * 2) * (worldSize.y * 2))
         {
             numberOfRooms = Mathf.RoundToInt((worldSize.x * 2) * (worldSize.y * 2));
@@ -31,13 +39,23 @@ public class MultiplayerMazeGen : MonoBehaviour
         gridSizeX = Mathf.RoundToInt(worldSize.x);
         gridSizeY = Mathf.RoundToInt(worldSize.y);
 
-        CreateRooms();
-        SetRoomDoors();
-        DrawMap();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            CreateRooms();
+            SetRoomDoors();
+            DrawMap();
+
+            object[] content = new object[] { rooms,takenPositions };
+            RaiseEventOptions raiseEventOption = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+            PhotonNetwork.RaiseEvent(MazeGeneration, content, raiseEventOption, ExitGames.Client.Photon.SendOptions.SendReliable);
+        }
 
         updater.InitUiUpdater(rooms, takenPositions);
     }
-
+    private void OnDestroy()
+    {
+        PhotonNetwork.NetworkingClient.EventReceived -= OnEvent;
+    }
     private void DrawMap()
     {
         SetMonsterRoom();
@@ -254,6 +272,29 @@ public class MultiplayerMazeGen : MonoBehaviour
         }
 
         return newRoom;
+    }
+
+    public void OnEvent(EventData photonEvent)
+    {
+        byte eventCode = photonEvent.Code;
+
+        if (eventCode == MazeGeneration)
+        {
+            object[] data = (object[])photonEvent.CustomData;
+            Room[,] rooms = (Room[,])data[0];
+            List<Vector2> takenPositions = (List<Vector2>)data[1];
+
+            SetRoomsAndDraw(rooms, takenPositions);
+        }
+
+    }
+
+    private void SetRoomsAndDraw(Room[,] rooms, List<Vector2> takenpositions)
+    {
+        this.rooms = rooms;
+        this.takenPositions = takenpositions;
+
+        DrawMap();
     }
 }
 

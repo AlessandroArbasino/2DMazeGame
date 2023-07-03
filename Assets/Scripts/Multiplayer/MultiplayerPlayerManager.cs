@@ -95,7 +95,7 @@ public class MultiplayerPlayerManager : MonoBehaviourPun
             object[] content = new object[] { newArrowRoom };
             RaiseEventOptions raiseEventOption = new RaiseEventOptions { Receivers = ReceiverGroup.All };
             PhotonNetwork.RaiseEvent(Translate_Arrow_Sprite_Event_Code, content, raiseEventOption, ExitGames.Client.Photon.SendOptions.SendReliable);
-            TranslateArrowSprite(newArrowRoom, newShootDirection);
+            TranslateArrowSprite(newArrowRoom);
 
             if (newArrowRoom.roomType == RoomType.Enemy)
             {
