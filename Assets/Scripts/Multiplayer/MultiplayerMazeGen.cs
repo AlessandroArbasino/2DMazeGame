@@ -14,7 +14,7 @@ public class MultiplayerMazeGen : MonoBehaviourPun
     public Room[,] rooms;
     public List<Vector2> takenPositions = new List<Vector2>();
 
-    protected const byte MazeGeneration = 1;
+    protected const byte MazeGeneration = 3;
 
     int gridSizeX, gridSizeY = 20;
     int numberOfRooms = 40;
@@ -27,6 +27,11 @@ public class MultiplayerMazeGen : MonoBehaviourPun
     public UIUpdater updater;
     public Dictionary<Vector2, Room> roomsPositionType = new Dictionary<Vector2, Room>();
 
+    private void Awake()
+    {
+        PhotonPeer.RegisterType(typeof(Room), (byte)'M', Room.ObjectToByteArray, Room.ByteArrayToObject);
+        PhotonPeer.RegisterType(typeof(Vector2), (byte)'W', Room.SerializeVector2, Room.DeserializeVector2);
+    }
     private void Start()
     {
         PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
@@ -46,8 +51,8 @@ public class MultiplayerMazeGen : MonoBehaviourPun
             DrawMap();
 
             object[] content = new object[] { rooms,takenPositions };
-            RaiseEventOptions raiseEventOption = new RaiseEventOptions { Receivers = ReceiverGroup.All };
-            PhotonNetwork.RaiseEvent(MazeGeneration, content, raiseEventOption, ExitGames.Client.Photon.SendOptions.SendReliable);
+            RaiseEventOptions raiseEventOption = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
+            PhotonNetwork.RaiseEvent(MazeGeneration, content, raiseEventOption, SendOptions.SendUnreliable);
         }
 
         updater.InitUiUpdater(rooms, takenPositions);
