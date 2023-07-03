@@ -1,7 +1,10 @@
+using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class Room
 {
     public Vector2 gridPos;
@@ -38,4 +41,5 @@ public class Room
         this.roomType = roomType;
         this.myCellType = myCellType;
     }
+
 }

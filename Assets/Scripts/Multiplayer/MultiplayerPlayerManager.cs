@@ -11,7 +11,7 @@ using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
-public class MultiplayerPlayerManager : MonoBehaviourPun
+public class MultiplayerPlayerManager : MonoBehaviour,IOnEventCallback
 {
     protected const byte Translate_Arrow_Sprite_Event_Code = 1;
     protected const byte Translate_Player_Sprite_Event_Code = 2;
