@@ -66,6 +66,9 @@ public class MultiplayerPlayerManager : MonoBehaviour, IOnEventCallback
         {
             TurnManager.Instance.BeginTurnMessage();
         }
+
+        Vector3Int drawPos = new Vector3Int((int)currentRoom.row, (int)currentRoom.col, 0);
+        opponentMapMap.SetTile(drawPos, opponentMapBase);
     }
 
     public void OnShot(InputAction.CallbackContext context)
