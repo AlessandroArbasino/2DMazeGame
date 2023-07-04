@@ -93,8 +93,8 @@ public class MultiplayerPlayerManager : MonoBehaviour,IOnEventCallback
         if (newArrowRoom != null)
         {
             object[] content = new object[] { newArrowRoom };
-            RaiseEventOptions raiseEventOption = new RaiseEventOptions { Receivers = ReceiverGroup.All };
-            PhotonNetwork.RaiseEvent(Translate_Arrow_Sprite_Event_Code, content, raiseEventOption, ExitGames.Client.Photon.SendOptions.SendReliable);
+            RaiseEventOptions raiseEventOption = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
+            PhotonNetwork.RaiseEvent(Translate_Arrow_Sprite_Event_Code, content, raiseEventOption,SendOptions.SendReliable);
             TranslateArrowSprite(newArrowRoom);
 
             if (newArrowRoom.roomType == RoomType.Enemy)
@@ -141,7 +141,10 @@ public class MultiplayerPlayerManager : MonoBehaviour,IOnEventCallback
         if (newCurrentRoom == null)
             yield break;
 
-        TranslateSprite(newCurrentRoom);
+        object[] content = new object[] { this.currentRoom,newCurrentRoom };
+        RaiseEventOptions raiseEventOption = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
+        PhotonNetwork.RaiseEvent(Translate_Player_Sprite_Event_Code, content, raiseEventOption, SendOptions.SendReliable);
+        TranslateSprite(currentRoom, newCurrentRoom);
         currentRoom = newCurrentRoom;
 
 
@@ -149,7 +152,7 @@ public class MultiplayerPlayerManager : MonoBehaviour,IOnEventCallback
 
         if (entry.nextRoom.roomType == RoomType.Enemy || entry.nextRoom.roomType == RoomType.Hole)
         {
-            PlayerDeath();
+            //PlayerDeath();
             yield break;
         }
 
@@ -169,14 +172,12 @@ public class MultiplayerPlayerManager : MonoBehaviour,IOnEventCallback
         else
             myInput.Player.Enable();
     }
-    private void TranslateSprite(Room newCurrentRoom)
+    private void TranslateSprite(Room CurrentPlayerRoom,Room newCurrentRoom)
     {
         //clean the position before the movement 
-        playerMap.SetTile(new Vector3Int((int)currentRoom.row, (int)currentRoom.col, 0), null);
-        //set new player position
-        currentRoom = newCurrentRoom;
+        playerMap.SetTile(new Vector3Int((int)CurrentPlayerRoom.row, (int)CurrentPlayerRoom.col, 0), null);
         //set the new player base tile
-        playerMap.SetTile(new Vector3Int((int)currentRoom.row, (int)currentRoom.col, 0), playerBase);
+        playerMap.SetTile(new Vector3Int((int)newCurrentRoom.row, (int)newCurrentRoom.col, 0), playerBase);
     }
 
     private void TranslateArrowSprite(Room newCurrentRoom)
@@ -205,8 +206,8 @@ public class MultiplayerPlayerManager : MonoBehaviour,IOnEventCallback
     private void Teleport()
     {
         Room teleportRoom = playerMovement.Teleport();
-
-        TranslateSprite(teleportRoom);
+        currentRoom= teleportRoom;
+        TranslateSprite(currentRoom,teleportRoom);
         fogUpdater.UpdateFog(teleportRoom);
     }
 
@@ -225,9 +226,10 @@ public class MultiplayerPlayerManager : MonoBehaviour,IOnEventCallback
         if (eventCode == Translate_Player_Sprite_Event_Code)
         {
             object[] data = (object[])photonEvent.CustomData;
-            Room otherPlayerRoom = (Room)data[0];
+            Room previousPlayerRoom = (Room)data[0];
+            Room otherPlayerRoom = (Room)data[1];
 
-            TranslateSprite(otherPlayerRoom);
+            TranslateSprite(previousPlayerRoom,otherPlayerRoom);
         }
     }
 }
