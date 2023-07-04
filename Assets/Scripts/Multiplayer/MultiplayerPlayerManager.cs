@@ -22,7 +22,6 @@ public class MultiplayerPlayerManager : MonoBehaviour, IOnEventCallback
 
     private PlayerMovement playerMovement;
     private PlayerShoot playerShoot;
-    private Inputs myInput;
 
     [SerializeField] private Tilemap playerMap;
     [SerializeField] private TileBase playerBase;
@@ -40,25 +39,18 @@ public class MultiplayerPlayerManager : MonoBehaviour, IOnEventCallback
 
     private Room currentRoom;
 
-    private void Awake()
-    {
-        //enabling input Actions
-        myInput = new Inputs();
-        myInput.Player.Enable();
-
-    }
     void Start()
     {
-        myInput.Player.Shoot.started += OnShot;
-        myInput.Player.Move.started += OnMove;
+        TurnManager.Instance.GetInputClass().Player.Shoot.started += OnShot;
+        TurnManager.Instance.GetInputClass().Player.Move.started += OnMove;
 
         PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
     }
 
     private void OnDestroy()
     {
-        myInput.Player.Shoot.started -= OnShot;
-        myInput.Player.Move.started -= OnMove;
+        TurnManager.Instance.GetInputClass().Player.Shoot.started -= OnShot;
+        TurnManager.Instance.GetInputClass().Player.Move.started -= OnMove;
 
         PhotonNetwork.NetworkingClient.EventReceived -= OnEvent;
     }
@@ -69,6 +61,11 @@ public class MultiplayerPlayerManager : MonoBehaviour, IOnEventCallback
         playerShoot = new PlayerShoot(rooms, takenPositions);
         fogUpdater.UpdateFog(currentRoom);
         this.currentRoom = currentRoom;
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            TurnManager.Instance.BeginTurnMessage();
+        }
     }
 
     public void OnShot(InputAction.CallbackContext context)
@@ -125,7 +122,7 @@ public class MultiplayerPlayerManager : MonoBehaviour, IOnEventCallback
 
     private void WinGame(string popUpMessage)
     {
-        myInput.Player.Disable();
+        TurnManager.Instance.DisableInput();
 
         PopUpManager.Instance.SpawnPopUp(popUpMessage, "WIN", "PlayAgain", delegate { PlayAgain(); });
 
@@ -135,6 +132,7 @@ public class MultiplayerPlayerManager : MonoBehaviour, IOnEventCallback
     public void OnMove(InputAction.CallbackContext context)
     {
         MoveMethod(context.ReadValue<Vector2>(), DoorTypes.TopDoor);
+        TurnManager.Instance.EndTurnMessage();
     }
 
     private void MoveMethod(Vector2 moveDirection, DoorTypes usedDoor)
@@ -171,18 +169,18 @@ public class MultiplayerPlayerManager : MonoBehaviour, IOnEventCallback
         if (entry.nextRoom.roomType == RoomType.Teleport)
         {
             Teleport();
-            myInput.Player.Enable();
+            TurnManager.Instance.EnableInput();
             yield break;
         }
 
         if (newCurrentRoom.myCellType == CellType.Tunnel)
         {
-            myInput.Player.Disable();
+            TurnManager.Instance.DisableInput();
             yield return new WaitForSeconds(.2f);
             MoveMethod(moveDirection, entry.entryDoor);
         }
         else
-            myInput.Player.Enable();
+            TurnManager.Instance.EnableInput();
     }
     private void TranslateSprite(Room CurrentPlayerRoom, Room newCurrentRoom, bool isOpponent = false)
     {
@@ -221,7 +219,7 @@ public class MultiplayerPlayerManager : MonoBehaviour, IOnEventCallback
     }
     private void PlayerDeath(RoomType whatKillsPlayer)
     {
-        myInput.Player.Disable();
+        TurnManager.Instance.DisableInput();
 
         switch (whatKillsPlayer)
         {
