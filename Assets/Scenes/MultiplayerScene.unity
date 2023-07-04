@@ -2277,7 +2277,7 @@ MonoBehaviour:
   oppponetArrowMap: {fileID: 1177028551}
   arrowBase: {fileID: 11400000, guid: 6b047680755fe7d4191ba38f65551bb1, type: 2}
   fogUpdater: {fileID: 42105750}
-  currentArrowNumber: 3
+  currentArrowNumber: 5
   currentArrowNumberText: {fileID: 1963809599}
 --- !u!114 &1186325067
 MonoBehaviour:

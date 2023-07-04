@@ -41,7 +41,7 @@ public class MultiplayerPlayerManager : MonoBehaviour, IOnEventCallback
 
     private Room currentRoom;
 
-    [SerializeField] private int currentArrowNumber = 3;
+    [SerializeField] private int currentArrowNumber = 5;
     [SerializeField] private TextMeshProUGUI currentArrowNumberText;
     void Start()
     {
