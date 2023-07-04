@@ -69,6 +69,10 @@ public class MultiplayerMazeGen : MonoBehaviourPun
             {
                 for (int y = 0; y < (gridSizeY * 2); y++)
                 {
+                    if (rooms[x,y] == null)
+                    {
+                        continue;
+                    }
                     Room roomToSend = rooms[x, y];
                     object[] singleRoomContent = new object[] { x, y, roomToSend };
                     PhotonNetwork.RaiseEvent(UpdateRooms, singleRoomContent, RaiseEventOptions.Default, SendOptions.SendReliable);
