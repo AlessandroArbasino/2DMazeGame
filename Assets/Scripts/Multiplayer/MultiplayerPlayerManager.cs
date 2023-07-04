@@ -18,6 +18,7 @@ public class MultiplayerPlayerManager : MonoBehaviour, IOnEventCallback
     protected const byte Translate_Player_Sprite_Event_Code = 2;
     protected const byte Destroy_ArrowSprite = 8;
     protected const byte OpponentsDeath = 9;
+    protected const byte MonsterKilled = 10;
 
     private PlayerMovement playerMovement;
     private PlayerShoot playerShoot;
@@ -126,6 +127,8 @@ public class MultiplayerPlayerManager : MonoBehaviour, IOnEventCallback
         myInput.Player.Disable();
 
         PopUpManager.Instance.SpawnPopUp(popUpMessage, "WIN", "PlayAgain", delegate { PlayAgain(); });
+
+        PhotonNetwork.RaiseEvent(MonsterKilled, null, raiseEventOption, SendOptions.SendReliable);
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -222,10 +225,10 @@ public class MultiplayerPlayerManager : MonoBehaviour, IOnEventCallback
         switch (whatKillsPlayer)
         {
             case RoomType.Enemy:
-                PopUpManager.Instance.SpawnPopUp("The monster kills you", "Defeat", "PlayAgain", delegate { PlayAgain(); });
+                LoseGame("The monster kills you");
                 break;
             case RoomType.Hole:
-                PopUpManager.Instance.SpawnPopUp("You fall into an endless hole ", "Defeat", "PlayAgain", delegate { PlayAgain(); });
+                LoseGame("You fall into an endless hole");
                 break;
         }
 
@@ -233,6 +236,10 @@ public class MultiplayerPlayerManager : MonoBehaviour, IOnEventCallback
         PhotonNetwork.RaiseEvent(OpponentsDeath, null, raiseEventOption, SendOptions.SendReliable);
     }
 
+    private void LoseGame(string message)
+    {
+        PopUpManager.Instance.SpawnPopUp(message, "Defeat", "PlayAgain", delegate { PlayAgain(); });
+    }
     private void PlayAgain()
     {
         StopAllCoroutines();
@@ -281,6 +288,10 @@ public class MultiplayerPlayerManager : MonoBehaviour, IOnEventCallback
         if(eventCode == OpponentsDeath)
         {
             WinGame("The other player is dead congratulations");
+        }
+        if(eventCode == MonsterKilled)
+        {
+            LoseGame("The other player kills the monster");
         }
     }
 }
