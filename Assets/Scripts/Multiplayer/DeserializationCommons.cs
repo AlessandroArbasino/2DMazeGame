@@ -9,12 +9,12 @@ public class DeserializationCommons
 {
     public static Room[] SendArray2D(Room[,] room2DArray)
     {
-        int elementSize = room2DArray.GetLength(1);
+        
         Room[] rooomFlatArray = room2DArray.Cast<Room>().ToArray();
         return rooomFlatArray;
     }
 
-    public Room[,] ReceiveArray2D(int elementSize, Room[] arrayFlat)
+    public static Room[,] ReceiveArray2D(int elementSize, Room[] arrayFlat)
     {
         var elementCount = arrayFlat.Length / elementSize;
         Room[,]roomArray2D = new Room[elementCount, elementSize];

@@ -26,27 +26,27 @@ public class PlayerMovement
         DoorTypes usedDoor = DoorTypes.TopDoor;
         if (moveDirection.y > 0)
             if (currentRoom.doorTop)
-                if (takenPositions.Contains(new Vector2((int)currentRoom.gridPos.x, (int)currentRoom.gridPos.y + 1)))
+                if (takenPositions.Contains(new Vector2((int)currentRoom.row, (int)currentRoom.col + 1)))
                 {
-                    newRoom = GetNextRoom(new Vector2((int)currentRoom.gridPos.x, (int)currentRoom.gridPos.y + 1));
+                    newRoom = GetNextRoom(new Vector2((int)currentRoom.row, (int)currentRoom.col + 1));
                     usedDoor = DoorTypes.BottomDoor;
                 }
 
 
         if (moveDirection.y < 0)
             if (currentRoom.doorBot)
-                if (takenPositions.Contains(new Vector2((int)currentRoom.gridPos.x, (int)currentRoom.gridPos.y - 1)))
+                if (takenPositions.Contains(new Vector2((int)currentRoom.row, (int)currentRoom.col - 1)))
                 {
-                    newRoom = GetNextRoom(new Vector2((int)currentRoom.gridPos.x, (int)currentRoom.gridPos.y - 1));
+                    newRoom = GetNextRoom(new Vector2((int)currentRoom.row, (int)currentRoom.col - 1));
                     usedDoor = DoorTypes.TopDoor;
                 }
 
 
         if (moveDirection.x < 0)
             if (currentRoom.doorleft)
-                if (takenPositions.Contains(new Vector2((int)currentRoom.gridPos.x - 1, (int)currentRoom.gridPos.y)))
+                if (takenPositions.Contains(new Vector2((int)currentRoom.row - 1, (int)currentRoom.col)))
                 {
-                    newRoom = GetNextRoom(new Vector2((int)currentRoom.gridPos.x - 1, (int)currentRoom.gridPos.y));
+                    newRoom = GetNextRoom(new Vector2((int)currentRoom.row - 1, (int)currentRoom.col));
                     usedDoor = DoorTypes.RightDoor;
                 }
 
@@ -54,9 +54,9 @@ public class PlayerMovement
 
         if (moveDirection.x > 0)
             if (currentRoom.doorRight)
-                if (takenPositions.Contains(new Vector2((int)currentRoom.gridPos.x + 1, (int)currentRoom.gridPos.y)))
+                if (takenPositions.Contains(new Vector2((int)currentRoom.row + 1, (int)currentRoom.col)))
                 {
-                    newRoom = GetNextRoom(new Vector2((int)currentRoom.gridPos.x + 1, (int)currentRoom.gridPos.y));
+                    newRoom = GetNextRoom(new Vector2((int)currentRoom.row + 1, (int)currentRoom.col));
                     usedDoor = DoorTypes.LeftDoor;
                 }
 
@@ -69,34 +69,34 @@ public class PlayerMovement
         DoorTypes newusedDoor = DoorTypes.TopDoor;
         if (usedDoor != DoorTypes.TopDoor)
             if (currentRoom.doorTop)
-                if (takenPositions.Contains(new Vector2((int)currentRoom.gridPos.x, (int)currentRoom.gridPos.y + 1)))
+                if (takenPositions.Contains(new Vector2((int)currentRoom.row, (int)currentRoom.col + 1)))
                 {
-                    newRoom = GetNextRoom(new Vector2((int)currentRoom.gridPos.x, (int)currentRoom.gridPos.y + 1));
+                    newRoom = GetNextRoom(new Vector2((int)currentRoom.row, (int)currentRoom.col + 1));
                     newusedDoor = DoorTypes.BottomDoor;
                 }
 
         if (usedDoor != DoorTypes.BottomDoor)
             if (currentRoom.doorBot)
-                if (takenPositions.Contains(new Vector2((int)currentRoom.gridPos.x, (int)currentRoom.gridPos.y - 1)))
+                if (takenPositions.Contains(new Vector2((int)currentRoom.row, (int)currentRoom.col - 1)))
                 {
-                    newRoom = GetNextRoom(new Vector2((int)currentRoom.gridPos.x, (int)currentRoom.gridPos.y - 1));
+                    newRoom = GetNextRoom(new Vector2((int)currentRoom.row, (int)currentRoom.col - 1));
                     newusedDoor = DoorTypes.TopDoor;
                 }
 
 
         if (usedDoor != DoorTypes.LeftDoor)
             if (currentRoom.doorleft)
-                if (takenPositions.Contains(new Vector2((int)currentRoom.gridPos.x - 1, (int)currentRoom.gridPos.y)))
+                if (takenPositions.Contains(new Vector2((int)currentRoom.row - 1, (int)currentRoom.col)))
                 {
-                    newRoom = GetNextRoom(new Vector2((int)currentRoom.gridPos.x - 1, (int)currentRoom.gridPos.y));
+                    newRoom = GetNextRoom(new Vector2((int)currentRoom.row - 1, (int)currentRoom.col));
                     newusedDoor = DoorTypes.RightDoor;
                 }
 
         if (usedDoor != DoorTypes.RightDoor)
             if (currentRoom.doorRight)
-                if (takenPositions.Contains(new Vector2((int)currentRoom.gridPos.x + 1, (int)currentRoom.gridPos.y)))
+                if (takenPositions.Contains(new Vector2((int)currentRoom.row + 1, (int)currentRoom.col)))
                 {
-                    newRoom = GetNextRoom(new Vector2((int)currentRoom.gridPos.x + 1, (int)currentRoom.gridPos.y));
+                    newRoom = GetNextRoom(new Vector2((int)currentRoom.row + 1, (int)currentRoom.col));
                     newusedDoor = DoorTypes.LeftDoor;
                 }
 
@@ -114,7 +114,7 @@ public class PlayerMovement
                 {
                     continue;
                 }
-                if (rooms[x, y].gridPos == newGripPositoin)
+                if (rooms[x, y].row == newGripPositoin.x && rooms[x, y].col == newGripPositoin.y)
                 {
                     newRoom = rooms[x, y];
                     break;
@@ -135,7 +135,7 @@ public class PlayerMovement
                 {
                     continue;
                 }
-                if (rooms[x, y].gridPos == newGripPositionIn)
+                if (rooms[x, y].row == newGripPositionIn.x && rooms[x, y].col == newGripPositionIn.y)
                 {
                     newRoom = rooms[x, y];
                     break;

@@ -66,27 +66,27 @@ public class UIUpdater : MonoBehaviour
     {
         if (currentRoom.doorTop)
         {
-            if (takenPosition.Contains(new Vector2((int)currentRoom.gridPos.x, (int)currentRoom.gridPos.y + 1)))
-                uiMap.SetTile(new Vector3Int((int)currentRoom.gridPos.x, (int)currentRoom.gridPos.y + 1, 0), uiBase);
+            if (takenPosition.Contains(new Vector2((int)currentRoom.row, (int)currentRoom.col + 1)))
+                uiMap.SetTile(new Vector3Int((int)currentRoom.row, (int)currentRoom.col + 1, 0), uiBase);
         }
 
 
         if (currentRoom.doorBot)
         {
-            if (takenPosition.Contains(new Vector2((int)currentRoom.gridPos.x, (int)currentRoom.gridPos.y - 1)))
-                uiMap.SetTile(new Vector3Int((int)currentRoom.gridPos.x, (int)currentRoom.gridPos.y - 1, 0), uiBase);
+            if (takenPosition.Contains(new Vector2((int)currentRoom.row, (int)currentRoom.col - 1)))
+                uiMap.SetTile(new Vector3Int((int)currentRoom.row, (int)currentRoom.col - 1, 0), uiBase);
         }
 
         if (currentRoom.doorleft)
         {
-            if (takenPosition.Contains(new Vector2((int)currentRoom.gridPos.x - 1, (int)currentRoom.gridPos.y)))
-                uiMap.SetTile(new Vector3Int((int)currentRoom.gridPos.x - 1, (int)currentRoom.gridPos.y, 0), uiBase);
+            if (takenPosition.Contains(new Vector2((int)currentRoom.row - 1, (int)currentRoom.col)))
+                uiMap.SetTile(new Vector3Int((int)currentRoom.row - 1, (int)currentRoom.col, 0), uiBase);
         }
 
         if (currentRoom.doorRight)
         {
-            if (takenPosition.Contains(new Vector2((int)currentRoom.gridPos.x + 1, (int)currentRoom.gridPos.y)))
-                uiMap.SetTile(new Vector3Int((int)currentRoom.gridPos.x + 1, (int)currentRoom.gridPos.y, 0), uiBase);
+            if (takenPosition.Contains(new Vector2((int)currentRoom.row + 1, (int)currentRoom.col)))
+                uiMap.SetTile(new Vector3Int((int)currentRoom.row + 1, (int)currentRoom.col, 0), uiBase);
         }
     }
 }

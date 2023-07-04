@@ -7,19 +7,21 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
-[Serializable]
+[System.Serializable]
 public class Room
 {
-    public Vector2 gridPos;
+    public int row;
+    public int col;
     public CellType myCellType;
     public RoomType roomType;
     public bool doorTop, doorBot, doorleft, doorRight;
     public List<DoorTypes> doors;
 
     public bool IsDefinitive;
-    public Room(Vector2 _gridPos, bool isDefinitive)
+    public Room(int row, int col, bool isDefinitive)
     {
-        gridPos = _gridPos;
+        this.row = row;
+        this.col = col;
         doors = new List<DoorTypes>();
         IsDefinitive = isDefinitive;
     }

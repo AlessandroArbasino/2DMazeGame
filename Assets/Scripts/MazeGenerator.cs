@@ -21,6 +21,10 @@ public class MazeGenerator : MonoBehaviour
     public UIUpdater updater;
     public Dictionary<Vector2, Room> roomsPositionType = new Dictionary<Vector2, Room>();
 
+    private void Awake()
+    {
+        this.rooms = new Room[20 * 2, 20 * 2];
+    }
     private void Start()
     {
         if (numberOfRooms >= (worldSize.x * 2) * (worldSize.y * 2))
@@ -54,7 +58,7 @@ public class MazeGenerator : MonoBehaviour
 
     private void DrawTileByType(Room room)
     {
-        Vector3Int drawRoomPos = new Vector3Int((int)room.gridPos.x, (int)room.gridPos.y, 0);
+        Vector3Int drawRoomPos = new Vector3Int((int)room.row, (int)room.col, 0);
         DungeonMap.SetTile(drawRoomPos, baseDungeonTile);
 
         //a tunnel cannot have anything inside maybe ui ?
@@ -69,7 +73,7 @@ public class MazeGenerator : MonoBehaviour
         {
             if (value.type == room.roomType)
             {
-                Vector3Int drawPos = new Vector3Int((int)room.gridPos.x, (int)room.gridPos.y, 0);
+                Vector3Int drawPos = new Vector3Int((int)room.row, (int)room.col, 0);
                 value.myTypeMap.SetTile(drawPos, value.mybaseTyle);
             }
         }
@@ -128,9 +132,8 @@ public class MazeGenerator : MonoBehaviour
 
     private void CreateRooms()
     {
-        rooms = new Room[gridSizeX * 2, gridSizeY * 2];
         //1 for starting room
-        rooms[gridSizeX, gridSizeY] = new Room(Vector2.zero, true);
+        rooms[gridSizeX, gridSizeY] = new Room(0,0, true);
         rooms[gridSizeX, gridSizeY].SetRoomType(RoomType.Start, CellType.Room);
         //roomsPositionType.Add(Vector2.zero, new Room(Vector2.zero, RoomType.Start));
 
@@ -146,7 +149,7 @@ public class MazeGenerator : MonoBehaviour
             Vector2 checkPos = NewPosition();
 
             takenPositions.Insert(0, checkPos);
-            rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, false);
+            rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room((int)checkPos.x,(int)checkPos.y, false);
         }
     }
     private Vector2 NewPosition()
@@ -245,7 +248,7 @@ public class MazeGenerator : MonoBehaviour
                 {
                     continue;
                 }
-                if (rooms[x, y].gridPos == newGripPositionIn)
+                if (rooms[x, y].row == newGripPositionIn.x && rooms[x, y].col == newGripPositionIn.y)
                 {
                     newRoom = rooms[x, y];
                     break;

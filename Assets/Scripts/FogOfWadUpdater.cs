@@ -11,6 +11,6 @@ public class FogOfWadUpdater : MonoBehaviour
     public void UpdateFog(Room discoveredRoom)
     {
         //clean all the visited tiles from the fog
-        fogOfWarTileMap.SetTile(new Vector3Int((int)discoveredRoom.gridPos.x, (int)discoveredRoom.gridPos.y, 0), null);
+        fogOfWarTileMap.SetTile(new Vector3Int((int)discoveredRoom.row, (int)discoveredRoom.col, 0), null);
     }
 }

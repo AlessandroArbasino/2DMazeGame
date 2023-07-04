@@ -11,10 +11,12 @@ using UnityEngine.Tilemaps;
 public class MultiplayerMazeGen : MonoBehaviourPun
 {
     public Vector2 worldSize = new Vector2(20, 20);
-    public Room[,] rooms;
+    [SerializeField] public Room[,] rooms;
     public List<Vector2> takenPositions = new List<Vector2>();
 
-    protected const byte MazeGeneration = 3;
+    protected const byte UpdateTakenPositions = 3;
+    protected const byte UpdateRooms = 4;
+    protected const byte DrawMapByte = 5;
 
     int gridSizeX, gridSizeY = 20;
     int numberOfRooms = 40;
@@ -31,10 +33,14 @@ public class MultiplayerMazeGen : MonoBehaviourPun
     {
         PhotonPeer.RegisterType(typeof(Room), (byte)'M', Room.ObjectToByteArray, Room.ByteArrayToObject);
         PhotonPeer.RegisterType(typeof(Vector2), (byte)'W', Room.SerializeVector2, Room.DeserializeVector2);
+
+        this.rooms = new Room[20 * 2, 20 * 2];
     }
     private void Start()
     {
-        PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
+        PhotonNetwork.NetworkingClient.EventReceived += SetTakenPositions;
+        PhotonNetwork.NetworkingClient.EventReceived += SetRooms;
+        PhotonNetwork.NetworkingClient.EventReceived += DrawMapEvent;
 
         if (numberOfRooms >= (worldSize.x * 2) * (worldSize.y * 2))
         {
@@ -52,20 +58,41 @@ public class MultiplayerMazeGen : MonoBehaviourPun
             updater.InitUiUpdater(rooms, takenPositions);
 
             Vector2[] takenPosArray = takenPositions.ToArray();
-            Room[] roomFlatArray = DeserializationCommons.SendArray2D(rooms);
-            object[] content = new object[] { takenPosArray};
-            RaiseEventOptions raiseEventOption = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
-            PhotonNetwork.RaiseEvent(MazeGeneration, content, RaiseEventOptions.Default, SendOptions.SendReliable);
+            object[] positionsContent = new object[] { takenPosArray };
+            RaiseEventOptions raiseEventOptionPos = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
+            PhotonNetwork.RaiseEvent(UpdateTakenPositions, positionsContent, RaiseEventOptions.Default, SendOptions.SendReliable);
+
+
+            RaiseEventOptions raiseEventOptionRoom = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
+
+            for (int x = 0; x < (gridSizeX * 2); x++)
+            {
+                for (int y = 0; y < (gridSizeY * 2); y++)
+                {
+                    Room roomToSend = rooms[x, y];
+                    object[] singleRoomContent = new object[] { x, y, roomToSend };
+                    PhotonNetwork.RaiseEvent(UpdateRooms, singleRoomContent, RaiseEventOptions.Default, SendOptions.SendReliable);
+                }
+            }
+
+            PhotonNetwork.RaiseEvent(DrawMapByte, null, RaiseEventOptions.Default, SendOptions.SendReliable);
+
         }
 
     }
     private void OnDestroy()
     {
-        PhotonNetwork.NetworkingClient.EventReceived -= OnEvent;
+        PhotonNetwork.NetworkingClient.EventReceived -= SetTakenPositions;
+        PhotonNetwork.NetworkingClient.EventReceived -= SetRooms;
+        PhotonNetwork.NetworkingClient.EventReceived -= DrawMapEvent;
     }
+
+
+
     private void DrawMap()
     {
-        SetMonsterRoom();
+        if (PhotonNetwork.IsMasterClient)
+            SetMonsterRoom();
         foreach (Room room in rooms)
         {
             if (room == null)
@@ -79,7 +106,7 @@ public class MultiplayerMazeGen : MonoBehaviourPun
 
     private void DrawTileByType(Room room)
     {
-        Vector3Int drawRoomPos = new Vector3Int((int)room.gridPos.x, (int)room.gridPos.y, 0);
+        Vector3Int drawRoomPos = new Vector3Int((int)room.row, (int)room.col, 0);
         DungeonMap.SetTile(drawRoomPos, baseDungeonTile);
 
         //a tunnel cannot have anything inside maybe ui ?
@@ -94,7 +121,7 @@ public class MultiplayerMazeGen : MonoBehaviourPun
         {
             if (value.type == room.roomType)
             {
-                Vector3Int drawPos = new Vector3Int((int)room.gridPos.x, (int)room.gridPos.y, 0);
+                Vector3Int drawPos = new Vector3Int((int)room.row, (int)room.col, 0);
                 value.myTypeMap.SetTile(drawPos, value.mybaseTyle);
             }
         }
@@ -153,9 +180,8 @@ public class MultiplayerMazeGen : MonoBehaviourPun
 
     private void CreateRooms()
     {
-        rooms = new Room[gridSizeX * 2, gridSizeY * 2];
         //1 for starting room
-        rooms[gridSizeX, gridSizeY] = new Room(Vector2.zero, true);
+        rooms[gridSizeX, gridSizeY] = new Room(0, 0, true);
         rooms[gridSizeX, gridSizeY].SetRoomType(RoomType.Start, CellType.Room);
         //roomsPositionType.Add(Vector2.zero, new Room(Vector2.zero, RoomType.Start));
 
@@ -171,7 +197,7 @@ public class MultiplayerMazeGen : MonoBehaviourPun
             Vector2 checkPos = NewPosition();
 
             takenPositions.Insert(0, checkPos);
-            rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room(checkPos, false);
+            rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room((int)checkPos.x, (int)checkPos.y, false);
         }
     }
     private Vector2 NewPosition()
@@ -270,7 +296,7 @@ public class MultiplayerMazeGen : MonoBehaviourPun
                 {
                     continue;
                 }
-                if (rooms[x, y].gridPos == newGripPositionIn)
+                if (rooms[x, y].row == newGripPositionIn.x && rooms[x, y].col == newGripPositionIn.y)
                 {
                     newRoom = rooms[x, y];
                     break;
@@ -281,28 +307,47 @@ public class MultiplayerMazeGen : MonoBehaviourPun
         return newRoom;
     }
 
-    public void OnEvent(EventData photonEvent)
+    public void SetTakenPositions(EventData photonEvent)
     {
         byte eventCode = photonEvent.Code;
 
-        if (eventCode == MazeGeneration)
+        if (eventCode == UpdateTakenPositions)
         {
             object[] data = (object[])photonEvent.CustomData;
             //Room[,] rooms = (Room[,])data[0];
             List<Vector2> takenPositions = new List<Vector2>((Vector2[])data[0]);
-        this.takenPositions = takenPositions;
+            this.takenPositions = takenPositions;
 
             //SetRoomsAndDraw(rooms, takenPositions);
         }
 
     }
 
-    private void SetRoomsAndDraw(Room[,] rooms, List<Vector2> takenpositions)
+    private void SetRooms(EventData photonEvent)
     {
-        this.rooms = rooms;
+        byte eventCode = photonEvent.Code;
 
-        DrawMap();
-        updater.InitUiUpdater(rooms, takenPositions);
+        if (eventCode == UpdateRooms)
+        {
+            object[] data = (object[])photonEvent.CustomData;
+            int row = (int)data[0];
+            int column = (int)data[1];
+            Room sentRoom = (Room)data[2];
+
+            this.rooms[row, column] = sentRoom;
+
+        }
+    }
+
+    private void DrawMapEvent(EventData photonEvent)
+    {
+        byte eventCode = photonEvent.Code;
+
+        if (eventCode == UpdateRooms)
+        {
+            DrawMap();
+            updater.InitUiUpdater(rooms, takenPositions);
+        }
     }
 }
 

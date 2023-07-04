@@ -107,7 +107,7 @@ public class MultiplayerPlayerManager : MonoBehaviour,IOnEventCallback
         }
         else
         {
-            arrowMap.SetTile(new Vector3Int((int)currentArrowRoom.gridPos.x, (int)currentArrowRoom.gridPos.y, 0), null);
+            arrowMap.SetTile(new Vector3Int((int)currentArrowRoom.row, (int)currentArrowRoom.col, 0), null);
             yield break;
         }
     }
@@ -172,22 +172,22 @@ public class MultiplayerPlayerManager : MonoBehaviour,IOnEventCallback
     private void TranslateSprite(Room newCurrentRoom)
     {
         //clean the position before the movement 
-        playerMap.SetTile(new Vector3Int((int)currentRoom.gridPos.x, (int)currentRoom.gridPos.y, 0), null);
+        playerMap.SetTile(new Vector3Int((int)currentRoom.row, (int)currentRoom.col, 0), null);
         //set new player position
         currentRoom = newCurrentRoom;
         //set the new player base tile
-        playerMap.SetTile(new Vector3Int((int)currentRoom.gridPos.x, (int)currentRoom.gridPos.y, 0), playerBase);
+        playerMap.SetTile(new Vector3Int((int)currentRoom.row, (int)currentRoom.col, 0), playerBase);
     }
 
     private void TranslateArrowSprite(Room newCurrentRoom)
     {
         //clean the position before the movement 
-        arrowMap.SetTile(new Vector3Int((int)currentArrowRoom.gridPos.x, (int)currentArrowRoom.gridPos.y, 0), null);
+        arrowMap.SetTile(new Vector3Int((int)currentArrowRoom.row, (int)currentArrowRoom.col, 0), null);
         //set new player position
         currentArrowRoom = newCurrentRoom;
         //set the new player base tile
-        arrowMap.SetTile(new Vector3Int((int)currentArrowRoom.gridPos.x, (int)currentArrowRoom.gridPos.y, 0), arrowBase);
-        //TileChangeData arrowData = new TileChangeData(new Vector3Int((int)currentArrowRoom.gridPos.x, (int)currentArrowRoom.gridPos.y, 0), arrowBase,Color.black, Matrix4x4.Rotate(Quaternion.LookRotation(arrowDirection,Vector2.up)));
+        arrowMap.SetTile(new Vector3Int((int)currentArrowRoom.row, (int)currentArrowRoom.col, 0), arrowBase);
+        //TileChangeData arrowData = new TileChangeData(new Vector3Int((int)currentArrowRoom.row, (int)currentArrowRoom.col, 0), arrowBase,Color.black, Matrix4x4.Rotate(Quaternion.LookRotation(arrowDirection,Vector2.up)));
         //arrowMap.SetTile(arrowData, true);
     }
     private void PlayerDeath()
