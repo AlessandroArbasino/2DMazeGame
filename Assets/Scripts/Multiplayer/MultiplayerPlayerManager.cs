@@ -107,6 +107,7 @@ public class MultiplayerPlayerManager : MonoBehaviour, IOnEventCallback
             if (newArrowRoom.roomType == RoomType.Enemy)
             {
                 WinGame("Hero you defeat the terrible monster");
+                PhotonNetwork.RaiseEvent(MonsterKilled, null, raiseEventOption, SendOptions.SendReliable);
             }
 
             ShootMethod(newShootDirection, entry.entryDoor, newArrowRoom);
@@ -128,7 +129,7 @@ public class MultiplayerPlayerManager : MonoBehaviour, IOnEventCallback
 
         PopUpManager.Instance.SpawnPopUp(popUpMessage, "WIN", "PlayAgain", delegate { PlayAgain(); });
 
-        PhotonNetwork.RaiseEvent(MonsterKilled, null, raiseEventOption, SendOptions.SendReliable);
+       
     }
 
     public void OnMove(InputAction.CallbackContext context)
