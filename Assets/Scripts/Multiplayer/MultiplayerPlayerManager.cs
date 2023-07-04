@@ -17,6 +17,7 @@ public class MultiplayerPlayerManager : MonoBehaviour, IOnEventCallback
     protected const byte Translate_Arrow_Sprite_Event_Code = 1;
     protected const byte Translate_Player_Sprite_Event_Code = 2;
     protected const byte Destroy_ArrowSprite = 8;
+    protected const byte OpponentsDeath = 9;
 
     private PlayerMovement playerMovement;
     private PlayerShoot playerShoot;
@@ -33,6 +34,8 @@ public class MultiplayerPlayerManager : MonoBehaviour, IOnEventCallback
     [SerializeField] private TileBase arrowBase;
 
     [SerializeField] private FogOfWadUpdater fogUpdater;
+
+    RaiseEventOptions raiseEventOption = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
 
     private Room currentRoom;
 
@@ -97,13 +100,12 @@ public class MultiplayerPlayerManager : MonoBehaviour, IOnEventCallback
         if (newArrowRoom != null)
         {
             object[] content = new object[] { currentArrowRoom,newArrowRoom };
-            RaiseEventOptions raiseEventOption = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
             PhotonNetwork.RaiseEvent(Translate_Arrow_Sprite_Event_Code, content, raiseEventOption, SendOptions.SendReliable);
             TranslateArrowSprite(currentArrowRoom,newArrowRoom);
 
             if (newArrowRoom.roomType == RoomType.Enemy)
             {
-                WinGame();
+                WinGame("Hero you defeat the terrible monster");
             }
 
             ShootMethod(newShootDirection, entry.entryDoor, newArrowRoom);
@@ -114,17 +116,16 @@ public class MultiplayerPlayerManager : MonoBehaviour, IOnEventCallback
             arrowMap.SetTile(new Vector3Int((int)currentArrowRoom.row, (int)currentArrowRoom.col, 0), null);
 
             object[] content = new object[] { currentArrowRoom };
-            RaiseEventOptions raiseEventOption = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
             PhotonNetwork.RaiseEvent(Destroy_ArrowSprite, content, raiseEventOption, SendOptions.SendReliable);
             yield break;
         }
     }
 
-    private void WinGame()
+    private void WinGame(string popUpMessage)
     {
         myInput.Player.Disable();
 
-        PopUpManager.Instance.SpawnPopUp("Hero you defeat the terrible monster", "WIN", "PlayAgain", delegate { PlayAgain(); });
+        PopUpManager.Instance.SpawnPopUp(popUpMessage, "WIN", "PlayAgain", delegate { PlayAgain(); });
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -150,7 +151,6 @@ public class MultiplayerPlayerManager : MonoBehaviour, IOnEventCallback
             yield break;
 
         object[] content = new object[] { this.currentRoom, newCurrentRoom };
-        RaiseEventOptions raiseEventOption = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
         PhotonNetwork.RaiseEvent(Translate_Player_Sprite_Event_Code, content, raiseEventOption, SendOptions.SendReliable);
         TranslateSprite(currentRoom, newCurrentRoom);
         currentRoom = newCurrentRoom;
@@ -160,7 +160,7 @@ public class MultiplayerPlayerManager : MonoBehaviour, IOnEventCallback
 
         if (entry.nextRoom.roomType == RoomType.Enemy || entry.nextRoom.roomType == RoomType.Hole)
         {
-            //PlayerDeath();
+            PlayerDeath(entry.nextRoom.roomType);
             yield break;
         }
 
@@ -215,11 +215,22 @@ public class MultiplayerPlayerManager : MonoBehaviour, IOnEventCallback
             oppponetArrowMap.SetTile(new Vector3Int((int)newCurrentRoom.row, (int)newCurrentRoom.col, 0), arrowBase);
         }
     }
-    private void PlayerDeath()
+    private void PlayerDeath(RoomType whatKillsPlayer)
     {
         myInput.Player.Disable();
 
-        PopUpManager.Instance.SpawnPopUp("The monster kills you", "DEFEAT", "PlayAgain", delegate { PlayAgain(); });
+        switch (whatKillsPlayer)
+        {
+            case RoomType.Enemy:
+                PopUpManager.Instance.SpawnPopUp("The monster kills you", "Defeat", "PlayAgain", delegate { PlayAgain(); });
+                break;
+            case RoomType.Hole:
+                PopUpManager.Instance.SpawnPopUp("You fall into an endless hole ", "Defeat", "PlayAgain", delegate { PlayAgain(); });
+                break;
+        }
+
+        
+        PhotonNetwork.RaiseEvent(OpponentsDeath, null, raiseEventOption, SendOptions.SendReliable);
     }
 
     private void PlayAgain()
@@ -266,6 +277,10 @@ public class MultiplayerPlayerManager : MonoBehaviour, IOnEventCallback
             Room previousArrowPos= (Room)data[0];
 
             arrowMap.SetTile(new Vector3Int((int)previousArrowPos.row, (int)previousArrowPos.col, 0), null);
+        }
+        if(eventCode == OpponentsDeath)
+        {
+            WinGame("The other player is dead congratulations");
         }
     }
 }
