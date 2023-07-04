@@ -49,13 +49,15 @@ public class MultiplayerMazeGen : MonoBehaviourPun
             CreateRooms();
             SetRoomDoors();
             DrawMap();
+            updater.InitUiUpdater(rooms, takenPositions);
 
-            object[] content = new object[] { rooms,takenPositions };
+            Vector2[] takenPosArray = takenPositions.ToArray();
+            Room[] roomFlatArray = DeserializationCommons.SendArray2D(rooms);
+            object[] content = new object[] { takenPosArray};
             RaiseEventOptions raiseEventOption = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
-            PhotonNetwork.RaiseEvent(MazeGeneration, content, raiseEventOption, SendOptions.SendUnreliable);
+            PhotonNetwork.RaiseEvent(MazeGeneration, content, RaiseEventOptions.Default, SendOptions.SendReliable);
         }
 
-        updater.InitUiUpdater(rooms, takenPositions);
     }
     private void OnDestroy()
     {
@@ -286,10 +288,11 @@ public class MultiplayerMazeGen : MonoBehaviourPun
         if (eventCode == MazeGeneration)
         {
             object[] data = (object[])photonEvent.CustomData;
-            Room[,] rooms = (Room[,])data[0];
-            List<Vector2> takenPositions = (List<Vector2>)data[1];
+            //Room[,] rooms = (Room[,])data[0];
+            List<Vector2> takenPositions = new List<Vector2>((Vector2[])data[0]);
+        this.takenPositions = takenPositions;
 
-            SetRoomsAndDraw(rooms, takenPositions);
+            //SetRoomsAndDraw(rooms, takenPositions);
         }
 
     }
@@ -297,9 +300,9 @@ public class MultiplayerMazeGen : MonoBehaviourPun
     private void SetRoomsAndDraw(Room[,] rooms, List<Vector2> takenpositions)
     {
         this.rooms = rooms;
-        this.takenPositions = takenpositions;
 
         DrawMap();
+        updater.InitUiUpdater(rooms, takenPositions);
     }
 }
 
