@@ -191,7 +191,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 48.75
+  m_fontSize: 38.3
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -461,7 +461,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 67.7
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1521,6 +1521,7 @@ MonoBehaviour:
   titleText: {fileID: 641053333527703475}
   buttonFunctionText: {fileID: 1753077244569873589}
   functionalityButton: {fileID: 1543928119967604209}
+  OtherButton: {fileID: 8398446793052026778}
   functionalityButtonContainer: {fileID: 7139812024017254656}
 --- !u!1 &7989756478970942445
 GameObject:

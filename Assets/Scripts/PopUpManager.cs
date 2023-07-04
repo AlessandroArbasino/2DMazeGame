@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+public enum PopUpButtonNumbers
+{
+    ErrorPopUp,
+    PlayAgainMainMenuPopUp,
+    MainMenuPopUp
+}
 public class PopUpManager : MonoBehaviour
 {
     private static PopUpManager _instance = null;
@@ -17,9 +23,20 @@ public class PopUpManager : MonoBehaviour
             Destroy(gameObject);
     }
 
-    public void SpawnPopUp(string message, string title, string ButtonText, UnityAction function)
+    public void SpawnPopUp(string message, string title, string ButtonText, UnityAction function, PopUpButtonNumbers popUpButtonNumbers)
     {
         popUp.gameObject.SetActive(true);
-        popUp.InitializeFunctionalytyPopUp(message, title, ButtonText, function);
+        switch (popUpButtonNumbers)
+        {
+            case PopUpButtonNumbers.ErrorPopUp:
+                popUp.InitializeSingleButtonPopUp(message, title, ButtonText, true);
+                break;
+            case PopUpButtonNumbers.MainMenuPopUp:
+                popUp.InitializeSingleButtonPopUp(message, title, ButtonText, false);
+                break;
+            case PopUpButtonNumbers.PlayAgainMainMenuPopUp:
+                popUp.InitializeFunctionalytyPopUp(message, title, ButtonText, function);
+                break;
+        }
     }
 }

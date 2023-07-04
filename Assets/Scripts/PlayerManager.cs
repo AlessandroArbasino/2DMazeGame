@@ -103,7 +103,7 @@ public class PlayerManager : MonoBehaviour
     {
         myInput.Player.Disable();
 
-        PopUpManager.Instance.SpawnPopUp("Hero you defeat the terrible monster", "WIN", "PlayAgain", delegate { PlayAgain(); });
+        PopUpManager.Instance.SpawnPopUp("Hero you defeat the terrible monster", "WIN", "PlayAgain", delegate { PlayAgain(); },PopUpButtonNumbers.PlayAgainMainMenuPopUp);
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -181,7 +181,7 @@ public class PlayerManager : MonoBehaviour
     {
         myInput.Player.Disable();
 
-        PopUpManager.Instance.SpawnPopUp("The monster kills you", "DEFEAT", "PlayAgain", delegate { PlayAgain(); });
+        PopUpManager.Instance.SpawnPopUp("The monster kills you", "DEFEAT", "PlayAgain", delegate { PlayAgain(); },PopUpButtonNumbers.PlayAgainMainMenuPopUp);
     }
 
     private void PlayAgain()

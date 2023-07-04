@@ -147,9 +147,7 @@ public class MultiplayerPlayerManager : MonoBehaviour, IOnEventCallback
     {
         TurnManager.Instance.DisableInput();
 
-        PopUpManager.Instance.SpawnPopUp(popUpMessage, "WIN", "PlayAgain", delegate { PlayAgain(); });
-
-
+        PopUpManager.Instance.SpawnPopUp(popUpMessage, "WIN", "PlayAgain", delegate { PlayAgain(); },PopUpButtonNumbers.MainMenuPopUp);
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -261,7 +259,7 @@ public class MultiplayerPlayerManager : MonoBehaviour, IOnEventCallback
     private void LoseGame(string message)
     {
         TurnManager.Instance.DisableInput();
-        PopUpManager.Instance.SpawnPopUp(message, "Defeat", "PlayAgain", delegate { PlayAgain(); });
+        PopUpManager.Instance.SpawnPopUp(message, "Defeat", "PlayAgain", delegate { PlayAgain(); },PopUpButtonNumbers.MainMenuPopUp);
     }
     private void PlayAgain()
     {

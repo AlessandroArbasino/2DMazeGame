@@ -24,7 +24,8 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
     {
         RoomOptions options = new RoomOptions();
         options.MaxPlayers = 2;
-        PhotonNetwork.CreateRoom(createRoomInput.text,options);
+        if(!PhotonNetwork.CreateRoom(createRoomInput.text,options))
+            PopUpManager.Instance.SpawnPopUp("no internetConnection", "NO INTERNET", "Close", delegate { }, PopUpButtonNumbers.ErrorPopUp);
     }
 
     public void JoinRoom()

@@ -14,7 +14,8 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        PhotonNetwork.JoinLobby();
+        if (!PhotonNetwork.JoinLobby())
+            PopUpManager.Instance.SpawnPopUp("no internetConnection", "NO INTERNET","Close", delegate { }, PopUpButtonNumbers.ErrorPopUp);
     }
 
     public override void OnJoinedLobby()

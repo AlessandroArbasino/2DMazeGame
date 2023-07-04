@@ -13,14 +13,24 @@ public class PopUp : MonoBehaviour
     [SerializeField] private TextMeshProUGUI titleText;
     [SerializeField] private TextMeshProUGUI buttonFunctionText;
     [SerializeField] private Button functionalityButton;
+    [SerializeField] private Button OtherButton;
     [SerializeField] private GameObject functionalityButtonContainer;
-    public void InitializeGenericPopUp(string message, string title, string functionalityButtonString)
+    public void InitializeSingleButtonPopUp(string message, string title, string functionalityButtonString,bool isError)
     {
         titleText.text = title;
         messageText.text = message;
         buttonFunctionText.text = functionalityButtonString;
 
         functionalityButtonContainer.SetActive(false);
+
+        if(isError)
+        {
+            OtherButton.onClick.AddListener(delegate { ClosePopUP(); });
+        }
+        else
+        {
+            OtherButton.onClick.AddListener(delegate { BackToMainMenu(); });
+        }
     }
 
     public void InitializeFunctionalytyPopUp(string message, string title, string functionalityButtonString, UnityAction function)
@@ -31,11 +41,16 @@ public class PopUp : MonoBehaviour
         functionalityButton.onClick.AddListener(function);
         functionalityButtonContainer.SetActive(true);
 
-        functionalityButton.onClick.AddListener(delegate { BackToMainMenu(); });
+        functionalityButton.onClick.AddListener(delegate { function(); });
     }
 
     public void BackToMainMenu()
     {
         SceneManager.LoadScene("MenuScene");
+    }
+
+    public void ClosePopUP()
+    {
+        gameObject.SetActive(false);
     }
 }
