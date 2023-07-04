@@ -14,8 +14,8 @@ public class TurnManager : MonoBehaviour
     protected const byte GetMyTurn = 11;
     protected const byte NewOpponetTurn = 12;
 
-    [SerializeField] private TextMeshProUGUI myTurnGui;
-    [SerializeField] private TextMeshProUGUI OpponentTurnGui;
+    [SerializeField] private GameObject myTurnGui;
+    [SerializeField] private GameObject OpponentTurnGui;
 
     private void Awake()
     {
@@ -58,8 +58,8 @@ public class TurnManager : MonoBehaviour
     }
     public void ActivateTurnUI(bool isMyTurn)
     {
-        myTurnGui.gameObject.SetActive(isMyTurn);
-        OpponentTurnGui.gameObject.SetActive(!isMyTurn);
+        myTurnGui.SetActive(isMyTurn);
+        OpponentTurnGui.SetActive(!isMyTurn);
     }
 
     public void DisableInput()

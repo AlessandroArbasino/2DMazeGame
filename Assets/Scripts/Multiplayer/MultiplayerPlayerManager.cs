@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
@@ -19,6 +20,7 @@ public class MultiplayerPlayerManager : MonoBehaviour, IOnEventCallback
     protected const byte Destroy_ArrowSprite = 8;
     protected const byte OpponentsDeath = 9;
     protected const byte MonsterKilled = 10;
+    protected const byte NoMoreAmmo = 20;
 
     private PlayerMovement playerMovement;
     private PlayerShoot playerShoot;
@@ -39,6 +41,8 @@ public class MultiplayerPlayerManager : MonoBehaviour, IOnEventCallback
 
     private Room currentRoom;
 
+    [SerializeField] private int currentArrowNumber = 3;
+    [SerializeField] private TextMeshProUGUI currentArrowNumberText;
     void Start()
     {
         TurnManager.Instance.GetInputClass().Player.Shoot.started += OnShot;
@@ -73,7 +77,23 @@ public class MultiplayerPlayerManager : MonoBehaviour, IOnEventCallback
 
     public void OnShot(InputAction.CallbackContext context)
     {
-        ShootMethod(context.ReadValue<Vector2>(), DoorTypes.TopDoor, currentRoom);
+        if (currentArrowNumber > 0)
+        {
+            ShootMethod(context.ReadValue<Vector2>(), DoorTypes.TopDoor, currentRoom);
+            currentArrowNumber--;
+            currentArrowNumberText.text = $"Remainig Arrows : {currentArrowNumber.ToString()}";
+
+            if (currentArrowNumber == 0)
+            {
+                LoseGame("Not enought arrows to win the game");
+                PhotonNetwork.RaiseEvent(NoMoreAmmo, null, raiseEventOption, SendOptions.SendReliable);
+            }
+        }
+        //else
+        //{
+        //    LoseGame("Not enought arrows to win the game");
+        //    PhotonNetwork.RaiseEvent(NoMoreAmmo, null, raiseEventOption, SendOptions.SendReliable);
+        //}
     }
 
     private void ShootMethod(Vector2 shootDirection, DoorTypes usedDoor, Room currentArrowRoom)
@@ -100,9 +120,9 @@ public class MultiplayerPlayerManager : MonoBehaviour, IOnEventCallback
 
         if (newArrowRoom != null)
         {
-            object[] content = new object[] { currentArrowRoom,newArrowRoom };
+            object[] content = new object[] { currentArrowRoom, newArrowRoom };
             PhotonNetwork.RaiseEvent(Translate_Arrow_Sprite_Event_Code, content, raiseEventOption, SendOptions.SendReliable);
-            TranslateArrowSprite(currentArrowRoom,newArrowRoom);
+            TranslateArrowSprite(currentArrowRoom, newArrowRoom);
 
             if (newArrowRoom.roomType == RoomType.Enemy)
             {
@@ -129,7 +149,7 @@ public class MultiplayerPlayerManager : MonoBehaviour, IOnEventCallback
 
         PopUpManager.Instance.SpawnPopUp(popUpMessage, "WIN", "PlayAgain", delegate { PlayAgain(); });
 
-       
+
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -203,7 +223,7 @@ public class MultiplayerPlayerManager : MonoBehaviour, IOnEventCallback
         }
     }
 
-    private void TranslateArrowSprite(Room previosArrowRoom,Room newCurrentRoom, bool isOpponent = false)
+    private void TranslateArrowSprite(Room previosArrowRoom, Room newCurrentRoom, bool isOpponent = false)
     {
 
         if (!isOpponent)
@@ -234,12 +254,13 @@ public class MultiplayerPlayerManager : MonoBehaviour, IOnEventCallback
                 break;
         }
 
-        
+
         PhotonNetwork.RaiseEvent(OpponentsDeath, null, raiseEventOption, SendOptions.SendReliable);
     }
 
     private void LoseGame(string message)
     {
+        TurnManager.Instance.DisableInput();
         PopUpManager.Instance.SpawnPopUp(message, "Defeat", "PlayAgain", delegate { PlayAgain(); });
     }
     private void PlayAgain()
@@ -283,17 +304,21 @@ public class MultiplayerPlayerManager : MonoBehaviour, IOnEventCallback
         if (eventCode == Destroy_ArrowSprite)
         {
             object[] data = (object[])photonEvent.CustomData;
-            Room previousArrowPos= (Room)data[0];
+            Room previousArrowPos = (Room)data[0];
 
             arrowMap.SetTile(new Vector3Int((int)previousArrowPos.row, (int)previousArrowPos.col, 0), null);
         }
-        if(eventCode == OpponentsDeath)
+        if (eventCode == OpponentsDeath)
         {
             WinGame("The other player is dead congratulations");
         }
-        if(eventCode == MonsterKilled)
+        if (eventCode == MonsterKilled)
         {
             LoseGame("The other player kills the monster");
+        }
+        if (eventCode == NoMoreAmmo)
+        {
+            WinGame("The other player has no arrow to kill the monster");
         }
     }
 }
