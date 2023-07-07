@@ -2101,7 +2101,27 @@ MonoBehaviour:
   takenPositions: []
   gridSizeX: 20
   gridSizeY: 20
-  spawnTypeValues: []
+  spawnTypeValues:
+  - type: 0
+    myTypeMap: {fileID: 1973413286}
+    mybaseTyle: {fileID: 11400000, guid: 5e0aa9eaf0e08ed4a83dd51974ebecf7, type: 2}
+    min: 0
+    max: 0
+  - type: 2
+    myTypeMap: {fileID: 1784667657}
+    mybaseTyle: {fileID: 11400000, guid: 21d2843f7ab46284c9a222667d5f01ad, type: 2}
+    min: 0
+    max: 0
+  - type: 3
+    myTypeMap: {fileID: 2101590186}
+    mybaseTyle: {fileID: 11400000, guid: 7f1f7e6cf07e75144a852452d26de2a1, type: 2}
+    min: 50
+    max: 60
+  - type: 4
+    myTypeMap: {fileID: 1400590664}
+    mybaseTyle: {fileID: 11400000, guid: 8f8c3569c9846384187d0b69e947621d, type: 2}
+    min: 80
+    max: 89
   DungeonMap: {fileID: 1629797115}
   baseDungeonTile: {fileID: 11400000, guid: 51e3157cf04452a4f9e56e693244bf24, type: 2}
   playerManager: {fileID: 1186325068}
