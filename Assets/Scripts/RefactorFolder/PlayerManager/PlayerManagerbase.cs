@@ -33,6 +33,8 @@ public abstract class PlayerManagerbase : MonoBehaviour
         TurnManager.Instance.GetInputClass().Player.Shoot.started += OnShot;
         TurnManager.Instance.GetInputClass().Player.Move.started += OnMove;
 
+        currentArrowNumberText.text = $"Remainig Arrows : {currentArrowNumber.ToString()}";
+
     }
 
     protected virtual void OnDestroy()
@@ -77,11 +79,10 @@ public abstract class PlayerManagerbase : MonoBehaviour
         PopUpManager.Instance.SpawnPopUp(popUpMessage, "WIN", "PlayAgain", delegate { PlayAgain(); }, PopUpButtonNumbers.MainMenuPopUp);
     }
 
-    protected void OnMove(InputAction.CallbackContext context)
+    protected virtual void OnMove(InputAction.CallbackContext context)
     {
         MoveMethod(context.ReadValue<Vector2>(), DoorTypes.TopDoor);
-        if (TurnManager.Instance != null)
-            TurnManager.Instance.EndTurnMessage();
+
     }
 
     protected void MoveMethod(Vector2 moveDirection, DoorTypes usedDoor)

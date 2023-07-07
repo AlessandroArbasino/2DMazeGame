@@ -11,31 +11,24 @@ public abstract class MazeGenerationBase : MonoBehaviour
     [SerializeField] public Room[,] rooms;
     public List<Vector2> takenPositions = new List<Vector2>();
 
-    public int gridSizeX, gridSizeY = 20;
-    int numberOfRooms = 40;
+    public int gridSizeX = 20;
+    public int gridSizeY = 20;
+    protected int numberOfRooms = 40;
     public List<SpawnTypeValues> spawnTypeValues = new List<SpawnTypeValues>();
 
     public Tilemap DungeonMap;
     public TileBase baseDungeonTile;
 
-    public MultiplayerPlayerManager playerManager;
+    public PlayerManagerbase playerManager;
     public UIUpdater updater;
     public Dictionary<Vector2, Room> roomsPositionType = new Dictionary<Vector2, Room>();
     public virtual void Awake()
-    { 
+    {
         this.rooms = new Room[20 * 2, 20 * 2];
     }
 
     public virtual void Start()
     {
-        if (numberOfRooms >= (worldSize.x * 2) * (worldSize.y * 2))
-        {
-            numberOfRooms = Mathf.RoundToInt((worldSize.x * 2) * (worldSize.y * 2));
-        }
-
-        gridSizeX = Mathf.RoundToInt(worldSize.x);
-        gridSizeY = Mathf.RoundToInt(worldSize.y);
-
         CreateRooms();
         SetRoomDoors();
         DrawMap();

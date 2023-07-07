@@ -108,7 +108,7 @@ public class MultiplayerMazeGen : MonoBehaviourPun
         }
     }
 
-    private void DrawTileByType(Room room)
+    protected void DrawTileByType(Room room)
     {
         Vector3Int drawRoomPos = new Vector3Int((int)room.row, (int)room.col, 0);
         DungeonMap.SetTile(drawRoomPos, baseDungeonTile);
@@ -130,7 +130,7 @@ public class MultiplayerMazeGen : MonoBehaviourPun
             }
         }
     }
-    private void SetRoomDoors()
+    protected void SetRoomDoors()
     {
         for (int x = 0; x < (gridSizeX * 2); x++)
         {
@@ -182,7 +182,7 @@ public class MultiplayerMazeGen : MonoBehaviourPun
         }
     }
 
-    private void CreateRooms()
+    protected void CreateRooms()
     {
         //1 for starting room
         rooms[gridSizeX, gridSizeY] = new Room(0, 0, true);
@@ -204,7 +204,7 @@ public class MultiplayerMazeGen : MonoBehaviourPun
             rooms[(int)checkPos.x + gridSizeX, (int)checkPos.y + gridSizeY] = new Room((int)checkPos.x, (int)checkPos.y, false);
         }
     }
-    private Vector2 NewPosition()
+    protected Vector2 NewPosition()
     {
         int x = 0; int y = 0;
         Vector2 checkingPos = Vector2.zero;
@@ -247,7 +247,7 @@ public class MultiplayerMazeGen : MonoBehaviourPun
     }
 
 
-    private void ChooseRoomType(Room currentRoom)
+    protected void ChooseRoomType(Room currentRoom)
     {
         if (currentRoom.IsDefinitive)
             return;

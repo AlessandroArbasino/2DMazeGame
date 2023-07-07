@@ -21,7 +21,7 @@ public class TurnManager : MonoBehaviour
     {
         Instance = this;
         myInput = new Inputs();
-
+        myInput.Enable();
         PhotonNetwork.NetworkingClient.EventReceived += OnChangeTurnEvent;
 
     }

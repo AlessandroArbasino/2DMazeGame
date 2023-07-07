@@ -101,7 +101,11 @@ public class MultiplayerManager : PlayerManagerbase
             yield break;
         }
     }
-
+    protected override void OnMove(InputAction.CallbackContext context)
+    {
+        base.OnMove(context);
+        TurnManager.Instance.EndTurnMessage();
+    }
     protected override IEnumerator MoveCouroutine(Vector2 moveDirection, DoorTypes usedDoor)
     {
         NextRoomEntryDoor entry;
@@ -162,7 +166,7 @@ public class MultiplayerManager : PlayerManagerbase
     {
         if (!isOpponent)
             base.TranslateSprite(CurrentPlayerRoom, newCurrentRoom, isOpponent);
-       
+
         else
         {
             //clean the position before the movement 
@@ -181,7 +185,7 @@ public class MultiplayerManager : PlayerManagerbase
 
     protected override Room Teleport()
     {
-        Room teleportRoom=base.Teleport();
+        Room teleportRoom = base.Teleport();
 
 
         object[] content = new object[] { this.currentRoom, teleportRoom };

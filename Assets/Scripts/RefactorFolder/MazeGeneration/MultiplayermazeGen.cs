@@ -11,16 +11,19 @@ public class MultiplayermazeGen : MazeGenerationBase
     protected const byte UpdateRooms = 4;
     protected const byte DrawMapByte = 5;
 
-    public override void Awake()
-    {
-        base.Awake();
-    }
-
     public override void Start()
     {
         PhotonNetwork.NetworkingClient.EventReceived += SetTakenPositions;
         PhotonNetwork.NetworkingClient.EventReceived += SetRooms;
         PhotonNetwork.NetworkingClient.EventReceived += DrawMapEvent;
+
+        if (numberOfRooms >= (worldSize.x * 2) * (worldSize.y * 2))
+        {
+            numberOfRooms = Mathf.RoundToInt((worldSize.x * 2) * (worldSize.y * 2));
+        }
+
+        gridSizeX = Mathf.RoundToInt(worldSize.x);
+        gridSizeY = Mathf.RoundToInt(worldSize.y);
 
         if (PhotonNetwork.IsMasterClient)
             base.Start();
