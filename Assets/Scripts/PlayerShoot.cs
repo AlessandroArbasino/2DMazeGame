@@ -142,7 +142,6 @@ public class PlayerShoot
 
     public Vector2 CalcolateNewShootdirection(DoorTypes usedDoor)
     {
-        Debug.Log(usedDoor.ToString());
         return usedDoor switch
         {
             DoorTypes.TopDoor => new Vector2(0, -1),

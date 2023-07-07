@@ -53,7 +53,6 @@ public abstract class MazeGenerationBase : MonoBehaviour
         if (room.roomType == RoomType.Start)
             playerManager.InitPlayer(rooms, takenPositions, room);
 
-        Debug.Log(room.roomType);
         foreach (SpawnTypeValues value in spawnTypeValues)
         {
             if (value.type == room.roomType)

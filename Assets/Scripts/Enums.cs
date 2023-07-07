@@ -11,7 +11,8 @@ public enum RoomType
     Normal,
     Enemy,
     Hole,
-    Teleport
+    Teleport,
+    Arrow
 }
 [JsonConverter(typeof(StringEnumConverter))]
 public enum CellType

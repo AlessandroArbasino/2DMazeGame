@@ -83,6 +83,10 @@ public class MultiplayerManager : PlayerManagerbase
             PhotonNetwork.RaiseEvent(Translate_Arrow_Sprite_Event_Code, content, raiseEventOption, SendOptions.SendReliable);
             TranslateArrowSprite(currentArrowRoom, newArrowRoom);
 
+            if(newArrowRoom == currentRoom)
+            {
+                PlayerDeath(RoomType.Arrow);
+            }
             if (newArrowRoom.roomType == RoomType.Enemy)
             {
                 WinGame("Hero you defeat the terrible monster");
@@ -97,6 +101,7 @@ public class MultiplayerManager : PlayerManagerbase
             arrowMap.SetTile(new Vector3Int((int)currentArrowRoom.row, (int)currentArrowRoom.col, 0), null);
 
             object[] content = new object[] { currentArrowRoom };
+            TurnManager.Instance.EnableInput();
             PhotonNetwork.RaiseEvent(Destroy_ArrowSprite, content, raiseEventOption, SendOptions.SendReliable);
             yield break;
         }
@@ -122,7 +127,6 @@ public class MultiplayerManager : PlayerManagerbase
         PhotonNetwork.RaiseEvent(Translate_Player_Sprite_Event_Code, content, raiseEventOption, SendOptions.SendReliable);
         TranslateSprite(currentRoom, newCurrentRoom);
         currentRoom = newCurrentRoom;
-
 
         fogUpdater.UpdateFog(entry.nextRoom);
 

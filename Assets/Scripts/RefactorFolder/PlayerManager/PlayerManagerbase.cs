@@ -60,6 +60,8 @@ public abstract class PlayerManagerbase : MonoBehaviour
             currentArrowNumber--;
             currentArrowNumberText.text = $"Remainig Arrows : {currentArrowNumber.ToString()}";
         }
+
+        TurnManager.Instance.DisableInput();
     }
 
     protected void ShootMethod(Vector2 shootDirection, DoorTypes usedDoor, Room currentArrowRoom)
@@ -123,6 +125,9 @@ public abstract class PlayerManagerbase : MonoBehaviour
                 break;
             case RoomType.Hole:
                 LoseGame("You fall into an endless hole");
+                break;
+            case RoomType.Arrow:
+                LoseGame("Your arrow kills you");
                 break;
         }
     }

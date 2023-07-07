@@ -26,6 +26,10 @@ public class SinglePlayerManager : PlayerManagerbase
         {
             TranslateArrowSprite(currentArrowRoom, newArrowRoom);
 
+            if (newArrowRoom == currentRoom)
+            {
+                PlayerDeath(RoomType.Arrow);
+            }
             if (newArrowRoom.roomType == RoomType.Enemy)
             {
                 WinGame("Hero you defeat the terrible monster");
@@ -37,6 +41,7 @@ public class SinglePlayerManager : PlayerManagerbase
         else
         {
             arrowMap.SetTile(new Vector3Int((int)currentArrowRoom.row, (int)currentArrowRoom.col, 0), null);
+            TurnManager.Instance.EnableInput();
             yield break;
         }
     }
