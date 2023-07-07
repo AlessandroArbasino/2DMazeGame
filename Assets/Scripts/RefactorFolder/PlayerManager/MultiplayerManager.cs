@@ -183,16 +183,16 @@ public class MultiplayerManager : PlayerManagerbase
         PhotonNetwork.RaiseEvent(OpponentsDeath, null, raiseEventOption, SendOptions.SendReliable);
     }
 
-    protected override Room Teleport()
+    protected override void Teleport()
     {
-        Room teleportRoom = base.Teleport();
-
+        Room teleportRoom = playerMovement.Teleport();
 
         object[] content = new object[] { this.currentRoom, teleportRoom };
         RaiseEventOptions raiseEventOption = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
         PhotonNetwork.RaiseEvent(Translate_Player_Sprite_Event_Code, content, raiseEventOption, SendOptions.SendReliable);
-
-        return teleportRoom;
+        TranslateSprite(currentRoom, teleportRoom);
+        currentRoom = teleportRoom;
+        fogUpdater.UpdateFog(teleportRoom); ;
     }
 
     public void OnEvent(EventData photonEvent)

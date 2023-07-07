@@ -133,14 +133,12 @@ public abstract class PlayerManagerbase : MonoBehaviour
         PopUpManager.Instance.SpawnPopUp(message, "Defeat", "PlayAgain", delegate { PlayAgain(); }, PopUpButtonNumbers.MainMenuPopUp);
     }
 
-    protected virtual Room Teleport()
+    protected virtual void Teleport()
     {
         Room teleportRoom = playerMovement.Teleport();
         TranslateSprite(currentRoom, teleportRoom);
         currentRoom = teleportRoom;
         fogUpdater.UpdateFog(teleportRoom);
-
-        return teleportRoom;
     }
 
     protected void PlayAgain()
