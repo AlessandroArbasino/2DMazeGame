@@ -11,6 +11,13 @@ public class MultiplayermazeGen : MazeGenerationBase
     protected const byte UpdateRooms = 4;
     protected const byte DrawMapByte = 5;
 
+    public override void Awake()
+    {
+        base.Awake();
+
+        PhotonPeer.RegisterType(typeof(Room), (byte)'M', Room.ObjectToByteArray, Room.ByteArrayToObject);
+        PhotonPeer.RegisterType(typeof(Vector2), (byte)'W', Room.SerializeVector2, Room.DeserializeVector2);
+    }
     public override void Start()
     {
         PhotonNetwork.NetworkingClient.EventReceived += SetTakenPositions;
