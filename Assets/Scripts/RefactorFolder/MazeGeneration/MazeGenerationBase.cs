@@ -13,7 +13,8 @@ public abstract class MazeGenerationBase : MonoBehaviour
 
     public int gridSizeX = 10;
     public int gridSizeY = 10;
-   [SerializeField] protected int numberOfRooms = 40;
+    protected int numberOfRooms = 40;
+    [SerializeField] protected int minNumberOfRooms = 100;
     public List<SpawnTypeValues> spawnTypeValues = new List<SpawnTypeValues>();
 
     public Tilemap DungeonMap;
@@ -25,6 +26,7 @@ public abstract class MazeGenerationBase : MonoBehaviour
     public virtual void Awake()
     {
         this.rooms = new Room[20 * 2, 20 * 2];
+        numberOfRooms = Random.Range(minNumberOfRooms, (int)worldSize.x * (int)worldSize.y);
     }
 
     public virtual void Start()
@@ -159,9 +161,9 @@ public abstract class MazeGenerationBase : MonoBehaviour
                     y -= 1;
             else
                 if (positive)
-                    x += 1;
-                else
-                    x -= 1;
+                x += 1;
+            else
+                x -= 1;
             checkingPos = new Vector2(x, y);
 
         } while (takenPositions.Contains(checkingPos) || x >= gridSizeX || x < -gridSizeX || y >= gridSizeY || y < -gridSizeY);

@@ -6222,11 +6222,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f20eb156cee25b4e83a57815e10b132, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldSize: {x: 10, y: 10}
+  worldSize: {x: 20, y: 20}
   takenPositions: []
   gridSizeX: 20
   gridSizeY: 20
-  numberOfRooms: 200
+  minNumberOfRooms: 100
   spawnTypeValues:
   - type: 0
     myTypeMap: {fileID: 1772402849}
