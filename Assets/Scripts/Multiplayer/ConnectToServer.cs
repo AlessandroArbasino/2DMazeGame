@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.SceneManagement;
+using Photon.Realtime;
 
 public class ConnectToServer : MonoBehaviourPunCallbacks
 {
@@ -14,8 +15,12 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        if (!PhotonNetwork.JoinLobby())
-            PopUpManager.Instance.SpawnPopUp("no internetConnection", "NO INTERNET","Close", delegate { }, PopUpButtonNumbers.ErrorPopUp);
+        PhotonNetwork.JoinLobby();
+    }
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        PopUpManager.Instance.SpawnPopUp("Something went wrong try again", "Error", "Close", delegate { }, PopUpButtonNumbers.ErrorPopUp);
     }
 
     public override void OnJoinedLobby()

@@ -24,8 +24,7 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
     {
         RoomOptions options = new RoomOptions();
         options.MaxPlayers = 2;
-        if(!PhotonNetwork.CreateRoom(createRoomInput.text,options))
-            PopUpManager.Instance.SpawnPopUp("no internetConnection", "NO INTERNET", "Close", delegate { }, PopUpButtonNumbers.ErrorPopUp);
+        PhotonNetwork.CreateRoom(createRoomInput.text, options);
     }
 
     public void JoinRoom()
@@ -40,6 +39,13 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
             PhotonNetwork.LoadLevel("WaitingRoomScene");
         else
             PhotonNetwork.LoadLevel("MultiplayerScene");
+    }
+
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        base.OnJoinRoomFailed(returnCode, message);
+
+        PopUpManager.Instance.SpawnPopUp(message, "Error", "Close", delegate { }, PopUpButtonNumbers.ErrorPopUp);
     }
 
 }
