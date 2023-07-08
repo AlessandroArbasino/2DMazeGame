@@ -7,7 +7,7 @@ public class MenuButtonFunctions : MonoBehaviour
 {
     public void PlaySinglePlayerMatch()
     {
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("SinglePlayerScene");
     }
 
     public void PlayMultiPlayerMatch()

@@ -11,9 +11,9 @@ public abstract class MazeGenerationBase : MonoBehaviour
     [SerializeField] public Room[,] rooms;
     public List<Vector2> takenPositions = new List<Vector2>();
 
-    public int gridSizeX = 20;
-    public int gridSizeY = 20;
-    protected int numberOfRooms = 40;
+    public int gridSizeX = 10;
+    public int gridSizeY = 10;
+   [SerializeField] protected int numberOfRooms = 40;
     public List<SpawnTypeValues> spawnTypeValues = new List<SpawnTypeValues>();
 
     public Tilemap DungeonMap;
@@ -92,7 +92,7 @@ public abstract class MazeGenerationBase : MonoBehaviour
                     rooms[x, y].doorTop = (rooms[x, y + 1] != null);
                 }
 
-                if (y + 1 < 0)
+                if (x - 1 < 0)
                 {
                     rooms[x, y].doorleft = false;
                 }
@@ -153,27 +153,15 @@ public abstract class MazeGenerationBase : MonoBehaviour
             bool positive = (UnityEngine.Random.value < 0.5f);
 
             if (UpDown)
-            {
                 if (positive)
-                {
                     y += 1;
-                }
                 else
-                {
                     y -= 1;
-                }
-            }
             else
-            {
                 if (positive)
-                {
                     x += 1;
-                }
                 else
-                {
                     x -= 1;
-                }
-            }
             checkingPos = new Vector2(x, y);
 
         } while (takenPositions.Contains(checkingPos) || x >= gridSizeX || x < -gridSizeX || y >= gridSizeY || y < -gridSizeY);

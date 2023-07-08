@@ -28,12 +28,16 @@ public abstract class PlayerManagerbase : MonoBehaviour
 
     [SerializeField] protected int currentArrowNumber = 5;
     [SerializeField] protected TextMeshProUGUI currentArrowNumberText;
+
+    [SerializeField] protected Transform playerPos;
     protected virtual void Start()
     {
         TurnManager.Instance.GetInputClass().Player.Shoot.started += OnShot;
         TurnManager.Instance.GetInputClass().Player.Move.started += OnMove;
 
         currentArrowNumberText.text = $"Remainig Arrows : {currentArrowNumber.ToString()}";
+
+        
 
     }
 
@@ -49,6 +53,8 @@ public abstract class PlayerManagerbase : MonoBehaviour
         playerShoot = new PlayerShoot(rooms, takenPositions);
         fogUpdater.UpdateFog(currentRoom);
         this.currentRoom = currentRoom;
+
+        playerPos.position = new Vector3(currentRoom.row, currentRoom.col, 0);
 
     }
 
@@ -103,6 +109,8 @@ public abstract class PlayerManagerbase : MonoBehaviour
         playerMap.SetTile(new Vector3Int((int)CurrentPlayerRoom.row, (int)CurrentPlayerRoom.col, 0), null);
         //set the new player base tile
         playerMap.SetTile(new Vector3Int((int)newCurrentRoom.row, (int)newCurrentRoom.col, 0), playerBase);
+
+        playerPos.position = new Vector3(newCurrentRoom.row, newCurrentRoom.col,0);
     }
 
     protected virtual void TranslateArrowSprite(Room previosArrowRoom, Room newCurrentRoom, bool isOpponent = false)
