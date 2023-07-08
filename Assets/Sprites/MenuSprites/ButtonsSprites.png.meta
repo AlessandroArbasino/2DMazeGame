@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cbc5a7b5df6e00245b0f70d3ca074591
+guid: 2f618a0ec51260e4e89ede0e21e49091
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 600
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -113,29 +113,122 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: iPhone
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: DungeonAssets_4_0
+      name: ButtonsSprites_0
+      rect:
+        serializedVersion: 2
+        x: 379
+        y: 420
+        width: 530
+        height: 391
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db537921384d2e64f9fa666686096803
+      internalID: 71983617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ButtonsSprites_1
+      rect:
+        serializedVersion: 2
+        x: 1028
+        y: 501
+        width: 599
+        height: 309
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 568f14558e2293943b348e8b635d7404
+      internalID: -1703280904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ButtonsSprites_2
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 300
+        width: 268
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39b0bcf947b0ede43842106d3f03d3ba
+      internalID: 1717826215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ButtonsSprites_3
+      rect:
+        serializedVersion: 2
+        x: 379
+        y: 2
+        width: 530
+        height: 388
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7cf1f5c250c15448803ee66e52a3ada
+      internalID: -1794333208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ButtonsSprites_4
+      rect:
+        serializedVersion: 2
+        x: 940
+        y: 75
+        width: 618
+        height: 310
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b269adaa12e30e44ea9d60eb4737c983
+      internalID: 810768844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ButtonsSprites_5
       rect:
         serializedVersion: 2
         x: 0
-        y: 471
-        width: 204
-        height: 204
+        y: 200
+        width: 270
+        height: 76
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -143,20 +236,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 33046786409e8ea4f80e1e5bfb02472f
-      internalID: 2099285799
+      spriteID: fbc8fac1aead3134f98105c72e8a4828
+      internalID: 73512624
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DungeonAssets_4_1
+      name: ButtonsSprites_6
       rect:
         serializedVersion: 2
-        x: 232
-        y: 471
-        width: 205
-        height: 204
+        x: 5
+        y: 98
+        width: 265
+        height: 71
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -164,155 +257,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ed7c73aaa51f73142b6756a4170b1903
-      internalID: -68231369
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DungeonAssets_4_2
-      rect:
-        serializedVersion: 2
-        x: 465
-        y: 471
-        width: 205
-        height: 204
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8594c42f6f6226d40b90e14672816079
-      internalID: 1083589097
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DungeonAssets_4_3
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 236
-        width: 204
-        height: 204
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 95c6a65ecc21f9b4c8ab45f324c10170
-      internalID: 125401383
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DungeonAssets_4_4
-      rect:
-        serializedVersion: 2
-        x: 232
-        y: 236
-        width: 205
-        height: 204
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 00aa478d61e25754eacccf4e2f88101f
-      internalID: -54603262
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DungeonAssets_4_5
-      rect:
-        serializedVersion: 2
-        x: 465
-        y: 236
-        width: 205
-        height: 204
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2e7da8eb7a8cffd48b5b716eca077a7d
-      internalID: 568864545
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DungeonAssets_4_6
-      rect:
-        serializedVersion: 2
-        x: 2
-        y: 1
-        width: 205
-        height: 204
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7e0337ac84970074d8539039180bc7bd
-      internalID: -1285209453
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DungeonAssets_4_7
-      rect:
-        serializedVersion: 2
-        x: 235
-        y: 1
-        width: 205
-        height: 204
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 15b1db60b61f04349a80cdee3d7e495a
-      internalID: -1541659464
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DungeonAssets_4_8
-      rect:
-        serializedVersion: 2
-        x: 468
-        y: 0
-        width: 204
-        height: 204
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: aa972d51cb1e29f4e822e135f39955c0
-      internalID: -1815337897
+      spriteID: 628ceba47dd9c524887d192e15a7c52c
+      internalID: -1113415208
       vertices: []
       indices: 
       edges: []
@@ -328,15 +274,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      DungeonAssets_4_1: -68231369
-      DungeonAssets_4_7: -1541659464
-      DungeonAssets_4_4: -54603262
-      DungeonAssets_4_8: -1815337897
-      DungeonAssets_4_6: -1285209453
-      DungeonAssets_4_2: 1083589097
-      DungeonAssets_4_0: 2099285799
-      DungeonAssets_4_5: 568864545
-      DungeonAssets_4_3: 125401383
+      ButtonsSprites_0: 71983617
+      ButtonsSprites_3: -1794333208
+      ButtonsSprites_1: -1703280904
+      ButtonsSprites_4: 810768844
+      ButtonsSprites_2: 1717826215
+      ButtonsSprites_6: -1113415208
+      ButtonsSprites_5: 73512624
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

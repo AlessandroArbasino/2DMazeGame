@@ -35,7 +35,7 @@ public abstract class PlayerManagerbase : MonoBehaviour
         TurnManager.Instance.GetInputClass().Player.Shoot.started += OnShot;
         TurnManager.Instance.GetInputClass().Player.Move.started += OnMove;
 
-        currentArrowNumberText.text = $"Remainig Arrows : {currentArrowNumber.ToString()}";
+        currentArrowNumberText.text = $"Remaining Arrows: {currentArrowNumber.ToString()}";
 
         
 
@@ -64,7 +64,7 @@ public abstract class PlayerManagerbase : MonoBehaviour
         {
             ShootMethod(context.ReadValue<Vector2>(), DoorTypes.TopDoor, currentRoom);
             currentArrowNumber--;
-            currentArrowNumberText.text = $"Remainig Arrows : {currentArrowNumber.ToString()}";
+            currentArrowNumberText.text = $"Remaining Arrows: {currentArrowNumber.ToString()}";
         }
 
         TurnManager.Instance.DisableInput();
@@ -84,7 +84,7 @@ public abstract class PlayerManagerbase : MonoBehaviour
     {
         TurnManager.Instance.DisableInput();
 
-        PopUpManager.Instance.SpawnPopUp(popUpMessage, "WIN", "PlayAgain", delegate { PlayAgain(); }, PopUpButtonNumbers.MainMenuPopUp);
+        PopUpManager.Instance.SpawnPopUp(popUpMessage, "WIN", "Play Again", delegate { PlayAgain(); }, PopUpButtonNumbers.MainMenuPopUp);
     }
 
     protected virtual void OnMove(InputAction.CallbackContext context)
@@ -129,13 +129,13 @@ public abstract class PlayerManagerbase : MonoBehaviour
         switch (whatKillsPlayer)
         {
             case RoomType.Enemy:
-                LoseGame("The monster kills you");
+                LoseGame("The monster killed you");
                 break;
             case RoomType.Hole:
-                LoseGame("You fall into an endless hole");
+                LoseGame("You fell into an endless hole");
                 break;
             case RoomType.Arrow:
-                LoseGame("Your arrow kills you");
+                LoseGame("Your arrow killed you");
                 break;
         }
     }
@@ -143,7 +143,7 @@ public abstract class PlayerManagerbase : MonoBehaviour
     protected void LoseGame(string message)
     {
         TurnManager.Instance.DisableInput();
-        PopUpManager.Instance.SpawnPopUp(message, "Defeat", "PlayAgain", delegate { PlayAgain(); }, PopUpButtonNumbers.MainMenuPopUp);
+        PopUpManager.Instance.SpawnPopUp(message, "Defeat", "Play Again", delegate { PlayAgain(); }, PopUpButtonNumbers.MainMenuPopUp);
     }
 
     protected virtual void Teleport()
@@ -157,7 +157,7 @@ public abstract class PlayerManagerbase : MonoBehaviour
     protected void PlayAgain()
     {
         StopAllCoroutines();
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("SinglePlayerScene");
     }
 }
 

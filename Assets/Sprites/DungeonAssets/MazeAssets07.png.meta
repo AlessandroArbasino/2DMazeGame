@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e3aaf704b2d26ad4a8ad853efe8cbb59
+guid: d0da6a8d5c363ff4586a691ef211582f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 250
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -113,29 +113,17 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: iPhone
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: DungeonAssets_2_0
+      name: MazeAssets07_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 473
-        width: 202
-        height: 203
+        y: 509
+        width: 222
+        height: 222
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -143,20 +131,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ee1c5c62aec244946916dd68ee153d83
-      internalID: 1909537148
+      spriteID: 0fbbcc8f4c9b606438337606c2564663
+      internalID: 1666403351
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DungeonAssets_2_1
+      name: MazeAssets07_1
       rect:
         serializedVersion: 2
-        x: 231
-        y: 473
-        width: 203
-        height: 203
+        x: 250
+        y: 509
+        width: 221
+        height: 222
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -164,20 +152,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e1a704e21bd018d4d97766a1465b3898
-      internalID: -2085333574
+      spriteID: 4d9702b75c9fbef49876f3a773db487d
+      internalID: -1636975357
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DungeonAssets_2_2
+      name: MazeAssets07_2
       rect:
         serializedVersion: 2
-        x: 462
-        y: 473
-        width: 204
-        height: 203
+        x: 506
+        y: 509
+        width: 222
+        height: 222
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -185,83 +173,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 65982434c57bb4e49a1d925639b34e6e
-      internalID: 63378692
+      spriteID: 5a5f3bd96fea9f044b688989bc10180d
+      internalID: 614093528
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DungeonAssets_2_3
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 239
-        width: 202
-        height: 204
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f53e389d2d744df4aa69735b2d5149cc
-      internalID: -1122125783
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DungeonAssets_2_4
-      rect:
-        serializedVersion: 2
-        x: 231
-        y: 239
-        width: 203
-        height: 204
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: af3f00532ac957946a4eca781a610c74
-      internalID: 620725855
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DungeonAssets_2_5
-      rect:
-        serializedVersion: 2
-        x: 462
-        y: 239
-        width: 204
-        height: 204
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 023d599413ea84945b96952b1ae5a28e
-      internalID: 1615438569
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DungeonAssets_2_6
+      name: MazeAssets07_3
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 202
-        height: 203
+        y: 253
+        width: 222
+        height: 223
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -269,20 +194,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1b9f69caa4f90564ab0726dbc125ae54
-      internalID: -977343327
+      spriteID: 7899e44249990d54f946db22e58dc941
+      internalID: -1423504974
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DungeonAssets_2_7
+      name: MazeAssets07_4
       rect:
         serializedVersion: 2
-        x: 231
-        y: 0
-        width: 203
-        height: 204
+        x: 250
+        y: 253
+        width: 221
+        height: 223
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -290,20 +215,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1576f0321b5e90a4d93bc53ef718275d
-      internalID: 1207922386
+      spriteID: 7fcfe92875c30094d8ef1eb2bde41634
+      internalID: -1703075594
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DungeonAssets_2_8
+      name: MazeAssets07_5
       rect:
         serializedVersion: 2
-        x: 464
-        y: 0
-        width: 202
-        height: 203
+        x: 506
+        y: 253
+        width: 222
+        height: 223
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -311,8 +236,71 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fab9a8934a2429d4bab656e8a59e780a
-      internalID: 1058193450
+      spriteID: 0edf3bb6baa7821409ad3bea4fb57693
+      internalID: -1041977689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MazeAssets07_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1
+        width: 222
+        height: 222
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35bbd6f5889e7b64a98331bac185898b
+      internalID: 2136441481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MazeAssets07_7
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 1
+        width: 221
+        height: 222
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87720fbb4e01e3444a904228fe39a304
+      internalID: -1057479513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MazeAssets07_8
+      rect:
+        serializedVersion: 2
+        x: 505
+        y: 0
+        width: 224
+        height: 222
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 003e7a4265516ef459ba0e6d83d73cab
+      internalID: -1555999753
       vertices: []
       indices: 
       edges: []
@@ -328,15 +316,15 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      DungeonAssets_2_3: -1122125783
-      DungeonAssets_2_7: 1207922386
-      DungeonAssets_2_4: 620725855
-      DungeonAssets_2_1: -2085333574
-      DungeonAssets_2_2: 63378692
-      DungeonAssets_2_5: 1615438569
-      DungeonAssets_2_6: -977343327
-      DungeonAssets_2_0: 1909537148
-      DungeonAssets_2_8: 1058193450
+      MazeAssets07_3: -1423504974
+      MazeAssets07_1: -1636975357
+      MazeAssets07_4: -1703075594
+      MazeAssets07_0: 1666403351
+      MazeAssets07_6: 2136441481
+      MazeAssets07_5: -1041977689
+      MazeAssets07_7: -1057479513
+      MazeAssets07_2: 614093528
+      MazeAssets07_8: -1555999753
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -24,9 +24,6 @@ public class MultiplayermazeGen : MazeGenerationBase
         PhotonNetwork.NetworkingClient.EventReceived += SetRooms;
         PhotonNetwork.NetworkingClient.EventReceived += DrawMapEvent;
 
-        gridSizeX = Mathf.RoundToInt(worldSize.x);
-        gridSizeY = Mathf.RoundToInt(worldSize.y);
-
         if (PhotonNetwork.IsMasterClient)
             base.Start();
 

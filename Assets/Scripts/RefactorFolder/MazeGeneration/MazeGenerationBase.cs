@@ -27,6 +27,9 @@ public abstract class MazeGenerationBase : MonoBehaviour
     {
         this.rooms = new Room[20 * 2, 20 * 2];
         numberOfRooms = Random.Range(minNumberOfRooms, (int)worldSize.x * (int)worldSize.y);
+
+        gridSizeX = (int)worldSize.x / 2;
+        gridSizeY = (int)worldSize.y / 2;
     }
 
     public virtual void Start()

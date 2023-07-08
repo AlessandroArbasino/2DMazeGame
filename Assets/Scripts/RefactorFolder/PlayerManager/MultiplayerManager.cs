@@ -89,7 +89,7 @@ public class MultiplayerManager : PlayerManagerbase
             }
             if (newArrowRoom.roomType == RoomType.Enemy)
             {
-                WinGame("Hero you defeat the terrible monster");
+                WinGame("Mission achieved: you defeated the monster");
                 PhotonNetwork.RaiseEvent(MonsterKilled, null, raiseEventOption, SendOptions.SendReliable);
             }
 
@@ -228,15 +228,15 @@ public class MultiplayerManager : PlayerManagerbase
         }
         if (eventCode == OpponentsDeath)
         {
-            WinGame("The other player is dead congratulations");
+            WinGame("The opponent is dead congratulations");
         }
         if (eventCode == MonsterKilled)
         {
-            LoseGame("The other player kills the monster");
+            LoseGame("The opponent killed the monster");
         }
         if (eventCode == NoMoreAmmo)
         {
-            WinGame("The other player has no arrow to kill the monster");
+            WinGame("The opponent has no arrows left to kill the monster");
         }
     }
 }
