@@ -37,6 +37,7 @@ public class MultiplayerManager : PlayerManagerbase
 
         PhotonNetwork.LeaveRoom();
         PhotonNetwork.LeaveLobby();
+        PhotonNetwork.Disconnect();
     }
 
     public override void InitPlayer(Room[,] rooms, List<Vector2> takenPositions, Room currentRoom)

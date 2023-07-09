@@ -23,7 +23,8 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
 
     public override void OnDisconnected(DisconnectCause cause)
     {
-        PopUpManager.Instance.SpawnPopUp("Something went wrong try again", "Error", "Close", delegate { }, PopUpButtonNumbers.ErrorPopUp);
+        if(cause!= DisconnectCause.DisconnectByClientLogic)
+            PopUpManager.Instance.SpawnPopUp("Something went wrong try again", "Error", "Close", delegate { }, PopUpButtonNumbers.ErrorPopUp);
     }
 
     public override void OnJoinedLobby()
