@@ -7,10 +7,13 @@ using Photon.Realtime;
 
 public class ConnectToServer : MonoBehaviourPunCallbacks
 {
-    // Start is called before the first frame update
     public void MuliplayerButton()
     {
+        if(!PhotonNetwork.IsConnected)
         PhotonNetwork.ConnectUsingSettings();
+        else
+            SceneManager.LoadScene("CreateLobby");
+
     }
 
     public override void OnConnectedToMaster()

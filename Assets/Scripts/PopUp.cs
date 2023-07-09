@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static PopUpManager;
 
-public class PopUp : MonoBehaviour
+public abstract class PopUp : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI messageText;
     [SerializeField] private TextMeshProUGUI titleText;
@@ -42,9 +42,10 @@ public class PopUp : MonoBehaviour
         functionalityButtonContainer.SetActive(true);
 
         functionalityButton.onClick.AddListener(delegate { function(); });
+        OtherButton.onClick.AddListener(delegate { BackToMainMenu(); });
     }
 
-    public void BackToMainMenu()
+    public virtual void BackToMainMenu()
     {
         SceneManager.LoadScene("MenuScene");
     }

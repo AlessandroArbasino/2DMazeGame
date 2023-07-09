@@ -34,6 +34,9 @@ public class MultiplayerManager : PlayerManagerbase
     {
         base.OnDestroy();
         PhotonNetwork.NetworkingClient.EventReceived -= OnEvent;
+
+        PhotonNetwork.LeaveRoom();
+        PhotonNetwork.LeaveLobby();
     }
 
     public override void InitPlayer(Room[,] rooms, List<Vector2> takenPositions, Room currentRoom)

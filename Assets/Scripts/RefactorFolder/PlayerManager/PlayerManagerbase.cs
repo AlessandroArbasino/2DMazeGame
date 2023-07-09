@@ -44,8 +44,8 @@ public abstract class PlayerManagerbase : MonoBehaviour
 
     protected virtual void OnDestroy()
     {
-        TurnManager.Instance.GetInputClass().Player.Shoot.started += OnShot;
-        TurnManager.Instance.GetInputClass().Player.Move.started += OnMove;
+        TurnManager.Instance.GetInputClass().Player.Shoot.started -= OnShot;
+        TurnManager.Instance.GetInputClass().Player.Move.started -= OnMove;
 
     }
     public virtual void InitPlayer(Room[,] rooms, List<Vector2> takenPositions, Room currentRoom)

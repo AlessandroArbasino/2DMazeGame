@@ -1,6 +1,8 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Windows;
 
 public class SinglePlayerManager : PlayerManagerbase
@@ -46,7 +48,14 @@ public class SinglePlayerManager : PlayerManagerbase
             yield break;
         }
     }
-
+    public override void OnShot(InputAction.CallbackContext context)
+    {
+        base.OnShot(context);
+        if (currentArrowNumber == 0)
+        {
+            LoseGame("Not enought arrows to win the game");
+        }
+    }
     protected override IEnumerator MoveCouroutine(Vector2 moveDirection, DoorTypes usedDoor)
     {
         NextRoomEntryDoor entry;

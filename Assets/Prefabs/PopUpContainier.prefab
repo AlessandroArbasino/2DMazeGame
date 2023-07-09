@@ -1427,7 +1427,7 @@ GameObject:
   - component: {fileID: 7989756478638398934}
   - component: {fileID: 7989756478638398929}
   - component: {fileID: 7989756478638398928}
-  - component: {fileID: 3119218676269295537}
+  - component: {fileID: 93095294881607006}
   m_Layer: 0
   m_Name: PopUpContainier
   m_TagString: Untagged
@@ -1542,7 +1542,7 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &3119218676269295537
+--- !u!114 &93095294881607006
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1551,7 +1551,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7989756478638398930}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d91216f109f29ad45ac4136db34116cd, type: 3}
+  m_Script: {fileID: 11500000, guid: 5e8945b2c163a4240a57b19db65dace3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   messageText: {fileID: 892244848087883875}

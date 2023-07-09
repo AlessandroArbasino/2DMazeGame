@@ -26,7 +26,10 @@ public class TurnManager : MonoBehaviour
 
     }
 
-
+    private void OnDestroy()
+    {
+        PhotonNetwork.NetworkingClient.EventReceived -= OnChangeTurnEvent;
+    }
     public Inputs GetInputClass() { return myInput; }
     public void BeginTurnMessage()
     {
