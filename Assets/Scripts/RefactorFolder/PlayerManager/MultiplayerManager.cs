@@ -113,16 +113,16 @@ public class MultiplayerManager : PlayerManagerbase
 
     protected override void WinGame(string popUpMessage)
     {
-        base.WinGame(popUpMessage);
+        TurnManager.Instance.DisableInput();
 
-        PhotonNetwork.Disconnect();
+        PopUpManager.Instance.SpawnPopUp(popUpMessage, "WIN", "Play Again", delegate { PlayAgain(); }, PopUpButtonNumbers.MainMenuPopUp);
     }
 
     protected override void LoseGame(string message)
     {
-        base.LoseGame(message);
+        TurnManager.Instance.DisableInput();
+        PopUpManager.Instance.SpawnPopUp(message, "Defeat", "Play Again", delegate { PlayAgain(); }, PopUpButtonNumbers.MainMenuPopUp);
 
-        PhotonNetwork.Disconnect();
     }
     protected override void OnMove(InputAction.CallbackContext context)
     {
@@ -200,9 +200,8 @@ public class MultiplayerManager : PlayerManagerbase
 
     protected override void PlayerDeath(RoomType whatKillsPlayer)
     {
-        base.PlayerDeath(whatKillsPlayer);
-
         PhotonNetwork.RaiseEvent(OpponentsDeath, null, raiseEventOption, SendOptions.SendReliable);
+        base.PlayerDeath(whatKillsPlayer);
     }
 
     protected override void Teleport()
@@ -261,7 +260,7 @@ public class MultiplayerManager : PlayerManagerbase
         {
             object[] data = (object[])photonEvent.CustomData;
             Room newMonsterRoom = (Room)data[0];
-            SetMonsterRoom(newMonsterRoom);
+            SetMonsterPosition(newMonsterRoom);
         }
         if (eventCode == OpponentsDeath)
         {

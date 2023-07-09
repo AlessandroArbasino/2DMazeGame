@@ -88,7 +88,7 @@ public abstract class PlayerManagerbase : MonoBehaviour
     {
         TurnManager.Instance.DisableInput();
 
-        PopUpManager.Instance.SpawnPopUp(popUpMessage, "WIN", "Play Again", delegate { PlayAgain(); }, PopUpButtonNumbers.MainMenuPopUp);
+        PopUpManager.Instance.SpawnPopUp(popUpMessage, "WIN", "Play Again", delegate { PlayAgain(); }, PopUpButtonNumbers.PlayAgainMainMenuPopUp);
     }
 
     protected virtual void OnMove(InputAction.CallbackContext context)
@@ -175,7 +175,7 @@ public abstract class PlayerManagerbase : MonoBehaviour
     protected virtual void LoseGame(string message)
     {
         TurnManager.Instance.DisableInput();
-        PopUpManager.Instance.SpawnPopUp(message, "Defeat", "Play Again", delegate { PlayAgain(); }, PopUpButtonNumbers.MainMenuPopUp);
+        PopUpManager.Instance.SpawnPopUp(message, "Defeat", "Play Again", delegate { PlayAgain(); }, PopUpButtonNumbers.PlayAgainMainMenuPopUp);
     }
 
     protected virtual void Teleport()
