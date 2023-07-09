@@ -103,7 +103,13 @@ public class PlayerMovement
         return new NextRoomEntryDoor(newRoom, newusedDoor);
     }
 
-    private Room GetNextRoom(Vector2 newGripPositoin)
+    public Vector2 RandomizePositionInTakenPosition()
+    {
+        int random = Random.Range(0, takenPositions.Count);
+
+        return takenPositions[random];
+    }
+    public Room GetNextRoom(Vector2 newGripPositoin)
     {
         Room newRoom = null;
         for (int x = 0; x < (gridSizeX * 2); x++)

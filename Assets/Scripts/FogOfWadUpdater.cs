@@ -13,4 +13,9 @@ public class FogOfWadUpdater : MonoBehaviour
         //clean all the visited tiles from the fog
         fogOfWarTileMap.SetTile(new Vector3Int((int)discoveredRoom.row, (int)discoveredRoom.col, 0), null);
     }
+
+    public bool CheckFogTile(Room controllRoom)
+    {
+        return fogOfWarTileMap.HasTile(new Vector3Int((int)controllRoom.row, (int)controllRoom.col, 0));
+    }
 }

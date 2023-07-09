@@ -15,6 +15,7 @@ public class MultiplayerManager : PlayerManagerbase
     protected const byte OpponentsDeath = 9;
     protected const byte MonsterKilled = 10;
     protected const byte NoMoreAmmo = 20;
+    protected const byte Move_Monster = 21;
     // Start is called before the first frame update
 
     RaiseEventOptions raiseEventOption = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
@@ -99,12 +100,29 @@ public class MultiplayerManager : PlayerManagerbase
         else
         {
             arrowMap.SetTile(new Vector3Int((int)currentArrowRoom.row, (int)currentArrowRoom.col, 0), null);
-
             object[] content = new object[] { currentArrowRoom };
             TurnManager.Instance.EnableInput();
             PhotonNetwork.RaiseEvent(Destroy_ArrowSprite, content, raiseEventOption, SendOptions.SendReliable);
+
+            Room newMonsterPos=NewMonsterPosition();
+            object[] monsterContent = new object[] { newMonsterPos };
+            PhotonNetwork.RaiseEvent(Move_Monster, monsterContent, raiseEventOption, SendOptions.SendReliable);
             yield break;
         }
+    }
+
+    protected override void WinGame(string popUpMessage)
+    {
+        base.WinGame(popUpMessage);
+
+        PhotonNetwork.Disconnect();
+    }
+
+    protected override void LoseGame(string message)
+    {
+        base.LoseGame(message);
+
+        PhotonNetwork.Disconnect();
     }
     protected override void OnMove(InputAction.CallbackContext context)
     {
@@ -199,6 +217,19 @@ public class MultiplayerManager : PlayerManagerbase
         fogUpdater.UpdateFog(teleportRoom); ;
     }
 
+    public void SetMonsterPosition(Room newMonsterPosition)
+    {
+        //translate sprite
+        TranslateMonsterSprite(currentMonsterRoom, newMonsterPosition);
+
+        //delete old blood ui
+        UIUpdater.Instance.InitNeightbours(currentMonsterRoom, RoomType.Enemy, true);
+        currentMonsterRoom.roomType = RoomType.Normal;
+        newMonsterPosition.roomType= RoomType.Enemy;
+        currentMonsterRoom = newMonsterPosition;
+        //draw the new blood ui
+        UIUpdater.Instance.InitNeightbours(newMonsterPosition, RoomType.Enemy);
+    }
     public void OnEvent(EventData photonEvent)
     {
         byte eventCode = photonEvent.Code;
@@ -223,8 +254,14 @@ public class MultiplayerManager : PlayerManagerbase
         {
             object[] data = (object[])photonEvent.CustomData;
             Room previousArrowPos = (Room)data[0];
-
+            
             arrowMap.SetTile(new Vector3Int((int)previousArrowPos.row, (int)previousArrowPos.col, 0), null);
+        }
+        if(eventCode == Move_Monster)
+        {
+            object[] data = (object[])photonEvent.CustomData;
+            Room newMonsterRoom = (Room)data[0];
+            SetMonsterRoom(newMonsterRoom);
         }
         if (eventCode == OpponentsDeath)
         {

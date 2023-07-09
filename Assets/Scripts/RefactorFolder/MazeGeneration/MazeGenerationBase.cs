@@ -64,6 +64,9 @@ public abstract class MazeGenerationBase : MonoBehaviour
             {
                 Vector3Int drawPos = new Vector3Int((int)room.row, (int)room.col, 0);
                 value.myTypeMap.SetTile(drawPos, value.mybaseTyle);
+
+                if(room.roomType == RoomType.Enemy)
+                    playerManager.SetMonsterRoom(room);
             }
         }
     }

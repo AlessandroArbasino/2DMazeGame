@@ -2052,6 +2052,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerMap: {fileID: 1973413286}
   playerBase: {fileID: 11400000, guid: 5e0aa9eaf0e08ed4a83dd51974ebecf7, type: 2}
+  monsterMap: {fileID: 1784667657}
+  monsterBase: {fileID: 11400000, guid: 21d2843f7ab46284c9a222667d5f01ad, type: 2}
   arrowMap: {fileID: 585451069}
   arrowBase: {fileID: 11400000, guid: 6b047680755fe7d4191ba38f65551bb1, type: 2}
   fogUpdater: {fileID: 42105750}

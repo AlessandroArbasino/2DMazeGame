@@ -1,5 +1,7 @@
+using Photon.Pun.Demo.PunBasics;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -18,12 +20,20 @@ public class UIUpdater : MonoBehaviour
     private int gridSizeY = 20;
     private Room[,] rooms;
     private List<Vector2> takenPosition;
+
+    private static UIUpdater _instance = null;
+    public static UIUpdater Instance { get => _instance; }
     public void InitUiUpdater(Room[,] rooms, List<Vector2> takenPositions)
     {
         this.rooms = rooms;
         this.takenPosition = takenPositions;
 
         UpdateUI();
+
+        if (_instance == null)
+            _instance = this;
+        else if (_instance != this)
+            Destroy(gameObject);
     }
 
     private void UpdateUI()
@@ -42,7 +52,7 @@ public class UIUpdater : MonoBehaviour
         }
     }
 
-    private void InitNeightbours(Room currentRoom, RoomType controllRoomType)
+    public void InitNeightbours(Room currentRoom, RoomType controllRoomType, bool isTileToBeDeleted = false)
     {
         switch (controllRoomType)
         {
@@ -51,13 +61,22 @@ public class UIUpdater : MonoBehaviour
             case RoomType.Normal:
                 break;
             case RoomType.Enemy:
-                CheckNearRooms(currentRoom, bloodMap, bloodBase);
+                if (!isTileToBeDeleted)
+                    CheckNearRooms(currentRoom, bloodMap, bloodBase);
+                else
+                    CancelPreviousUITiles(currentRoom, bloodMap);
                 break;
             case RoomType.Hole:
-                CheckNearRooms(currentRoom, mudMap, mudBase);
+                if (!isTileToBeDeleted)
+                    CheckNearRooms(currentRoom, mudMap, mudBase);
+                else
+                    CancelPreviousUITiles(currentRoom, mudMap);
                 break;
             case RoomType.Teleport:
-                CheckNearRooms(currentRoom, windMap, windBase);
+                if (!isTileToBeDeleted)
+                    CheckNearRooms(currentRoom, windMap, windBase);
+                else
+                    CancelPreviousUITiles(currentRoom, windMap);
                 break;
         }
     }
@@ -87,6 +106,34 @@ public class UIUpdater : MonoBehaviour
         {
             if (takenPosition.Contains(new Vector2((int)currentRoom.row + 1, (int)currentRoom.col)))
                 uiMap.SetTile(new Vector3Int((int)currentRoom.row + 1, (int)currentRoom.col, 0), uiBase);
+        }
+    }
+
+    public void CancelPreviousUITiles(Room currentRoom, Tilemap uiMap)
+    {
+        if (currentRoom.doorTop)
+        {
+            if (takenPosition.Contains(new Vector2((int)currentRoom.row, (int)currentRoom.col + 1)))
+                uiMap.SetTile(new Vector3Int((int)currentRoom.row, (int)currentRoom.col + 1, 0), null);
+        }
+
+
+        if (currentRoom.doorBot)
+        {
+            if (takenPosition.Contains(new Vector2((int)currentRoom.row, (int)currentRoom.col - 1)))
+                uiMap.SetTile(new Vector3Int((int)currentRoom.row, (int)currentRoom.col - 1, 0), null);
+        }
+
+        if (currentRoom.doorleft)
+        {
+            if (takenPosition.Contains(new Vector2((int)currentRoom.row - 1, (int)currentRoom.col)))
+                uiMap.SetTile(new Vector3Int((int)currentRoom.row - 1, (int)currentRoom.col, 0), null);
+        }
+
+        if (currentRoom.doorRight)
+        {
+            if (takenPosition.Contains(new Vector2((int)currentRoom.row + 1, (int)currentRoom.col)))
+                uiMap.SetTile(new Vector3Int((int)currentRoom.row + 1, (int)currentRoom.col, 0), null);
         }
     }
 }

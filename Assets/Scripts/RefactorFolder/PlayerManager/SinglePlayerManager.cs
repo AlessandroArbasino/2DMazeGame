@@ -41,6 +41,7 @@ public class SinglePlayerManager : PlayerManagerbase
         else
         {
             arrowMap.SetTile(new Vector3Int((int)currentArrowRoom.row, (int)currentArrowRoom.col, 0), null);
+            NewMonsterPosition();
             TurnManager.Instance.EnableInput();
             yield break;
         }

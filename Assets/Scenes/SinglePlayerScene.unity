@@ -361,6 +361,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerMap: {fileID: 1772402849}
   playerBase: {fileID: 11400000, guid: 5e0aa9eaf0e08ed4a83dd51974ebecf7, type: 2}
+  monsterMap: {fileID: 1367037301}
+  monsterBase: {fileID: 11400000, guid: 21d2843f7ab46284c9a222667d5f01ad, type: 2}
   arrowMap: {fileID: 484232914}
   arrowBase: {fileID: 11400000, guid: 6b047680755fe7d4191ba38f65551bb1, type: 2}
   fogUpdater: {fileID: 477354687}
@@ -1066,7 +1068,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.00000047683716, y: 0, z: -2.01}
+  m_LocalPosition: {x: 0, y: 0, z: -2.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7487,7 +7489,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6492443398961632812, guid: a3a06cb6be92c484684ad3900b265dd6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.00000047683716
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6492443398961632812, guid: a3a06cb6be92c484684ad3900b265dd6, type: 3}
       propertyPath: m_LocalPosition.y

@@ -19,12 +19,16 @@ public abstract class PlayerManagerbase : MonoBehaviour
     [SerializeField] protected Tilemap playerMap;
     [SerializeField] protected TileBase playerBase;
 
+    [SerializeField] protected Tilemap monsterMap;
+    [SerializeField] protected TileBase monsterBase;
+
     [SerializeField] protected Tilemap arrowMap;
     [SerializeField] protected TileBase arrowBase;
 
     [SerializeField] protected FogOfWadUpdater fogUpdater;
 
     protected Room currentRoom;
+    protected Room currentMonsterRoom;
 
     [SerializeField] protected int currentArrowNumber = 5;
     [SerializeField] protected TextMeshProUGUI currentArrowNumberText;
@@ -36,9 +40,6 @@ public abstract class PlayerManagerbase : MonoBehaviour
         TurnManager.Instance.GetInputClass().Player.Move.started += OnMove;
 
         currentArrowNumberText.text = $"Remaining Arrows: {currentArrowNumber.ToString()}";
-
-        
-
     }
 
     protected virtual void OnDestroy()
@@ -55,9 +56,12 @@ public abstract class PlayerManagerbase : MonoBehaviour
         this.currentRoom = currentRoom;
 
         playerPos.position = new Vector3(currentRoom.row, currentRoom.col, 0);
-
     }
 
+    public void SetMonsterRoom(Room monsterRoom)
+    {
+        this.currentMonsterRoom = monsterRoom;
+    }
     public virtual void OnShot(InputAction.CallbackContext context)
     {
         if (currentArrowNumber > 0)
@@ -80,7 +84,7 @@ public abstract class PlayerManagerbase : MonoBehaviour
         yield return null;
     }
 
-    protected void WinGame(string popUpMessage)
+    protected virtual void WinGame(string popUpMessage)
     {
         TurnManager.Instance.DisableInput();
 
@@ -110,14 +114,42 @@ public abstract class PlayerManagerbase : MonoBehaviour
         //set the new player base tile
         playerMap.SetTile(new Vector3Int((int)newCurrentRoom.row, (int)newCurrentRoom.col, 0), playerBase);
 
-        playerPos.position = new Vector3(newCurrentRoom.row, newCurrentRoom.col,0);
+        playerPos.position = new Vector3(newCurrentRoom.row, newCurrentRoom.col, 0);
     }
+    protected virtual Room NewMonsterPosition()
+    {
+        Room newMonsterPosition = null;
+        do
+        {
+            Vector2 chosenGripPositoin = playerMovement.RandomizePositionInTakenPosition();
 
+            newMonsterPosition = playerMovement.GetNextRoom(chosenGripPositoin);
+        } while (!fogUpdater.CheckFogTile(newMonsterPosition)&& newMonsterPosition.myCellType != CellType.Tunnel);
+
+        //translate sprite
+        TranslateMonsterSprite(currentMonsterRoom, newMonsterPosition);
+
+        //delete old blood ui
+        UIUpdater.Instance.InitNeightbours(currentMonsterRoom, RoomType.Enemy,true);
+        //changing room type according to the translate
+        currentMonsterRoom.roomType = RoomType.Normal;
+        newMonsterPosition.roomType = RoomType.Enemy;
+        currentMonsterRoom = newMonsterPosition;
+        //draw the new blood ui
+        UIUpdater.Instance.InitNeightbours(newMonsterPosition, RoomType.Enemy);
+        return newMonsterPosition;
+    }
+    protected void TranslateMonsterSprite(Room previousRoom, Room newMonsterRoom)
+    {
+        monsterMap.SetTile(new Vector3Int((int)previousRoom.row, (int)previousRoom.col, 0), null);
+
+        monsterMap.SetTile(new Vector3Int((int)newMonsterRoom.row, (int)newMonsterRoom.col, 0), monsterBase);
+    }
     protected virtual void TranslateArrowSprite(Room previosArrowRoom, Room newCurrentRoom, bool isOpponent = false)
     {
-        //clean the position before the movement 
+
         arrowMap.SetTile(new Vector3Int((int)previosArrowRoom.row, (int)previosArrowRoom.col, 0), null);
-        //set the new player base tile
+
         arrowMap.SetTile(new Vector3Int((int)newCurrentRoom.row, (int)newCurrentRoom.col, 0), arrowBase);
 
     }
@@ -140,7 +172,7 @@ public abstract class PlayerManagerbase : MonoBehaviour
         }
     }
 
-    protected void LoseGame(string message)
+    protected virtual void LoseGame(string message)
     {
         TurnManager.Instance.DisableInput();
         PopUpManager.Instance.SpawnPopUp(message, "Defeat", "Play Again", delegate { PlayAgain(); }, PopUpButtonNumbers.MainMenuPopUp);
