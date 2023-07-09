@@ -208,7 +208,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36.9
+  m_fontSize: 31.85
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -855,17 +855,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28c3e27b32f411145a148036503f5b15, type: 3}
---- !u!114 &57132636 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3119218676269295537, guid: 28c3e27b32f411145a148036503f5b15, type: 3}
-  m_PrefabInstance: {fileID: 57132635}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d91216f109f29ad45ac4136db34116cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &57132637 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7989756478638398931, guid: 28c3e27b32f411145a148036503f5b15, type: 3}
@@ -1632,7 +1621,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b5eaafed8c89464c865d510949ac3ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  popUp: {fileID: 57132636}
+  popUp: {fileID: 0}
 --- !u!4 &1195566994
 Transform:
   m_ObjectHideFlags: 0
@@ -1733,7 +1722,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 13.65
+  m_fontSize: 12
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2400,7 +2389,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a6afae5d5d973e942840563cf4a3b3e5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f56f601518b6d8a4b9a64a2a2a1c05ac, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2604,7 +2593,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 43.4
+  m_fontSize: 38.15
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2836,7 +2825,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Enter text...
+  m_text: Enter lobby name...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1e3498d97d90ae84886b66789e5580d2, type: 2}
   m_sharedMaterial: {fileID: -267157723561693141, guid: 1e3498d97d90ae84886b66789e5580d2, type: 2}
@@ -3093,7 +3082,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Enter text...
+  m_text: Enter lobby name...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1e3498d97d90ae84886b66789e5580d2, type: 2}
   m_sharedMaterial: {fileID: -267157723561693141, guid: 1e3498d97d90ae84886b66789e5580d2, type: 2}
