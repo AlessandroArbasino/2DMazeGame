@@ -147,20 +147,17 @@ public abstract class PlayerManagerbase : MonoBehaviour
     }
     protected virtual void TranslateArrowSprite(Vector2 shootDirection, Room previosArrowRoom, Room newCurrentRoom, bool isOpponent = false)
     {
-        Debug.Log("previous " + arrowMap.orientationMatrix.rotation);
+        //creating a new orientation matrix for rotating the arrow sprite 
         float angle=FromDirectionToAngle(shootDirection);
         angle= Mathf.Deg2Rad * angle;
         float halfAngleSin= Mathf.Sin(angle/2);
         float halfAngleCos = Mathf.Cos(angle / 2);
         Quaternion quaternion = new Quaternion(halfAngleSin * 0, halfAngleSin*0, halfAngleSin*1, halfAngleCos).normalized;
-        Debug.Log("quaternion " + quaternion.ToString());
-        //arrowMap.SetOrientationMatrix(new Vector3Int((int)newCurrentRoom.row, (int)newCurrentRoom.col), Matrix4x4.TRS(Vector3.zero, quaternion, Vector3.one));
         arrowMap.orientation = Tilemap.Orientation.Custom;
         arrowMap.orientationMatrix = Matrix4x4.TRS(Vector3.zero, quaternion, Vector3.one);
-        arrowMap.SetTile(new Vector3Int((int)previosArrowRoom.row, (int)previosArrowRoom.col, 0), null);
 
+        arrowMap.SetTile(new Vector3Int((int)previosArrowRoom.row, (int)previosArrowRoom.col, 0), null);
         arrowMap.SetTile(new Vector3Int((int)newCurrentRoom.row, (int)newCurrentRoom.col, 0), arrowBase);
-        Debug.Log("after " + arrowMap.orientationMatrix.rotation);
     }
     private int FromDirectionToAngle(Vector2 shootDirection)
     {

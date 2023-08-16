@@ -26,7 +26,7 @@ public class SinglePlayerManager : PlayerManagerbase
 
         if (newArrowRoom != null)
         {
-            TranslateArrowSprite(shootDirection,currentArrowRoom, newArrowRoom);
+            TranslateArrowSprite(newShootDirection,currentArrowRoom, newArrowRoom);
 
             if (newArrowRoom == currentRoom)
             {

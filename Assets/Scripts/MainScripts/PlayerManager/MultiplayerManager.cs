@@ -86,7 +86,7 @@ public class MultiplayerManager : PlayerManagerbase
         {
             object[] content = new object[] { currentArrowRoom, newArrowRoom,shootDirection };
             PhotonNetwork.RaiseEvent(Translate_Arrow_Sprite_Event_Code, content, raiseEventOption, SendOptions.SendReliable);
-            TranslateArrowSprite(shootDirection, currentArrowRoom, newArrowRoom);
+            TranslateArrowSprite(newShootDirection, currentArrowRoom, newArrowRoom);
 
             if(newArrowRoom == currentRoom)
             {
