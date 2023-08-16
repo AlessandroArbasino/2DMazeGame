@@ -84,9 +84,9 @@ public class MultiplayerManager : PlayerManagerbase
 
         if (newArrowRoom != null)
         {
-            object[] content = new object[] { currentArrowRoom, newArrowRoom };
+            object[] content = new object[] { currentArrowRoom, newArrowRoom,shootDirection };
             PhotonNetwork.RaiseEvent(Translate_Arrow_Sprite_Event_Code, content, raiseEventOption, SendOptions.SendReliable);
-            TranslateArrowSprite(currentArrowRoom, newArrowRoom);
+            TranslateArrowSprite(shootDirection, currentArrowRoom, newArrowRoom);
 
             if(newArrowRoom == currentRoom)
             {
@@ -175,10 +175,10 @@ public class MultiplayerManager : PlayerManagerbase
             TurnManager.Instance.EnableInput();
     }
 
-    protected override void TranslateArrowSprite(Room previosArrowRoom, Room newCurrentRoom, bool isOpponent = false)
+    protected override void TranslateArrowSprite(Vector2 shootDirection,Room previosArrowRoom, Room newCurrentRoom, bool isOpponent = false)
     {
         if (!isOpponent)
-            base.TranslateArrowSprite(previosArrowRoom, newCurrentRoom, isOpponent);
+            base.TranslateArrowSprite(shootDirection,previosArrowRoom, newCurrentRoom, isOpponent);
         else
         {
             oppponetArrowMap.SetTile(new Vector3Int((int)previosArrowRoom.row, (int)previosArrowRoom.col, 0), null);
@@ -242,8 +242,9 @@ public class MultiplayerManager : PlayerManagerbase
             object[] data = (object[])photonEvent.CustomData;
             Room previousArrowRoom = (Room)data[0];
             Room otherNewArrowRoom = (Room)data[1];
+            Vector2 shootDirection = (Vector2)data[2];
 
-            TranslateArrowSprite(previousArrowRoom, otherNewArrowRoom);
+            TranslateArrowSprite(shootDirection, previousArrowRoom, otherNewArrowRoom);
         }
         if (eventCode == Translate_Player_Sprite_Event_Code)
         {

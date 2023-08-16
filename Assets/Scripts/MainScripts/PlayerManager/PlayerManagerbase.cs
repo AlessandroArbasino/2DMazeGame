@@ -124,13 +124,13 @@ public abstract class PlayerManagerbase : MonoBehaviour
             Vector2 chosenGripPositoin = playerMovement.RandomizePositionInTakenPosition();
 
             newMonsterPosition = playerMovement.GetNextRoom(chosenGripPositoin);
-        } while (!fogUpdater.CheckFogTile(newMonsterPosition)&& newMonsterPosition.myCellType != CellType.Tunnel);
+        } while (!fogUpdater.CheckFogTile(newMonsterPosition) && newMonsterPosition.myCellType != CellType.Tunnel);
 
         //translate sprite
         TranslateMonsterSprite(currentMonsterRoom, newMonsterPosition);
 
         //delete old blood ui
-        UIUpdater.Instance.InitNeightbours(currentMonsterRoom, RoomType.Enemy,true);
+        UIUpdater.Instance.InitNeightbours(currentMonsterRoom, RoomType.Enemy, true);
         //changing room type according to the translate
         currentMonsterRoom.roomType = RoomType.Normal;
         newMonsterPosition.roomType = RoomType.Enemy;
@@ -145,15 +145,36 @@ public abstract class PlayerManagerbase : MonoBehaviour
 
         monsterMap.SetTile(new Vector3Int((int)newMonsterRoom.row, (int)newMonsterRoom.col, 0), monsterBase);
     }
-    protected virtual void TranslateArrowSprite(Room previosArrowRoom, Room newCurrentRoom, bool isOpponent = false)
+    protected virtual void TranslateArrowSprite(Vector2 shootDirection, Room previosArrowRoom, Room newCurrentRoom, bool isOpponent = false)
     {
-
+        Debug.Log("previous " + arrowMap.orientationMatrix.rotation);
+        float angle=FromDirectionToAngle(shootDirection);
+        angle= Mathf.Deg2Rad * angle;
+        float halfAngleSin= Mathf.Sin(angle/2);
+        float halfAngleCos = Mathf.Cos(angle / 2);
+        Quaternion quaternion = new Quaternion(halfAngleSin * 0, halfAngleSin*0, halfAngleSin*1, halfAngleCos).normalized;
+        Debug.Log("quaternion " + quaternion.ToString());
+        //arrowMap.SetOrientationMatrix(new Vector3Int((int)newCurrentRoom.row, (int)newCurrentRoom.col), Matrix4x4.TRS(Vector3.zero, quaternion, Vector3.one));
+        arrowMap.orientation = Tilemap.Orientation.Custom;
+        arrowMap.orientationMatrix = Matrix4x4.TRS(Vector3.zero, quaternion, Vector3.one);
         arrowMap.SetTile(new Vector3Int((int)previosArrowRoom.row, (int)previosArrowRoom.col, 0), null);
 
         arrowMap.SetTile(new Vector3Int((int)newCurrentRoom.row, (int)newCurrentRoom.col, 0), arrowBase);
-
+        Debug.Log("after " + arrowMap.orientationMatrix.rotation);
     }
+    private int FromDirectionToAngle(Vector2 shootDirection)
+    {
+        if (shootDirection.x == -1)
+            return 90;
+        else if (shootDirection.x == 1)
+            return 270;
+        else if (shootDirection.y == -1)
+            return 180;
+        else if (shootDirection.y == 1)
+            return 0;
 
+        return 0;
+    }
     protected virtual void PlayerDeath(RoomType whatKillsPlayer)
     {
         TurnManager.Instance.DisableInput();
