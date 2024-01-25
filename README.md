@@ -1,11 +1,9 @@
-# 2DMazeGame
 
 # Lost Planet Maze
 
 A Multiplayer Online Turn based Game done for the 2023 Nacon Scholarship
 
-Here the documentation link 
-[Requirements]([https://linktodocumentation](https://github.com/AlessandroArbasino/2DMazeGame/blob/main/Requirements.pdf))
+Here the [Requirements](https://github.com/AlessandroArbasino/2DMazeGame/blob/main/Requirements.pdf) link
 
 Everything in the requirements is featured in the game unless the double tunnel 
 
