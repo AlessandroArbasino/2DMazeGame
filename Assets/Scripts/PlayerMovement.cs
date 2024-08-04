@@ -156,9 +156,11 @@ public class PlayerMovement
     {
         int randomCell = UnityEngine.Random.Range(0, takenPositions.Count);
 
-        Room teleportRoom = GetTeleportRoom(takenPositions[randomCell]);
+        Room teleportRoom;
+ 
+         teleportRoom = GetTeleportRoom(takenPositions[randomCell]);
 
-        if (teleportRoom.roomType != RoomType.Enemy)
+        if (teleportRoom.roomType == RoomType.Normal && teleportRoom.myCellType==CellType.Room)
         {
             currentRoom = teleportRoom;
             return teleportRoom;
