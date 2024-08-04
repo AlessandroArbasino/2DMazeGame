@@ -12,6 +12,7 @@ public abstract class PopUp : MonoBehaviour
     [SerializeField] private TextMeshProUGUI messageText;
     [SerializeField] private TextMeshProUGUI titleText;
     [SerializeField] private TextMeshProUGUI buttonFunctionText;
+    [SerializeField] private TextMeshProUGUI otherbuttonText;
     [SerializeField] private Button functionalityButton;
     [SerializeField] private Button OtherButton;
     [SerializeField] private GameObject functionalityButtonContainer;
@@ -19,7 +20,7 @@ public abstract class PopUp : MonoBehaviour
     {
         titleText.text = title;
         messageText.text = message;
-        buttonFunctionText.text = functionalityButtonString;
+        otherbuttonText.text = functionalityButtonString;
 
         functionalityButtonContainer.SetActive(false);
 

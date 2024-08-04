@@ -48,4 +48,11 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
         PopUpManager.Instance.SpawnPopUp(message, "Error", "Close", delegate { }, PopUpButtonNumbers.ErrorPopUp);
     }
 
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        base.OnCreateRoomFailed(returnCode, message);
+
+        PopUpManager.Instance.SpawnPopUp(message, "Error", "Close", delegate { }, PopUpButtonNumbers.ErrorPopUp);
+    }
+
 }
