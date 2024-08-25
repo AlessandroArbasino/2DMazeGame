@@ -132,7 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 42105751}
-  - component: {fileID: 42105750}
+  - component: {fileID: 42105752}
   m_Layer: 0
   m_Name: FogOfWarUpdater
   m_TagString: Untagged
@@ -140,20 +140,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &42105750
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 42105749}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5faafd31ae3f33741999eb0949f970e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fogOfWarTileMap: {fileID: 2089197201}
-  fogBase: {fileID: 11400000, guid: d5e3ea883ec0a16489641265efe35c07, type: 2}
 --- !u!4 &42105751
 Transform:
   m_ObjectHideFlags: 0
@@ -169,6 +155,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &42105752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 42105749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 098b67dd8fa6f42468e143626a185d65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fogOfWarTileMap: {fileID: 2089197201}
+  fogBase: {fileID: 11400000, guid: d5e3ea883ec0a16489641265efe35c07, type: 2}
 --- !u!1 &138028492
 GameObject:
   m_ObjectHideFlags: 0
@@ -2165,7 +2165,7 @@ MonoBehaviour:
   monsterBase: {fileID: 11400000, guid: 21d2843f7ab46284c9a222667d5f01ad, type: 2}
   arrowMap: {fileID: 585451069}
   arrowBase: {fileID: 11400000, guid: 6b047680755fe7d4191ba38f65551bb1, type: 2}
-  fogUpdater: {fileID: 42105750}
+  fogUpdater: {fileID: 42105752}
   currentArrowNumber: 5
   currentArrowNumberText: {fileID: 1963809599}
   playerPos: {fileID: 494717500}

@@ -25,7 +25,7 @@ public abstract class PlayerManagerbase : MonoBehaviour
     [SerializeField] protected Tilemap arrowMap;
     [SerializeField] protected TileBase arrowBase;
 
-    [SerializeField] protected FogOfWadUpdater fogUpdater;
+    [SerializeField] protected FogOfWarUpdater fogUpdater;
 
     protected Room currentRoom;
     protected Room currentMonsterRoom;

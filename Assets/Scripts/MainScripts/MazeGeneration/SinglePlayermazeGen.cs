@@ -4,21 +4,22 @@ using UnityEngine;
 
 public class SinglePlayermazeGen : MazeGenerationBase
 {
-    public override void Start()
-    {
-        base.Start();
-    }
-    public override void DrawMap()
-    {
-        SetMonsterRoom();
-        foreach (Room room in rooms)
-        {
-            if (room == null)
-            {
-                continue;
-            }
+	public override void Start()
+	{
+		base.Start();
+	}
 
-            DrawTileByType(room);
-        }
-    }
+	public override void DrawMap()
+	{
+		SetMonsterRoom();
+		foreach (Room room in rooms)
+		{
+			if (room == null)
+			{
+				continue;
+			}
+
+			DrawTileByType(room);
+		}
+	}
 }

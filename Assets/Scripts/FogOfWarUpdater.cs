@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class FogOfWadUpdater : MonoBehaviour
+public class FogOfWarUpdater : MonoBehaviour
 {
     [SerializeField] private Tilemap fogOfWarTileMap;
     [SerializeField] private TileBase fogBase;
@@ -14,8 +14,8 @@ public class FogOfWadUpdater : MonoBehaviour
         fogOfWarTileMap.SetTile(new Vector3Int((int)discoveredRoom.row, (int)discoveredRoom.col, 0), null);
     }
 
-    public bool CheckFogTile(Room controllRoom)
+    public bool CheckFogTile(Room controlRoom)
     {
-        return fogOfWarTileMap.HasTile(new Vector3Int((int)controllRoom.row, (int)controllRoom.col, 0));
+        return fogOfWarTileMap.HasTile(new Vector3Int((int)controlRoom.row, (int)controlRoom.col, 0));
     }
 }
