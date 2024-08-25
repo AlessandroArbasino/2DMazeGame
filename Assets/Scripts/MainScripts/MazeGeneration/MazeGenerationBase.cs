@@ -6,8 +6,8 @@ using UnityEngine.Tilemaps;
 
 public abstract class MazeGenerationBase : MonoBehaviour
 {
-
-	public Vector2 worldSize = new Vector2(20, 20);
+    #region Variables
+    public Vector2 worldSize = new Vector2(20, 20);
 	[SerializeField] public Room[,] rooms;
 	public List<Vector2> takenPositions = new List<Vector2>();
 
@@ -23,7 +23,8 @@ public abstract class MazeGenerationBase : MonoBehaviour
 	public PlayerManagerbase playerManager;
 	public UIUpdater updater;
 	public Dictionary<Vector2, Room> roomsPositionType = new Dictionary<Vector2, Room>();
-	public virtual void Awake()
+    #endregion
+    public virtual void Awake()
 	{
 		this.rooms = new Room[20 * 2, 20 * 2];
 		numberOfRooms = Random.Range(minNumberOfRooms, (int)worldSize.x * (int)worldSize.y);
